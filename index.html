@@ -132,6 +132,27 @@
 
   .hint { color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
 
+  .money-row { margin-top: 16px; }
+  .money-row .hint:first-child { margin-top: 0; margin-bottom: 6px; }
+  .money-input-wrap {
+    display: flex;
+    align-items: center;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0 14px;
+  }
+  .money-input-wrap .dollar-sign { color: var(--muted); font-weight: 700; }
+  .money-input-wrap input {
+    border: none;
+    background: transparent;
+    padding: 12px 8px 12px 6px;
+    flex: 1;
+  }
+  .money-input-wrap input:focus { outline: none; }
+  .money-input-wrap:focus-within { outline: 2px solid var(--blue); }
+  .payout-amount { color: var(--red); }
+
   .status-banner {
     text-align: center;
     padding: 10px 14px;
@@ -228,6 +249,16 @@
     <ul class="player-list" id="player-list"></ul>
     <p class="hint" id="setup-hint">Add at least 2 players to start.</p>
     <div class="error" id="setup-error"></div>
+
+    <div class="money-row">
+      <label for="money-per-point-input" class="hint">Money per point (optional)</label>
+      <div class="money-input-wrap">
+        <span class="dollar-sign">$</span>
+        <input type="number" id="money-per-point-input" placeholder="0.25" min="0" step="0.01" />
+      </div>
+      <p class="hint">Leave blank to play without money stakes.</p>
+    </div>
+
     <div class="footer-actions">
       <button class="btn-primary" id="start-game-btn" disabled>Start Game</button>
     </div>
@@ -260,6 +291,17 @@
       </table>
     </div>
 
+    <div class="card" id="payouts-card" hidden>
+      <h2>💵 Payouts</h2>
+      <table>
+        <thead>
+          <tr><th>Player</th><th>Owes Winner</th></tr>
+        </thead>
+        <tbody id="payouts-body"></tbody>
+      </table>
+      <p class="hint" id="payouts-total"></p>
+    </div>
+
     <div class="card">
       <h2>Activity</h2>
       <div class="log" id="log"></div>
@@ -290,6 +332,7 @@
   const playerListEl = document.getElementById('player-list');
   const setupError = document.getElementById('setup-error');
   const startGameBtn = document.getElementById('start-game-btn');
+  const moneyPerPointInput = document.getElementById('money-per-point-input');
 
   const statusBanner = document.getElementById('status-banner');
   const turnLine = document.getElementById('turn-line');
@@ -302,8 +345,12 @@
   const logEl = document.getElementById('log');
   const newGameBtn = document.getElementById('new-game-btn');
   const actionCard = document.getElementById('action-card');
+  const payoutsCard = document.getElementById('payouts-card');
+  const payoutsBody = document.getElementById('payouts-body');
+  const payoutsTotal = document.getElementById('payouts-total');
 
   let setupPlayers = [];
+  let moneyPerPoint = 0;
 
   function renderSetup() {
     playerListEl.innerHTML = '';
@@ -343,6 +390,8 @@
   startGameBtn.addEventListener('click', () => {
     if (setupPlayers.length < 2) return;
     players = setupPlayers.map(name => ({ name, score: 0 }));
+    const rawMoney = Number(moneyPerPointInput.value);
+    moneyPerPoint = (moneyPerPointInput.value.trim() !== '' && rawMoney > 0) ? rawMoney : 0;
     phase = 'playing';
     currentPlayerIndex = 0;
     kingIndex = null;
@@ -462,11 +511,43 @@
     queue = [];
     winnerIndex = null;
     log = [];
+    moneyPerPoint = 0;
+    moneyPerPointInput.value = '';
     gameScreen.hidden = true;
     setupScreen.hidden = false;
     renderSetup();
     playerNameInput.focus();
   });
+
+  function formatMoney(amount) {
+    return `$${amount.toFixed(2)}`;
+  }
+
+  function renderPayouts() {
+    if (phase !== 'over' || moneyPerPoint <= 0 || winnerIndex === null) {
+      payoutsCard.hidden = true;
+      return;
+    }
+    payoutsCard.hidden = false;
+    const winner = players[winnerIndex];
+    payoutsBody.innerHTML = '';
+    let total = 0;
+    players.forEach((p, i) => {
+      if (i === winnerIndex) return;
+      const owed = (winner.score - p.score) * moneyPerPoint;
+      total += owed;
+      const tr = document.createElement('tr');
+      const nameTd = document.createElement('td');
+      nameTd.textContent = p.name;
+      const amountTd = document.createElement('td');
+      amountTd.className = 'score-cell payout-amount';
+      amountTd.textContent = formatMoney(owed);
+      tr.appendChild(nameTd);
+      tr.appendChild(amountTd);
+      payoutsBody.appendChild(tr);
+    });
+    payoutsTotal.textContent = `${winner.name} collects ${formatMoney(total)} total.`;
+  }
 
   function renderGame() {
     const inEndgame = phase === 'endgame';
@@ -522,6 +603,8 @@
       div.textContent = entry;
       logEl.appendChild(div);
     });
+
+    renderPayouts();
   }
 
   renderSetup();

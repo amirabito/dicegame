@@ -151,7 +151,19 @@
   }
   .money-input-wrap input:focus { outline: none; }
   .money-input-wrap:focus-within { outline: 2px solid var(--blue); }
+  #series-length-input { width: 100%; }
   .payout-amount { color: var(--red); }
+  .series-positive { color: var(--blue); }
+  .series-negative { color: var(--red); }
+
+  .game-counter {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 8px;
+  }
 
   .status-banner {
     text-align: center;
@@ -226,6 +238,8 @@
   .footer-actions {
     display: flex;
     justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
     margin-top: 4px;
   }
 
@@ -259,12 +273,19 @@
       <p class="hint">Leave blank to play without money stakes.</p>
     </div>
 
+    <div class="money-row">
+      <label for="series-length-input" class="hint">Games in series (optional)</label>
+      <input type="number" id="series-length-input" placeholder="e.g. 7" min="1" step="1" />
+      <p class="hint">Leave blank to keep playing games until you end the series.</p>
+    </div>
+
     <div class="footer-actions">
       <button class="btn-primary" id="start-game-btn" disabled>Start Game</button>
     </div>
   </div>
 
   <div id="game-screen" hidden>
+    <p class="game-counter" id="game-counter"></p>
     <div class="status-banner" id="status-banner"></div>
     <div class="turn-line" id="turn-line"></div>
 
@@ -292,7 +313,7 @@
     </div>
 
     <div class="card" id="payouts-card" hidden>
-      <h2>💵 Payouts</h2>
+      <h2 id="payouts-heading">💵 Payouts</h2>
       <table>
         <thead>
           <tr><th>Player</th><th>Owes Winner</th></tr>
@@ -302,13 +323,25 @@
       <p class="hint" id="payouts-total"></p>
     </div>
 
+    <div class="card" id="series-card" hidden>
+      <h2>📊 Series Totals</h2>
+      <p class="hint" id="series-label"></p>
+      <table>
+        <thead>
+          <tr><th>Player</th><th>Net</th></tr>
+        </thead>
+        <tbody id="series-body"></tbody>
+      </table>
+    </div>
+
     <div class="card">
       <h2>Activity</h2>
       <div class="log" id="log"></div>
     </div>
 
     <div class="footer-actions">
-      <button class="btn-secondary" id="new-game-btn">New Game</button>
+      <button class="btn-primary" id="next-game-btn" hidden>Next Game →</button>
+      <button class="btn-secondary" id="end-series-btn">New Series</button>
     </div>
   </div>
 </div>
@@ -324,6 +357,9 @@
   let queue = [];         // players still owed their one chance to beat the king this round
   let winnerIndex = null;
   let log = [];
+  let seriesLength = null;   // optional planned number of games
+  let seriesGameNumber = 1;
+  let seriesTotals = {};     // player name -> net money won/lost across the series
 
   const setupScreen = document.getElementById('setup-screen');
   const gameScreen = document.getElementById('game-screen');
@@ -333,7 +369,9 @@
   const setupError = document.getElementById('setup-error');
   const startGameBtn = document.getElementById('start-game-btn');
   const moneyPerPointInput = document.getElementById('money-per-point-input');
+  const seriesLengthInput = document.getElementById('series-length-input');
 
+  const gameCounter = document.getElementById('game-counter');
   const statusBanner = document.getElementById('status-banner');
   const turnLine = document.getElementById('turn-line');
   const amountInput = document.getElementById('amount-input');
@@ -343,11 +381,16 @@
   const actionError = document.getElementById('action-error');
   const scoreboardBody = document.getElementById('scoreboard-body');
   const logEl = document.getElementById('log');
-  const newGameBtn = document.getElementById('new-game-btn');
+  const nextGameBtn = document.getElementById('next-game-btn');
+  const endSeriesBtn = document.getElementById('end-series-btn');
   const actionCard = document.getElementById('action-card');
   const payoutsCard = document.getElementById('payouts-card');
+  const payoutsHeading = document.getElementById('payouts-heading');
   const payoutsBody = document.getElementById('payouts-body');
   const payoutsTotal = document.getElementById('payouts-total');
+  const seriesCard = document.getElementById('series-card');
+  const seriesLabel = document.getElementById('series-label');
+  const seriesBody = document.getElementById('series-body');
 
   let setupPlayers = [];
   let moneyPerPoint = 0;
@@ -392,13 +435,17 @@
     players = setupPlayers.map(name => ({ name, score: 0 }));
     const rawMoney = Number(moneyPerPointInput.value);
     moneyPerPoint = (moneyPerPointInput.value.trim() !== '' && rawMoney > 0) ? rawMoney : 0;
+    const rawSeriesLength = Number(seriesLengthInput.value);
+    seriesLength = (seriesLengthInput.value.trim() !== '' && rawSeriesLength >= 1) ? Math.floor(rawSeriesLength) : null;
+    seriesGameNumber = 1;
+    seriesTotals = {};
     phase = 'playing';
     currentPlayerIndex = 0;
     kingIndex = null;
     queue = [];
     winnerIndex = null;
     log = [];
-    addLog(`Game started with ${players.map(p => p.name).join(', ')}.`);
+    addLog(`Game 1 started with ${players.map(p => p.name).join(', ')}.`);
     setupScreen.hidden = true;
     gameScreen.hidden = false;
     renderGame();
@@ -432,14 +479,32 @@
     queue = otherPlayersInOrder(kingIndex);
   }
 
+  function recordGameResult() {
+    if (moneyPerPoint <= 0 || winnerIndex === null) return;
+    const winner = players[winnerIndex];
+    let winnerGain = 0;
+    players.forEach((p, i) => {
+      if (i === winnerIndex) return;
+      const owed = (winner.score - p.score) * moneyPerPoint;
+      seriesTotals[p.name] = (seriesTotals[p.name] || 0) - owed;
+      winnerGain += owed;
+    });
+    seriesTotals[winner.name] = (seriesTotals[winner.name] || 0) + winnerGain;
+  }
+
+  function endGame(winnerIdx) {
+    phase = 'over';
+    winnerIndex = winnerIdx;
+    addLog(`🏆 ${players[winnerIdx].name} wins the game with ${players[winnerIdx].score}!`);
+    recordGameResult();
+  }
+
   function advanceTurn(actedIdx) {
     if (phase === 'playing') {
       if (players[actedIdx].score >= WIN_SCORE) {
         crownKing(actedIdx);
         if (queue.length === 0) {
-          phase = 'over';
-          winnerIndex = kingIndex;
-          addLog(`🏆 ${players[kingIndex].name} wins the game!`);
+          endGame(kingIndex);
           return;
         }
         addLog(`${players[kingIndex].name} reached ${WIN_SCORE} with ${players[kingIndex].score}! Everyone else gets one chance to beat it.`);
@@ -456,9 +521,7 @@
       if (queue.length > 0) {
         currentPlayerIndex = queue.shift();
       } else {
-        phase = 'over';
-        winnerIndex = kingIndex;
-        addLog(`🏆 ${players[kingIndex].name} wins the game with ${players[kingIndex].score}!`);
+        endGame(kingIndex);
       }
     }
   }
@@ -501,8 +564,22 @@
     if (e.key === 'Enter') { e.preventDefault(); handleAction('add'); }
   });
 
-  newGameBtn.addEventListener('click', () => {
-    if (phase !== 'over' && !confirm('Start a new game? Current progress will be lost.')) return;
+  nextGameBtn.addEventListener('click', () => {
+    seriesGameNumber += 1;
+    players = players.map(p => ({ name: p.name, score: 0 }));
+    phase = 'playing';
+    currentPlayerIndex = 0;
+    kingIndex = null;
+    queue = [];
+    winnerIndex = null;
+    log = [];
+    addLog(`Game ${seriesGameNumber} started with ${players.map(p => p.name).join(', ')}.`);
+    renderGame();
+    focusAmount();
+  });
+
+  endSeriesBtn.addEventListener('click', () => {
+    if (phase !== 'over' && !confirm('End this series? Current game progress will be lost.')) return;
     players = [];
     setupPlayers = [];
     phase = 'setup';
@@ -513,6 +590,10 @@
     log = [];
     moneyPerPoint = 0;
     moneyPerPointInput.value = '';
+    seriesLength = null;
+    seriesLengthInput.value = '';
+    seriesGameNumber = 1;
+    seriesTotals = {};
     gameScreen.hidden = true;
     setupScreen.hidden = false;
     renderSetup();
@@ -529,6 +610,7 @@
       return;
     }
     payoutsCard.hidden = false;
+    payoutsHeading.textContent = seriesGameNumber > 1 ? `💵 Payouts — Game ${seriesGameNumber}` : '💵 Payouts';
     const winner = players[winnerIndex];
     payoutsBody.innerHTML = '';
     let total = 0;
@@ -549,8 +631,42 @@
     payoutsTotal.textContent = `${winner.name} collects ${formatMoney(total)} total.`;
   }
 
+  function renderSeriesTotals() {
+    if (phase !== 'over' || moneyPerPoint <= 0) {
+      seriesCard.hidden = true;
+      return;
+    }
+    seriesCard.hidden = false;
+    seriesLabel.textContent = seriesLength
+      ? `After game ${seriesGameNumber} of ${seriesLength}`
+      : `After game ${seriesGameNumber}`;
+
+    const names = Object.keys(seriesTotals).sort((a, b) => seriesTotals[b] - seriesTotals[a]);
+    const topNet = names.length ? seriesTotals[names[0]] : 0;
+
+    seriesBody.innerHTML = '';
+    names.forEach(name => {
+      const net = seriesTotals[name];
+      const tr = document.createElement('tr');
+      const nameTd = document.createElement('td');
+      nameTd.textContent = (net === topNet && topNet > 0) ? `🏆 ${name}` : name;
+      const amountTd = document.createElement('td');
+      amountTd.className = 'score-cell ' + (net >= 0 ? 'series-positive' : 'series-negative');
+      amountTd.textContent = (net >= 0 ? '+' : '-') + formatMoney(Math.abs(net));
+      tr.appendChild(nameTd);
+      tr.appendChild(amountTd);
+      seriesBody.appendChild(tr);
+    });
+  }
+
   function renderGame() {
     const inEndgame = phase === 'endgame';
+
+    gameCounter.textContent = seriesLength ? `Game ${seriesGameNumber} of ${seriesLength}` : `Game ${seriesGameNumber}`;
+
+    const seriesFinished = seriesLength !== null && seriesGameNumber >= seriesLength;
+    nextGameBtn.hidden = !(phase === 'over' && !seriesFinished);
+    endSeriesBtn.textContent = (phase === 'over' && seriesFinished) ? 'Start New Series' : 'New Series';
 
     if (phase === 'playing') {
       statusBanner.className = 'status-banner status-playing';
@@ -560,7 +676,8 @@
       statusBanner.textContent = `${players[kingIndex].name} leads with ${players[kingIndex].score} — everyone else gets one chance to beat it!`;
     } else if (phase === 'over') {
       statusBanner.className = 'status-banner status-over';
-      statusBanner.textContent = winnerIndex !== null ? `🏆 ${players[winnerIndex].name} wins!` : 'Game over.';
+      const winText = winnerIndex !== null ? `🏆 ${players[winnerIndex].name} wins!` : 'Game over.';
+      statusBanner.textContent = seriesFinished ? `${winText} Series complete!` : winText;
     }
 
     if (phase === 'over') {
@@ -605,6 +722,7 @@
     });
 
     renderPayouts();
+    renderSeriesTotals();
   }
 
   renderSetup();

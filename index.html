@@ -6,23 +6,22 @@
 <title>Race to 100 — Dice Game Score Tracker</title>
 <style>
   :root {
-    --bg: #0f172a;
-    --panel: #1e293b;
-    --panel-2: #263449;
-    --border: #334155;
-    --text: #f1f5f9;
-    --muted: #94a3b8;
-    --accent: #f59e0b;
-    --accent-2: #fbbf24;
-    --green: #22c55e;
-    --red: #ef4444;
-    --blue: #38bdf8;
+    --bg: #0a1830;
+    --panel: #102544;
+    --panel-2: #16305a;
+    --border: #24406b;
+    --text: #f4f7fb;
+    --muted: #9bb0d1;
+    --red: #e6394f;
+    --red-deep: #b91c2c;
+    --blue: #4f9ddb;
+    --white: #ffffff;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     min-height: 100vh;
-    background: linear-gradient(180deg, #0f172a, #111827);
+    background: radial-gradient(120% 160% at 50% -10%, #132a4d 0%, #0a1830 55%, #071224 100%);
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     padding: 24px 16px 60px;
@@ -31,30 +30,45 @@
     max-width: 640px;
     margin: 0 auto;
   }
+  .top { text-align: center; margin-bottom: 8px; }
   h1 {
-    text-align: center;
     font-size: 1.8rem;
-    margin: 8px 0 4px;
+    margin: 8px 0 6px;
     letter-spacing: 0.5px;
+    background: linear-gradient(180deg, #ffffff, var(--blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
   .subtitle {
-    text-align: center;
     color: var(--muted);
-    margin-bottom: 24px;
+    margin-bottom: 4px;
     font-size: 0.95rem;
   }
+  .tri-rule {
+    width: 84px;
+    height: 4px;
+    margin: 14px auto 24px;
+    border-radius: 999px;
+    overflow: hidden;
+    display: flex;
+  }
+  .tri-rule span { flex: 1; }
+  .tri-rule .r { background: var(--red); }
+  .tri-rule .w { background: #ffffff; }
+  .tri-rule .b { background: var(--blue); }
   .card {
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 20px;
     margin-bottom: 18px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
   }
   .card h2 {
     margin: 0 0 14px;
     font-size: 1.1rem;
-    color: var(--accent-2);
+    color: var(--white);
   }
   .row {
     display: flex;
@@ -68,8 +82,9 @@
     background: var(--panel-2);
     color: var(--text);
     font-size: 1rem;
+    min-width: 0;
   }
-  input:focus { outline: 2px solid var(--accent); }
+  input:focus { outline: 2px solid var(--blue); }
   button {
     cursor: pointer;
     border: none;
@@ -77,15 +92,17 @@
     padding: 12px 16px;
     font-size: 0.95rem;
     font-weight: 600;
-    transition: transform 0.05s ease, opacity 0.15s ease;
+    transition: transform 0.05s ease, opacity 0.15s ease, filter 0.15s ease;
   }
+  button:hover { filter: brightness(1.08); }
   button:active { transform: scale(0.97); }
   button:disabled { opacity: 0.4; cursor: not-allowed; }
-  .btn-primary { background: var(--accent); color: #1a1206; }
+  button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .btn-primary { background: var(--red); color: #ffffff; }
   .btn-secondary { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
-  .btn-add { background: var(--green); color: #062a12; }
-  .btn-subtract { background: var(--red); color: #2a0606; }
-  .btn-stay { background: var(--blue); color: #062230; }
+  .btn-add { background: var(--blue); color: #072238; }
+  .btn-zero { background: var(--red-deep); color: #ffffff; }
+  .btn-stay { background: #ffffff; color: #0a1830; }
 
   .player-list {
     list-style: none;
@@ -111,9 +128,42 @@
     padding: 2px 6px;
     font-size: 0.9rem;
   }
-  .player-chip button:hover { color: var(--red); }
+  .player-chip button:hover { color: var(--red); filter: none; }
 
   .hint { color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
+
+  .money-row { margin-top: 16px; }
+  .money-row .hint:first-child { margin-top: 0; margin-bottom: 6px; }
+  .money-input-wrap {
+    display: flex;
+    align-items: center;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0 14px;
+  }
+  .money-input-wrap .dollar-sign { color: var(--muted); font-weight: 700; }
+  .money-input-wrap input {
+    border: none;
+    background: transparent;
+    padding: 12px 8px 12px 6px;
+    flex: 1;
+  }
+  .money-input-wrap input:focus { outline: none; }
+  .money-input-wrap:focus-within { outline: 2px solid var(--blue); }
+  #series-length-input { width: 100%; }
+  .payout-amount { color: var(--red); }
+  .series-positive { color: var(--blue); }
+  .series-negative { color: var(--red); }
+
+  .game-counter {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 8px;
+  }
 
   .status-banner {
     text-align: center;
@@ -123,10 +173,9 @@
     margin-bottom: 16px;
     font-size: 1rem;
   }
-  .status-playing { background: rgba(56, 189, 248, 0.15); color: var(--blue); }
-  .status-final { background: rgba(245, 158, 11, 0.18); color: var(--accent-2); }
-  .status-tiebreak { background: rgba(239, 68, 68, 0.18); color: #fca5a5; }
-  .status-over { background: rgba(34, 197, 94, 0.18); color: var(--green); font-size: 1.15rem; }
+  .status-playing { background: rgba(79, 157, 219, 0.16); color: var(--blue); }
+  .status-endgame { background: rgba(230, 57, 79, 0.2); color: #ff8a95; }
+  .status-over { background: rgba(255, 255, 255, 0.14); color: #ffffff; font-size: 1.15rem; }
 
   .turn-line {
     text-align: center;
@@ -146,9 +195,9 @@
     border-bottom: 1px solid var(--border);
   }
   th { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
-  tr.current-turn td { background: rgba(245, 158, 11, 0.1); }
-  tr.current-turn td:first-child { border-left: 3px solid var(--accent); padding-left: 6px; }
-  .score-cell { font-weight: 700; font-size: 1.05rem; }
+  tr.current-turn td { background: rgba(79, 157, 219, 0.1); }
+  tr.current-turn td:first-child { border-left: 3px solid var(--blue); padding-left: 6px; }
+  .score-cell { font-weight: 700; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
   .badge {
     display: inline-block;
     margin-left: 6px;
@@ -156,16 +205,20 @@
     border-radius: 999px;
     font-size: 0.7rem;
     font-weight: 700;
-    background: var(--accent);
-    color: #1a1206;
+    background: var(--red);
+    color: #ffffff;
   }
-  .winner-row td { color: var(--green); font-weight: 800; }
+  .winner-row td { color: #ffffff; font-weight: 800; }
 
   .action-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 8px;
     margin-top: 10px;
+  }
+  @media (max-width: 420px) {
+    .action-buttons { grid-template-columns: 1fr 1fr; }
+    .btn-stay { grid-column: span 2; }
   }
 
   .log {
@@ -185,6 +238,8 @@
   .footer-actions {
     display: flex;
     justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
     margin-top: 4px;
   }
 
@@ -193,8 +248,11 @@
 </head>
 <body>
 <div class="wrap">
-  <h1>🎲 Race to 100</h1>
-  <p class="subtitle">Score tracker — add, subtract, or hold. First to reach 100 kicks off the final round.</p>
+  <div class="top">
+    <h1>🎲 Race to 100</h1>
+    <p class="subtitle">Score tracker — add, reset, or hold. First to reach 100 must defend the lead.</p>
+    <div class="tri-rule" aria-hidden="true"><span class="r"></span><span class="w"></span><span class="b"></span></div>
+  </div>
 
   <div id="setup-screen" class="card">
     <h2>Players</h2>
@@ -205,12 +263,29 @@
     <ul class="player-list" id="player-list"></ul>
     <p class="hint" id="setup-hint">Add at least 2 players to start.</p>
     <div class="error" id="setup-error"></div>
+
+    <div class="money-row">
+      <label for="money-per-point-input" class="hint">Money per point (optional)</label>
+      <div class="money-input-wrap">
+        <span class="dollar-sign">$</span>
+        <input type="number" id="money-per-point-input" placeholder="0.25" min="0" step="0.01" />
+      </div>
+      <p class="hint">Leave blank to play without money stakes.</p>
+    </div>
+
+    <div class="money-row">
+      <label for="series-length-input" class="hint">Games in series (optional)</label>
+      <input type="number" id="series-length-input" placeholder="e.g. 7" min="1" step="1" />
+      <p class="hint">Leave blank to keep playing games until you end the series.</p>
+    </div>
+
     <div class="footer-actions">
       <button class="btn-primary" id="start-game-btn" disabled>Start Game</button>
     </div>
   </div>
 
   <div id="game-screen" hidden>
+    <p class="game-counter" id="game-counter"></p>
     <div class="status-banner" id="status-banner"></div>
     <div class="turn-line" id="turn-line"></div>
 
@@ -221,7 +296,7 @@
       </div>
       <div class="action-buttons">
         <button class="btn-add" id="add-btn">➕ Add</button>
-        <button class="btn-subtract" id="subtract-btn">➖ Subtract</button>
+        <button class="btn-zero" id="zero-btn">🔁 Back to Zero</button>
         <button class="btn-stay" id="stay-btn">🤝 Stay Same</button>
       </div>
       <div class="error" id="action-error"></div>
@@ -237,13 +312,36 @@
       </table>
     </div>
 
+    <div class="card" id="payouts-card" hidden>
+      <h2 id="payouts-heading">💵 Payouts</h2>
+      <table>
+        <thead>
+          <tr><th>Player</th><th>Owes Winner</th></tr>
+        </thead>
+        <tbody id="payouts-body"></tbody>
+      </table>
+      <p class="hint" id="payouts-total"></p>
+    </div>
+
+    <div class="card" id="series-card" hidden>
+      <h2>📊 Series Totals</h2>
+      <p class="hint" id="series-label"></p>
+      <table>
+        <thead>
+          <tr><th>Player</th><th>Net</th></tr>
+        </thead>
+        <tbody id="series-body"></tbody>
+      </table>
+    </div>
+
     <div class="card">
       <h2>Activity</h2>
       <div class="log" id="log"></div>
     </div>
 
     <div class="footer-actions">
-      <button class="btn-secondary" id="new-game-btn">New Game</button>
+      <button class="btn-primary" id="next-game-btn" hidden>Next Game →</button>
+      <button class="btn-secondary" id="end-series-btn">New Series</button>
     </div>
   </div>
 </div>
@@ -253,12 +351,15 @@
   const WIN_SCORE = 100;
 
   let players = [];       // {name, score}
-  let phase = 'setup';    // setup | playing | final | tiebreak | over
+  let phase = 'setup';    // setup | playing | endgame | over
   let currentPlayerIndex = 0;
-  let finalQueue = [];
-  let tiebreakOrder = [];
+  let kingIndex = null;   // current highest-scoring player once someone reaches 100
+  let queue = [];         // players still owed their one chance to beat the king this round
   let winnerIndex = null;
   let log = [];
+  let seriesLength = null;   // optional planned number of games
+  let seriesGameNumber = 1;
+  let seriesTotals = {};     // player name -> net money won/lost across the series
 
   const setupScreen = document.getElementById('setup-screen');
   const gameScreen = document.getElementById('game-screen');
@@ -267,20 +368,32 @@
   const playerListEl = document.getElementById('player-list');
   const setupError = document.getElementById('setup-error');
   const startGameBtn = document.getElementById('start-game-btn');
+  const moneyPerPointInput = document.getElementById('money-per-point-input');
+  const seriesLengthInput = document.getElementById('series-length-input');
 
+  const gameCounter = document.getElementById('game-counter');
   const statusBanner = document.getElementById('status-banner');
   const turnLine = document.getElementById('turn-line');
   const amountInput = document.getElementById('amount-input');
   const addBtn = document.getElementById('add-btn');
-  const subtractBtn = document.getElementById('subtract-btn');
+  const zeroBtn = document.getElementById('zero-btn');
   const stayBtn = document.getElementById('stay-btn');
   const actionError = document.getElementById('action-error');
   const scoreboardBody = document.getElementById('scoreboard-body');
   const logEl = document.getElementById('log');
-  const newGameBtn = document.getElementById('new-game-btn');
+  const nextGameBtn = document.getElementById('next-game-btn');
+  const endSeriesBtn = document.getElementById('end-series-btn');
   const actionCard = document.getElementById('action-card');
+  const payoutsCard = document.getElementById('payouts-card');
+  const payoutsHeading = document.getElementById('payouts-heading');
+  const payoutsBody = document.getElementById('payouts-body');
+  const payoutsTotal = document.getElementById('payouts-total');
+  const seriesCard = document.getElementById('series-card');
+  const seriesLabel = document.getElementById('series-label');
+  const seriesBody = document.getElementById('series-body');
 
   let setupPlayers = [];
+  let moneyPerPoint = 0;
 
   function renderSetup() {
     playerListEl.innerHTML = '';
@@ -320,13 +433,19 @@
   startGameBtn.addEventListener('click', () => {
     if (setupPlayers.length < 2) return;
     players = setupPlayers.map(name => ({ name, score: 0 }));
+    const rawMoney = Number(moneyPerPointInput.value);
+    moneyPerPoint = (moneyPerPointInput.value.trim() !== '' && rawMoney > 0) ? rawMoney : 0;
+    const rawSeriesLength = Number(seriesLengthInput.value);
+    seriesLength = (seriesLengthInput.value.trim() !== '' && rawSeriesLength >= 1) ? Math.floor(rawSeriesLength) : null;
+    seriesGameNumber = 1;
+    seriesTotals = {};
     phase = 'playing';
     currentPlayerIndex = 0;
-    finalQueue = [];
-    tiebreakOrder = [];
+    kingIndex = null;
+    queue = [];
     winnerIndex = null;
     log = [];
-    addLog(`Game started with ${players.map(p => p.name).join(', ')}.`);
+    addLog(`Game 1 started with ${players.map(p => p.name).join(', ')}.`);
     setupScreen.hidden = true;
     gameScreen.hidden = false;
     renderGame();
@@ -339,7 +458,7 @@
   }
 
   function focusAmount() {
-    if (phase === 'playing' || phase === 'final' || phase === 'tiebreak') {
+    if (phase === 'playing' || phase === 'endgame') {
       amountInput.value = '';
       amountInput.focus();
     }
@@ -355,61 +474,54 @@
     return others;
   }
 
-  function finishFinalRound() {
-    const qualifiers = players
-      .map((p, i) => i)
-      .filter(i => players[i].score >= WIN_SCORE);
-
-    if (qualifiers.length <= 1) {
-      phase = 'over';
-      winnerIndex = qualifiers[0] ?? null;
-      if (winnerIndex !== null) addLog(`🏆 ${players[winnerIndex].name} wins the game!`);
-    } else {
-      phase = 'tiebreak';
-      tiebreakOrder = qualifiers;
-      currentPlayerIndex = tiebreakOrder[0];
-      addLog(`Tiebreaker! ${qualifiers.map(i => players[i].name).join(', ')} are all at or above ${WIN_SCORE}.`);
-    }
+  function crownKing(newKingIdx) {
+    kingIndex = newKingIdx;
+    queue = otherPlayersInOrder(kingIndex);
   }
 
-  function checkTiebreakWinner() {
-    const scores = tiebreakOrder.map(i => players[i].score);
-    const maxScore = Math.max(...scores);
-    const leaders = tiebreakOrder.filter(i => players[i].score === maxScore);
-    if (leaders.length === 1) {
-      phase = 'over';
-      winnerIndex = leaders[0];
-      addLog(`🏆 ${players[winnerIndex].name} wins the tiebreaker and the game!`);
-    }
+  function recordGameResult() {
+    if (moneyPerPoint <= 0 || winnerIndex === null) return;
+    const winner = players[winnerIndex];
+    let winnerGain = 0;
+    players.forEach((p, i) => {
+      if (i === winnerIndex) return;
+      const owed = (winner.score - p.score) * moneyPerPoint;
+      seriesTotals[p.name] = (seriesTotals[p.name] || 0) - owed;
+      winnerGain += owed;
+    });
+    seriesTotals[winner.name] = (seriesTotals[winner.name] || 0) + winnerGain;
+  }
+
+  function endGame(winnerIdx) {
+    phase = 'over';
+    winnerIndex = winnerIdx;
+    addLog(`🏆 ${players[winnerIdx].name} wins the game with ${players[winnerIdx].score}!`);
+    recordGameResult();
   }
 
   function advanceTurn(actedIdx) {
     if (phase === 'playing') {
       if (players[actedIdx].score >= WIN_SCORE) {
-        const others = otherPlayersInOrder(actedIdx);
-        if (others.length === 0) {
-          phase = 'over';
-          winnerIndex = actedIdx;
-          addLog(`🏆 ${players[actedIdx].name} wins the game!`);
+        crownKing(actedIdx);
+        if (queue.length === 0) {
+          endGame(kingIndex);
           return;
         }
-        addLog(`${players[actedIdx].name} reached ${WIN_SCORE}! Final round: everyone else gets one more turn.`);
-        finalQueue = others;
-        currentPlayerIndex = finalQueue.shift();
+        addLog(`${players[kingIndex].name} reached ${WIN_SCORE} with ${players[kingIndex].score}! Everyone else gets one chance to beat it.`);
+        phase = 'endgame';
+        currentPlayerIndex = queue.shift();
       } else {
         currentPlayerIndex = (actedIdx + 1) % players.length;
       }
-    } else if (phase === 'final') {
-      if (finalQueue.length > 0) {
-        currentPlayerIndex = finalQueue.shift();
-      } else {
-        finishFinalRound();
+    } else if (phase === 'endgame') {
+      if (players[actedIdx].score > players[kingIndex].score) {
+        crownKing(actedIdx);
+        addLog(`${players[kingIndex].name} takes the lead with ${players[kingIndex].score}! Everyone else gets one more chance to beat it.`);
       }
-    } else if (phase === 'tiebreak') {
-      checkTiebreakWinner();
-      if (phase === 'tiebreak') {
-        const pos = tiebreakOrder.indexOf(actedIdx);
-        currentPlayerIndex = tiebreakOrder[(pos + 1) % tiebreakOrder.length];
+      if (queue.length > 0) {
+        currentPlayerIndex = queue.shift();
+      } else {
+        endGame(kingIndex);
       }
     }
   }
@@ -420,7 +532,7 @@
     const idx = currentPlayerIndex;
     let amount = 0;
 
-    if (type !== 'stay') {
+    if (type === 'add') {
       const raw = amountInput.value.trim();
       if (raw === '' || isNaN(raw) || Number(raw) < 0) {
         actionError.textContent = 'Enter a non-negative number of points.';
@@ -433,9 +545,9 @@
     if (type === 'add') {
       players[idx].score += amount;
       addLog(`${name} added ${amount} → ${players[idx].score}.`);
-    } else if (type === 'subtract') {
-      players[idx].score -= amount;
-      addLog(`${name} subtracted ${amount} → ${players[idx].score}.`);
+    } else if (type === 'zero') {
+      players[idx].score = 0;
+      addLog(`${name} went back to zero.`);
     } else {
       addLog(`${name} stayed the same at ${players[idx].score}.`);
     }
@@ -446,43 +558,126 @@
   }
 
   addBtn.addEventListener('click', () => handleAction('add'));
-  subtractBtn.addEventListener('click', () => handleAction('subtract'));
+  zeroBtn.addEventListener('click', () => handleAction('zero'));
   stayBtn.addEventListener('click', () => handleAction('stay'));
   amountInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') { e.preventDefault(); handleAction('add'); }
   });
 
-  newGameBtn.addEventListener('click', () => {
-    if (phase !== 'over' && !confirm('Start a new game? Current progress will be lost.')) return;
+  nextGameBtn.addEventListener('click', () => {
+    seriesGameNumber += 1;
+    players = players.map(p => ({ name: p.name, score: 0 }));
+    phase = 'playing';
+    currentPlayerIndex = 0;
+    kingIndex = null;
+    queue = [];
+    winnerIndex = null;
+    log = [];
+    addLog(`Game ${seriesGameNumber} started with ${players.map(p => p.name).join(', ')}.`);
+    renderGame();
+    focusAmount();
+  });
+
+  endSeriesBtn.addEventListener('click', () => {
+    if (phase !== 'over' && !confirm('End this series? Current game progress will be lost.')) return;
     players = [];
     setupPlayers = [];
     phase = 'setup';
     currentPlayerIndex = 0;
-    finalQueue = [];
-    tiebreakOrder = [];
+    kingIndex = null;
+    queue = [];
     winnerIndex = null;
     log = [];
+    moneyPerPoint = 0;
+    moneyPerPointInput.value = '';
+    seriesLength = null;
+    seriesLengthInput.value = '';
+    seriesGameNumber = 1;
+    seriesTotals = {};
     gameScreen.hidden = true;
     setupScreen.hidden = false;
     renderSetup();
     playerNameInput.focus();
   });
 
+  function formatMoney(amount) {
+    return `$${amount.toFixed(2)}`;
+  }
+
+  function renderPayouts() {
+    if (phase !== 'over' || moneyPerPoint <= 0 || winnerIndex === null) {
+      payoutsCard.hidden = true;
+      return;
+    }
+    payoutsCard.hidden = false;
+    payoutsHeading.textContent = seriesGameNumber > 1 ? `💵 Payouts — Game ${seriesGameNumber}` : '💵 Payouts';
+    const winner = players[winnerIndex];
+    payoutsBody.innerHTML = '';
+    let total = 0;
+    players.forEach((p, i) => {
+      if (i === winnerIndex) return;
+      const owed = (winner.score - p.score) * moneyPerPoint;
+      total += owed;
+      const tr = document.createElement('tr');
+      const nameTd = document.createElement('td');
+      nameTd.textContent = p.name;
+      const amountTd = document.createElement('td');
+      amountTd.className = 'score-cell payout-amount';
+      amountTd.textContent = formatMoney(owed);
+      tr.appendChild(nameTd);
+      tr.appendChild(amountTd);
+      payoutsBody.appendChild(tr);
+    });
+    payoutsTotal.textContent = `${winner.name} collects ${formatMoney(total)} total.`;
+  }
+
+  function renderSeriesTotals() {
+    if (phase !== 'over' || moneyPerPoint <= 0) {
+      seriesCard.hidden = true;
+      return;
+    }
+    seriesCard.hidden = false;
+    seriesLabel.textContent = seriesLength
+      ? `After game ${seriesGameNumber} of ${seriesLength}`
+      : `After game ${seriesGameNumber}`;
+
+    const names = Object.keys(seriesTotals).sort((a, b) => seriesTotals[b] - seriesTotals[a]);
+    const topNet = names.length ? seriesTotals[names[0]] : 0;
+
+    seriesBody.innerHTML = '';
+    names.forEach(name => {
+      const net = seriesTotals[name];
+      const tr = document.createElement('tr');
+      const nameTd = document.createElement('td');
+      nameTd.textContent = (net === topNet && topNet > 0) ? `🏆 ${name}` : name;
+      const amountTd = document.createElement('td');
+      amountTd.className = 'score-cell ' + (net >= 0 ? 'series-positive' : 'series-negative');
+      amountTd.textContent = (net >= 0 ? '+' : '-') + formatMoney(Math.abs(net));
+      tr.appendChild(nameTd);
+      tr.appendChild(amountTd);
+      seriesBody.appendChild(tr);
+    });
+  }
+
   function renderGame() {
-    const activeSet = phase === 'tiebreak' ? new Set(tiebreakOrder) : null;
+    const inEndgame = phase === 'endgame';
+
+    gameCounter.textContent = seriesLength ? `Game ${seriesGameNumber} of ${seriesLength}` : `Game ${seriesGameNumber}`;
+
+    const seriesFinished = seriesLength !== null && seriesGameNumber >= seriesLength;
+    nextGameBtn.hidden = !(phase === 'over' && !seriesFinished);
+    endSeriesBtn.textContent = (phase === 'over' && seriesFinished) ? 'Start New Series' : 'New Series';
 
     if (phase === 'playing') {
       statusBanner.className = 'status-banner status-playing';
       statusBanner.textContent = `Playing — race to ${WIN_SCORE}`;
-    } else if (phase === 'final') {
-      statusBanner.className = 'status-banner status-final';
-      statusBanner.textContent = 'Final round — everyone else gets one more turn!';
-    } else if (phase === 'tiebreak') {
-      statusBanner.className = 'status-banner status-tiebreak';
-      statusBanner.textContent = 'Tiebreaker — head to head until someone pulls ahead!';
+    } else if (phase === 'endgame') {
+      statusBanner.className = 'status-banner status-endgame';
+      statusBanner.textContent = `${players[kingIndex].name} leads with ${players[kingIndex].score} — everyone else gets one chance to beat it!`;
     } else if (phase === 'over') {
       statusBanner.className = 'status-banner status-over';
-      statusBanner.textContent = winnerIndex !== null ? `🏆 ${players[winnerIndex].name} wins!` : 'Game over.';
+      const winText = winnerIndex !== null ? `🏆 ${players[winnerIndex].name} wins!` : 'Game over.';
+      statusBanner.textContent = seriesFinished ? `${winText} Series complete!` : winText;
     }
 
     if (phase === 'over') {
@@ -490,7 +685,9 @@
       actionCard.hidden = true;
     } else {
       actionCard.hidden = false;
-      turnLine.innerHTML = `It's <strong>${players[currentPlayerIndex].name}</strong>'s turn`;
+      turnLine.innerHTML = inEndgame
+        ? `It's <strong>${players[currentPlayerIndex].name}</strong>'s turn — beat <strong>${players[kingIndex].score}</strong> to win!`
+        : `It's <strong>${players[currentPlayerIndex].name}</strong>'s turn`;
     }
 
     scoreboardBody.innerHTML = '';
@@ -500,11 +697,11 @@
       if (phase === 'over' && i === winnerIndex) tr.classList.add('winner-row');
 
       const nameTd = document.createElement('td');
-      nameTd.textContent = p.name;
+      nameTd.textContent = (inEndgame && i === kingIndex) ? `🏆 ${p.name}` : p.name;
       if (p.score >= WIN_SCORE) {
         const badge = document.createElement('span');
         badge.className = 'badge';
-        badge.textContent = activeSet && !activeSet.has(i) ? '100+' : (phase === 'tiebreak' ? 'IN IT' : '100+');
+        badge.textContent = '100+';
         nameTd.appendChild(badge);
       }
 
@@ -523,6 +720,9 @@
       div.textContent = entry;
       logEl.appendChild(div);
     });
+
+    renderPayouts();
+    renderSeriesTotals();
   }
 
   renderSetup();

@@ -142,7 +142,7 @@
   }
   .status-playing { background: rgba(79, 157, 219, 0.16); color: var(--blue); }
   .status-final { background: rgba(230, 57, 79, 0.18); color: #ff8a95; }
-  .status-tiebreak { background: rgba(230, 57, 79, 0.26); color: #ffb3ba; }
+  .status-overtime { background: rgba(230, 57, 79, 0.26); color: #ffb3ba; }
   .status-over { background: rgba(255, 255, 255, 0.14); color: #ffffff; font-size: 1.15rem; }
 
   .turn-line {
@@ -277,10 +277,11 @@
   const WIN_SCORE = 100;
 
   let players = [];       // {name, score}
-  let phase = 'setup';    // setup | playing | final | tiebreak | over
+  let phase = 'setup';    // setup | playing | final | overtime | over
   let currentPlayerIndex = 0;
   let finalQueue = [];
-  let tiebreakOrder = [];
+  let overtimeRemaining = 0;
+  let overtimeRound = 1;
   let winnerIndex = null;
   let log = [];
 
@@ -347,7 +348,8 @@
     phase = 'playing';
     currentPlayerIndex = 0;
     finalQueue = [];
-    tiebreakOrder = [];
+    overtimeRemaining = 0;
+    overtimeRound = 1;
     winnerIndex = null;
     log = [];
     addLog(`Game started with ${players.map(p => p.name).join(', ')}.`);
@@ -363,7 +365,7 @@
   }
 
   function focusAmount() {
-    if (phase === 'playing' || phase === 'final' || phase === 'tiebreak') {
+    if (phase === 'playing' || phase === 'final' || phase === 'overtime') {
       amountInput.value = '';
       amountInput.focus();
     }
@@ -379,31 +381,24 @@
     return others;
   }
 
-  function finishFinalRound() {
-    const qualifiers = players
-      .map((p, i) => i)
-      .filter(i => players[i].score >= WIN_SCORE);
-
-    if (qualifiers.length <= 1) {
-      phase = 'over';
-      winnerIndex = qualifiers[0] ?? null;
-      if (winnerIndex !== null) addLog(`🏆 ${players[winnerIndex].name} wins the game!`);
-    } else {
-      phase = 'tiebreak';
-      tiebreakOrder = qualifiers;
-      currentPlayerIndex = tiebreakOrder[0];
-      addLog(`Tiebreaker! ${qualifiers.map(i => players[i].name).join(', ')} are all at or above ${WIN_SCORE}.`);
-    }
+  function evaluateLeaders() {
+    const maxScore = Math.max(...players.map(p => p.score));
+    const leaders = players.map((p, i) => i).filter(i => players[i].score === maxScore);
+    return { maxScore, leaders };
   }
 
-  function checkTiebreakWinner() {
-    const scores = tiebreakOrder.map(i => players[i].score);
-    const maxScore = Math.max(...scores);
-    const leaders = tiebreakOrder.filter(i => players[i].score === maxScore);
+  function finishFinalRound(lastActedIdx) {
+    const { maxScore, leaders } = evaluateLeaders();
     if (leaders.length === 1) {
       phase = 'over';
       winnerIndex = leaders[0];
-      addLog(`🏆 ${players[winnerIndex].name} wins the tiebreaker and the game!`);
+      addLog(`🏆 ${players[winnerIndex].name} wins the game with ${maxScore}!`);
+    } else {
+      phase = 'overtime';
+      overtimeRound = 1;
+      overtimeRemaining = players.length;
+      currentPlayerIndex = (lastActedIdx + 1) % players.length;
+      addLog(`Tied at ${maxScore} between ${leaders.map(i => players[i].name).join(', ')} — overtime!`);
     }
   }
 
@@ -417,7 +412,8 @@
           addLog(`🏆 ${players[actedIdx].name} wins the game!`);
           return;
         }
-        addLog(`${players[actedIdx].name} reached ${WIN_SCORE}! Final round: everyone else gets one more turn.`);
+        addLog(`${players[actedIdx].name} reached ${WIN_SCORE} with ${players[actedIdx].score}! Everyone else gets one more turn to try to beat it.`);
+        phase = 'final';
         finalQueue = others;
         currentPlayerIndex = finalQueue.shift();
       } else {
@@ -427,13 +423,22 @@
       if (finalQueue.length > 0) {
         currentPlayerIndex = finalQueue.shift();
       } else {
-        finishFinalRound();
+        finishFinalRound(actedIdx);
       }
-    } else if (phase === 'tiebreak') {
-      checkTiebreakWinner();
-      if (phase === 'tiebreak') {
-        const pos = tiebreakOrder.indexOf(actedIdx);
-        currentPlayerIndex = tiebreakOrder[(pos + 1) % tiebreakOrder.length];
+    } else if (phase === 'overtime') {
+      overtimeRemaining -= 1;
+      currentPlayerIndex = (actedIdx + 1) % players.length;
+      if (overtimeRemaining === 0) {
+        const { maxScore, leaders } = evaluateLeaders();
+        if (leaders.length === 1) {
+          phase = 'over';
+          winnerIndex = leaders[0];
+          addLog(`🏆 ${players[winnerIndex].name} wins the game with ${maxScore}!`);
+        } else {
+          overtimeRound += 1;
+          overtimeRemaining = players.length;
+          addLog(`Still tied at ${maxScore} — round ${overtimeRound} of overtime!`);
+        }
       }
     }
   }
@@ -483,7 +488,8 @@
     phase = 'setup';
     currentPlayerIndex = 0;
     finalQueue = [];
-    tiebreakOrder = [];
+    overtimeRemaining = 0;
+    overtimeRound = 1;
     winnerIndex = null;
     log = [];
     gameScreen.hidden = true;
@@ -493,17 +499,18 @@
   });
 
   function renderGame() {
-    const activeSet = phase === 'tiebreak' ? new Set(tiebreakOrder) : null;
+    const inRaceOff = phase === 'final' || phase === 'overtime';
+    const leadScore = inRaceOff ? evaluateLeaders().maxScore : null;
 
     if (phase === 'playing') {
       statusBanner.className = 'status-banner status-playing';
       statusBanner.textContent = `Playing — race to ${WIN_SCORE}`;
     } else if (phase === 'final') {
       statusBanner.className = 'status-banner status-final';
-      statusBanner.textContent = 'Final round — everyone else gets one more turn!';
-    } else if (phase === 'tiebreak') {
-      statusBanner.className = 'status-banner status-tiebreak';
-      statusBanner.textContent = 'Tiebreaker — head to head until someone pulls ahead!';
+      statusBanner.textContent = 'Final round — everyone else gets one more turn to try to beat the leader!';
+    } else if (phase === 'overtime') {
+      statusBanner.className = 'status-banner status-overtime';
+      statusBanner.textContent = `Overtime, round ${overtimeRound} — still tied, keep playing!`;
     } else if (phase === 'over') {
       statusBanner.className = 'status-banner status-over';
       statusBanner.textContent = winnerIndex !== null ? `🏆 ${players[winnerIndex].name} wins!` : 'Game over.';
@@ -514,7 +521,9 @@
       actionCard.hidden = true;
     } else {
       actionCard.hidden = false;
-      turnLine.innerHTML = `It's <strong>${players[currentPlayerIndex].name}</strong>'s turn`;
+      turnLine.innerHTML = inRaceOff
+        ? `It's <strong>${players[currentPlayerIndex].name}</strong>'s turn — beat <strong>${leadScore}</strong> to win!`
+        : `It's <strong>${players[currentPlayerIndex].name}</strong>'s turn`;
     }
 
     scoreboardBody.innerHTML = '';
@@ -524,11 +533,11 @@
       if (phase === 'over' && i === winnerIndex) tr.classList.add('winner-row');
 
       const nameTd = document.createElement('td');
-      nameTd.textContent = p.name;
+      nameTd.textContent = (inRaceOff && p.score === leadScore) ? `🏆 ${p.name}` : p.name;
       if (p.score >= WIN_SCORE) {
         const badge = document.createElement('span');
         badge.className = 'badge';
-        badge.textContent = activeSet && !activeSet.has(i) ? '100+' : (phase === 'tiebreak' ? 'IN IT' : '100+');
+        badge.textContent = '100+';
         nameTd.appendChild(badge);
       }
 

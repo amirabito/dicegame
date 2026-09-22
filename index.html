@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Race to 100 — Dice Game Score Tracker</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --panel-2: #263449;
+    --border: #334155;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --accent: #f59e0b;
+    --accent-2: #fbbf24;
+    --green: #22c55e;
+    --red: #ef4444;
+    --blue: #38bdf8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #0f172a, #111827);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 24px 16px 60px;
+  }
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 8px 0 4px;
+    letter-spacing: 0.5px;
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  }
+  .card h2 {
+    margin: 0 0 14px;
+    font-size: 1.1rem;
+    color: var(--accent-2);
+  }
+  .row {
+    display: flex;
+    gap: 8px;
+  }
+  input[type="text"], input[type="number"] {
+    flex: 1;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--panel-2);
+    color: var(--text);
+    font-size: 1rem;
+  }
+  input:focus { outline: 2px solid var(--accent); }
+  button {
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: transform 0.05s ease, opacity 0.15s ease;
+  }
+  button:active { transform: scale(0.97); }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-primary { background: var(--accent); color: #1a1206; }
+  .btn-secondary { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
+  .btn-add { background: var(--green); color: #062a12; }
+  .btn-subtract { background: var(--red); color: #2a0606; }
+  .btn-stay { background: var(--blue); color: #062230; }
+
+  .player-list {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .player-chip {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 10px 6px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+  }
+  .player-chip button {
+    background: transparent;
+    color: var(--muted);
+    padding: 2px 6px;
+    font-size: 0.9rem;
+  }
+  .player-chip button:hover { color: var(--red); }
+
+  .hint { color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
+
+  .status-banner {
+    text-align: center;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    font-size: 1rem;
+  }
+  .status-playing { background: rgba(56, 189, 248, 0.15); color: var(--blue); }
+  .status-final { background: rgba(245, 158, 11, 0.18); color: var(--accent-2); }
+  .status-tiebreak { background: rgba(239, 68, 68, 0.18); color: #fca5a5; }
+  .status-over { background: rgba(34, 197, 94, 0.18); color: var(--green); font-size: 1.15rem; }
+
+  .turn-line {
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .turn-line strong { color: var(--text); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  th { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  tr.current-turn td { background: rgba(245, 158, 11, 0.1); }
+  tr.current-turn td:first-child { border-left: 3px solid var(--accent); padding-left: 6px; }
+  .score-cell { font-weight: 700; font-size: 1.05rem; }
+  .badge {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 8px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: var(--accent);
+    color: #1a1206;
+  }
+  .winner-row td { color: var(--green); font-weight: 800; }
+
+  .action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .log {
+    max-height: 160px;
+    overflow-y: auto;
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 4px;
+    padding-right: 4px;
+  }
+  .log div { border-bottom: 1px dashed var(--border); padding-bottom: 4px; }
+
+  .error { color: var(--red); font-size: 0.85rem; margin-top: 8px; min-height: 1em; }
+
+  .footer-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎲 Race to 100</h1>
+  <p class="subtitle">Score tracker — add, subtract, or hold. First to reach 100 kicks off the final round.</p>
+
+  <div id="setup-screen" class="card">
+    <h2>Players</h2>
+    <div class="row">
+      <input type="text" id="player-name-input" placeholder="Enter player name" maxlength="24" />
+      <button class="btn-primary" id="add-player-btn">Add</button>
+    </div>
+    <ul class="player-list" id="player-list"></ul>
+    <p class="hint" id="setup-hint">Add at least 2 players to start.</p>
+    <div class="error" id="setup-error"></div>
+    <div class="footer-actions">
+      <button class="btn-primary" id="start-game-btn" disabled>Start Game</button>
+    </div>
+  </div>
+
+  <div id="game-screen" hidden>
+    <div class="status-banner" id="status-banner"></div>
+    <div class="turn-line" id="turn-line"></div>
+
+    <div class="card" id="action-card">
+      <h2>Take a turn</h2>
+      <div class="row">
+        <input type="number" id="amount-input" placeholder="Points" min="0" inputmode="numeric" />
+      </div>
+      <div class="action-buttons">
+        <button class="btn-add" id="add-btn">➕ Add</button>
+        <button class="btn-subtract" id="subtract-btn">➖ Subtract</button>
+        <button class="btn-stay" id="stay-btn">🤝 Stay Same</button>
+      </div>
+      <div class="error" id="action-error"></div>
+    </div>
+
+    <div class="card">
+      <h2>Scoreboard</h2>
+      <table>
+        <thead>
+          <tr><th>Player</th><th>Score</th></tr>
+        </thead>
+        <tbody id="scoreboard-body"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Activity</h2>
+      <div class="log" id="log"></div>
+    </div>
+
+    <div class="footer-actions">
+      <button class="btn-secondary" id="new-game-btn">New Game</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const WIN_SCORE = 100;
+
+  let players = [];       // {name, score}
+  let phase = 'setup';    // setup | playing | final | tiebreak | over
+  let currentPlayerIndex = 0;
+  let finalQueue = [];
+  let tiebreakOrder = [];
+  let winnerIndex = null;
+  let log = [];
+
+  const setupScreen = document.getElementById('setup-screen');
+  const gameScreen = document.getElementById('game-screen');
+  const playerNameInput = document.getElementById('player-name-input');
+  const addPlayerBtn = document.getElementById('add-player-btn');
+  const playerListEl = document.getElementById('player-list');
+  const setupError = document.getElementById('setup-error');
+  const startGameBtn = document.getElementById('start-game-btn');
+
+  const statusBanner = document.getElementById('status-banner');
+  const turnLine = document.getElementById('turn-line');
+  const amountInput = document.getElementById('amount-input');
+  const addBtn = document.getElementById('add-btn');
+  const subtractBtn = document.getElementById('subtract-btn');
+  const stayBtn = document.getElementById('stay-btn');
+  const actionError = document.getElementById('action-error');
+  const scoreboardBody = document.getElementById('scoreboard-body');
+  const logEl = document.getElementById('log');
+  const newGameBtn = document.getElementById('new-game-btn');
+  const actionCard = document.getElementById('action-card');
+
+  let setupPlayers = [];
+
+  function renderSetup() {
+    playerListEl.innerHTML = '';
+    setupPlayers.forEach((name, i) => {
+      const li = document.createElement('li');
+      li.className = 'player-chip';
+      li.innerHTML = '<span></span><button type="button" aria-label="Remove">✕</button>';
+      li.querySelector('span').textContent = name;
+      li.querySelector('button').addEventListener('click', () => {
+        setupPlayers.splice(i, 1);
+        renderSetup();
+      });
+      playerListEl.appendChild(li);
+    });
+    startGameBtn.disabled = setupPlayers.length < 2;
+  }
+
+  function addPlayerFromInput() {
+    const name = playerNameInput.value.trim();
+    setupError.textContent = '';
+    if (!name) return;
+    if (setupPlayers.some(p => p.toLowerCase() === name.toLowerCase())) {
+      setupError.textContent = 'That name is already added.';
+      return;
+    }
+    setupPlayers.push(name);
+    playerNameInput.value = '';
+    playerNameInput.focus();
+    renderSetup();
+  }
+
+  addPlayerBtn.addEventListener('click', addPlayerFromInput);
+  playerNameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); addPlayerFromInput(); }
+  });
+
+  startGameBtn.addEventListener('click', () => {
+    if (setupPlayers.length < 2) return;
+    players = setupPlayers.map(name => ({ name, score: 0 }));
+    phase = 'playing';
+    currentPlayerIndex = 0;
+    finalQueue = [];
+    tiebreakOrder = [];
+    winnerIndex = null;
+    log = [];
+    addLog(`Game started with ${players.map(p => p.name).join(', ')}.`);
+    setupScreen.hidden = true;
+    gameScreen.hidden = false;
+    renderGame();
+    focusAmount();
+  });
+
+  function addLog(text) {
+    log.push(text);
+    if (log.length > 100) log.shift();
+  }
+
+  function focusAmount() {
+    if (phase === 'playing' || phase === 'final' || phase === 'tiebreak') {
+      amountInput.value = '';
+      amountInput.focus();
+    }
+  }
+
+  function otherPlayersInOrder(fromIndex) {
+    const others = [];
+    let i = (fromIndex + 1) % players.length;
+    while (i !== fromIndex) {
+      others.push(i);
+      i = (i + 1) % players.length;
+    }
+    return others;
+  }
+
+  function finishFinalRound() {
+    const qualifiers = players
+      .map((p, i) => i)
+      .filter(i => players[i].score >= WIN_SCORE);
+
+    if (qualifiers.length <= 1) {
+      phase = 'over';
+      winnerIndex = qualifiers[0] ?? null;
+      if (winnerIndex !== null) addLog(`🏆 ${players[winnerIndex].name} wins the game!`);
+    } else {
+      phase = 'tiebreak';
+      tiebreakOrder = qualifiers;
+      currentPlayerIndex = tiebreakOrder[0];
+      addLog(`Tiebreaker! ${qualifiers.map(i => players[i].name).join(', ')} are all at or above ${WIN_SCORE}.`);
+    }
+  }
+
+  function checkTiebreakWinner() {
+    const scores = tiebreakOrder.map(i => players[i].score);
+    const maxScore = Math.max(...scores);
+    const leaders = tiebreakOrder.filter(i => players[i].score === maxScore);
+    if (leaders.length === 1) {
+      phase = 'over';
+      winnerIndex = leaders[0];
+      addLog(`🏆 ${players[winnerIndex].name} wins the tiebreaker and the game!`);
+    }
+  }
+
+  function advanceTurn(actedIdx) {
+    if (phase === 'playing') {
+      if (players[actedIdx].score >= WIN_SCORE) {
+        const others = otherPlayersInOrder(actedIdx);
+        if (others.length === 0) {
+          phase = 'over';
+          winnerIndex = actedIdx;
+          addLog(`🏆 ${players[actedIdx].name} wins the game!`);
+          return;
+        }
+        addLog(`${players[actedIdx].name} reached ${WIN_SCORE}! Final round: everyone else gets one more turn.`);
+        finalQueue = others;
+        currentPlayerIndex = finalQueue.shift();
+      } else {
+        currentPlayerIndex = (actedIdx + 1) % players.length;
+      }
+    } else if (phase === 'final') {
+      if (finalQueue.length > 0) {
+        currentPlayerIndex = finalQueue.shift();
+      } else {
+        finishFinalRound();
+      }
+    } else if (phase === 'tiebreak') {
+      checkTiebreakWinner();
+      if (phase === 'tiebreak') {
+        const pos = tiebreakOrder.indexOf(actedIdx);
+        currentPlayerIndex = tiebreakOrder[(pos + 1) % tiebreakOrder.length];
+      }
+    }
+  }
+
+  function handleAction(type) {
+    if (phase === 'over') return;
+    actionError.textContent = '';
+    const idx = currentPlayerIndex;
+    let amount = 0;
+
+    if (type !== 'stay') {
+      const raw = amountInput.value.trim();
+      if (raw === '' || isNaN(raw) || Number(raw) < 0) {
+        actionError.textContent = 'Enter a non-negative number of points.';
+        return;
+      }
+      amount = Math.floor(Number(raw));
+    }
+
+    const name = players[idx].name;
+    if (type === 'add') {
+      players[idx].score += amount;
+      addLog(`${name} added ${amount} → ${players[idx].score}.`);
+    } else if (type === 'subtract') {
+      players[idx].score -= amount;
+      addLog(`${name} subtracted ${amount} → ${players[idx].score}.`);
+    } else {
+      addLog(`${name} stayed the same at ${players[idx].score}.`);
+    }
+
+    advanceTurn(idx);
+    renderGame();
+    focusAmount();
+  }
+
+  addBtn.addEventListener('click', () => handleAction('add'));
+  subtractBtn.addEventListener('click', () => handleAction('subtract'));
+  stayBtn.addEventListener('click', () => handleAction('stay'));
+  amountInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); handleAction('add'); }
+  });
+
+  newGameBtn.addEventListener('click', () => {
+    if (phase !== 'over' && !confirm('Start a new game? Current progress will be lost.')) return;
+    players = [];
+    setupPlayers = [];
+    phase = 'setup';
+    currentPlayerIndex = 0;
+    finalQueue = [];
+    tiebreakOrder = [];
+    winnerIndex = null;
+    log = [];
+    gameScreen.hidden = true;
+    setupScreen.hidden = false;
+    renderSetup();
+    playerNameInput.focus();
+  });
+
+  function renderGame() {
+    const activeSet = phase === 'tiebreak' ? new Set(tiebreakOrder) : null;
+
+    if (phase === 'playing') {
+      statusBanner.className = 'status-banner status-playing';
+      statusBanner.textContent = `Playing — race to ${WIN_SCORE}`;
+    } else if (phase === 'final') {
+      statusBanner.className = 'status-banner status-final';
+      statusBanner.textContent = 'Final round — everyone else gets one more turn!';
+    } else if (phase === 'tiebreak') {
+      statusBanner.className = 'status-banner status-tiebreak';
+      statusBanner.textContent = 'Tiebreaker — head to head until someone pulls ahead!';
+    } else if (phase === 'over') {
+      statusBanner.className = 'status-banner status-over';
+      statusBanner.textContent = winnerIndex !== null ? `🏆 ${players[winnerIndex].name} wins!` : 'Game over.';
+    }
+
+    if (phase === 'over') {
+      turnLine.textContent = '';
+      actionCard.hidden = true;
+    } else {
+      actionCard.hidden = false;
+      turnLine.innerHTML = `It's <strong>${players[currentPlayerIndex].name}</strong>'s turn`;
+    }
+
+    scoreboardBody.innerHTML = '';
+    players.forEach((p, i) => {
+      const tr = document.createElement('tr');
+      if (phase !== 'over' && i === currentPlayerIndex) tr.classList.add('current-turn');
+      if (phase === 'over' && i === winnerIndex) tr.classList.add('winner-row');
+
+      const nameTd = document.createElement('td');
+      nameTd.textContent = p.name;
+      if (p.score >= WIN_SCORE) {
+        const badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.textContent = activeSet && !activeSet.has(i) ? '100+' : (phase === 'tiebreak' ? 'IN IT' : '100+');
+        nameTd.appendChild(badge);
+      }
+
+      const scoreTd = document.createElement('td');
+      scoreTd.className = 'score-cell';
+      scoreTd.textContent = p.score;
+
+      tr.appendChild(nameTd);
+      tr.appendChild(scoreTd);
+      scoreboardBody.appendChild(tr);
+    });
+
+    logEl.innerHTML = '';
+    log.slice().reverse().forEach(entry => {
+      const div = document.createElement('div');
+      div.textContent = entry;
+      logEl.appendChild(div);
+    });
+  }
+
+  renderSetup();
+})();
+</script>
+</body>
+</html>

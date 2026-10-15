@@ -1107,7 +1107,7 @@
         this.moveHistory = [];
         this.solutionCache = [];
         this.streak = 0;
-        this.pizzaSlices = 10;
+        this.pizzaSlices = 0;
         this.activeHero = 'kai';
         this.heroAbilityUsed = false;
         this.highlightCardIds = [];
@@ -1197,7 +1197,7 @@
 
       resetStats() {
         this.stats = { solved: 0, bestStreak: 0, blitzScore: 0, hintsUsed: 0 };
-        this.pizzaSlices = 10;
+        this.pizzaSlices = 0;
         this.saveStats();
         this.closeModal('stats-modal');
         this.showToast('Ninja stats reset.');

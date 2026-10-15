@@ -1,0 +1,2271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Target Ninja 🥷 Math Quest</title>
+  <!--
+    Styles and icons are built into this file so it works offline and on school networks.
+    If you add or change Tailwind classes or icons, rebuild with:  cd tools && npm install && npm run build
+  -->
+
+  <!-- Google Fonts (optional: falls back to system fonts if blocked) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+/* TAILWIND:START */
+*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}@media (min-width:1536px){.container{max-width:1536px}}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}.pointer-events-none{pointer-events:none}.visible{visibility:visible}.static{position:static}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.-bottom-6{bottom:-1.5rem}.bottom-6{bottom:1.5rem}.left-1\/2{left:50%}.right-3{right:.75rem}.top-0{top:0}.z-10{z-index:10}.z-30{z-index:30}.z-50{z-index:50}.z-\[70\]{z-index:70}.col-span-2{grid-column:span 2/span 2}.mx-auto{margin-left:auto;margin-right:auto}.my-2{margin-top:.5rem;margin-bottom:.5rem}.mb-1{margin-bottom:.25rem}.mb-1\.5{margin-bottom:.375rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.ml-1{margin-left:.25rem}.mr-1{margin-right:.25rem}.mr-2{margin-right:.5rem}.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.block{display:block}.flex{display:flex}.table{display:table}.grid{display:grid}.hidden{display:none}.h-12{height:3rem}.h-16{height:4rem}.h-3{height:.75rem}.h-32{height:8rem}.h-6{height:1.5rem}.h-full{height:100%}.max-h-\[90vh\]{max-height:90vh}.min-h-\[110px\]{min-height:110px}.min-h-\[250px\]{min-height:250px}.min-h-\[40px\]{min-height:40px}.min-h-\[44px\]{min-height:44px}.min-h-\[48px\]{min-height:48px}.min-h-\[56px\]{min-height:56px}.min-h-\[80px\]{min-height:80px}.min-h-screen{min-height:100vh}.w-0{width:0}.w-12{width:3rem}.w-16{width:4rem}.w-32{width:8rem}.w-6{width:1.5rem}.w-\[calc\(100\%-2rem\)\]{width:calc(100% - 2rem)}.w-\[calc\(50\%-0\.5rem\)\]{width:calc(50% - .5rem)}.w-full{width:100%}.w-max{width:-moz-max-content;width:max-content}.min-w-0{min-width:0}.min-w-\[130px\]{min-width:130px}.min-w-\[44px\]{min-width:44px}.min-w-\[56px\]{min-width:56px}.max-w-2xl{max-width:42rem}.max-w-5xl{max-width:64rem}.max-w-full{max-width:100%}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pop{0%{transform:scale(.85);opacity:0}70%{transform:scale(1.05)}to{transform:scale(1);opacity:1}}.animate-pop{animation:pop .3s ease-out forwards}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes spin{to{transform:rotate(1turn)}}.animate-spin-slow{animation:spin 8s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.list-inside{list-style-position:inside}.list-decimal{list-style-type:decimal}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.flex-row{flex-direction:row}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.space-x-1\.5>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(.375rem*var(--tw-space-x-reverse));margin-left:calc(.375rem*(1 - var(--tw-space-x-reverse)))}.space-x-2>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(.5rem*var(--tw-space-x-reverse));margin-left:calc(.5rem*(1 - var(--tw-space-x-reverse)))}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-pre-wrap{white-space:pre-wrap}.rounded{border-radius:.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-md{border-radius:.375rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-amber-400{--tw-border-opacity:1;border-color:rgb(251 191 36/var(--tw-border-opacity,1))}.border-amber-400\/50{border-color:rgba(251,191,36,.5)}.border-amber-400\/80{border-color:rgba(251,191,36,.8)}.border-amber-500\/30{border-color:rgba(245,158,11,.3)}.border-amber-500\/40{border-color:rgba(245,158,11,.4)}.border-ninja-blue{--tw-border-opacity:1;border-color:rgb(56 189 248/var(--tw-border-opacity,1))}.border-ninja-orange{--tw-border-opacity:1;border-color:rgb(251 146 60/var(--tw-border-opacity,1))}.border-ninja-purple{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.border-ninja-purple\/40{border-color:rgba(192,132,252,.4)}.border-ninja-purple\/50{border-color:rgba(192,132,252,.5)}.border-ninja-red{--tw-border-opacity:1;border-color:rgb(244 63 94/var(--tw-border-opacity,1))}.border-ninja-slime{--tw-border-opacity:1;border-color:rgb(163 230 53/var(--tw-border-opacity,1))}.border-ninja-slime\/30{border-color:rgba(163,230,53,.3)}.border-ninja-slime\/60{border-color:rgba(163,230,53,.6)}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94/var(--tw-border-opacity,1))}.border-rose-500\/40{border-color:rgba(244,63,94,.4)}.border-rose-600\/80{border-color:rgba(225,29,72,.8)}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-sky-400{--tw-border-opacity:1;border-color:rgb(56 189 248/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59/var(--tw-border-opacity,1))}.border-turtle-500{--tw-border-opacity:1;border-color:rgb(34 197 94/var(--tw-border-opacity,1))}.border-turtle-500\/40{border-color:rgba(34,197,94,.4)}.border-turtle-500\/60{border-color:rgba(34,197,94,.6)}.border-turtle-800{--tw-border-opacity:1;border-color:rgb(22 101 52/var(--tw-border-opacity,1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36/var(--tw-bg-opacity,1))}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11/var(--tw-bg-opacity,1))}.bg-amber-500\/10{background-color:rgba(245,158,11,.1)}.bg-ninja-blue{--tw-bg-opacity:1;background-color:rgb(56 189 248/var(--tw-bg-opacity,1))}.bg-ninja-blue\/20{background-color:rgba(56,189,248,.2)}.bg-ninja-orange{--tw-bg-opacity:1;background-color:rgb(251 146 60/var(--tw-bg-opacity,1))}.bg-ninja-orange\/20{background-color:rgba(251,146,60,.2)}.bg-ninja-purple{--tw-bg-opacity:1;background-color:rgb(192 132 252/var(--tw-bg-opacity,1))}.bg-ninja-purple\/10{background-color:rgba(192,132,252,.1)}.bg-ninja-purple\/20{background-color:rgba(192,132,252,.2)}.bg-ninja-red\/20{background-color:rgba(244,63,94,.2)}.bg-ninja-slime{--tw-bg-opacity:1;background-color:rgb(163 230 53/var(--tw-bg-opacity,1))}.bg-ninja-slime\/10{background-color:rgba(163,230,53,.1)}.bg-rose-500\/10{background-color:rgba(244,63,94,.1)}.bg-rose-900\/50{background-color:rgba(136,19,55,.5)}.bg-rose-950\/80{background-color:rgba(76,5,25,.8)}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-900\/80{background-color:rgba(15,23,42,.8)}.bg-slate-900\/90{background-color:rgba(15,23,42,.9)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-slate-950\/80{background-color:rgba(2,6,23,.8)}.bg-transparent{background-color:transparent}.bg-turtle-500\/20{background-color:rgba(34,197,94,.2)}.bg-turtle-600{--tw-bg-opacity:1;background-color:rgb(22 163 74/var(--tw-bg-opacity,1))}.bg-turtle-900\/40{background-color:rgba(20,83,45,.4)}.bg-turtle-900\/60{background-color:rgba(20,83,45,.6)}.bg-turtle-950{--tw-bg-opacity:1;background-color:rgb(5 46 22/var(--tw-bg-opacity,1))}.bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}.bg-gradient-to-tr{background-image:linear-gradient(to top right,var(--tw-gradient-stops))}.from-rose-600{--tw-gradient-from:#e11d48 var(--tw-gradient-from-position);--tw-gradient-to:rgba(225,29,72,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-turtle-700{--tw-gradient-from:#15803d var(--tw-gradient-from-position);--tw-gradient-to:rgba(21,128,61,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.via-turtle-500{--tw-gradient-to:rgba(34,197,94,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#22c55e var(--tw-gradient-via-position),var(--tw-gradient-to)}.to-amber-500{--tw-gradient-to:#f59e0b var(--tw-gradient-to-position)}.to-ninja-slime{--tw-gradient-to:#a3e635 var(--tw-gradient-to-position)}.p-1{padding:.25rem}.p-2{padding:.5rem}.p-2\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\.5{padding:.875rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-1\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-7{padding-left:1.75rem;padding-right:1.75rem}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-1{padding-bottom:.25rem}.pb-3{padding-bottom:.75rem}.pl-1{padding-left:.25rem}.pl-8{padding-left:2rem}.pt-1{padding-top:.25rem}.pt-4{padding-top:1rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-display{font-family:Fredoka,ui-rounded,system-ui,sans-serif}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-7xl{font-size:4.5rem;line-height:1}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77/var(--tw-text-opacity,1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36/var(--tw-text-opacity,1))}.text-ninja-blue{--tw-text-opacity:1;color:rgb(56 189 248/var(--tw-text-opacity,1))}.text-ninja-orange{--tw-text-opacity:1;color:rgb(251 146 60/var(--tw-text-opacity,1))}.text-ninja-purple{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-ninja-red{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-ninja-slime{--tw-text-opacity:1;color:rgb(163 230 53/var(--tw-text-opacity,1))}.text-orange-200{--tw-text-opacity:1;color:rgb(254 215 170/var(--tw-text-opacity,1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-sky-200{--tw-text-opacity:1;color:rgb(186 230 253/var(--tw-text-opacity,1))}.text-sky-300{--tw-text-opacity:1;color:rgb(125 211 252/var(--tw-text-opacity,1))}.text-sky-400{--tw-text-opacity:1;color:rgb(56 189 248/var(--tw-text-opacity,1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-800\/40{color:rgba(30,41,59,.4)}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23/var(--tw-text-opacity,1))}.text-turtle-100{--tw-text-opacity:1;color:rgb(220 252 231/var(--tw-text-opacity,1))}.text-turtle-200{--tw-text-opacity:1;color:rgb(187 247 208/var(--tw-text-opacity,1))}.text-turtle-300{--tw-text-opacity:1;color:rgb(134 239 172/var(--tw-text-opacity,1))}.text-turtle-400{--tw-text-opacity:1;color:rgb(74 222 128/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-md{--tw-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color),0 2px 4px -2px var(--tw-shadow-color)}.shadow-md,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.outline{outline-style:solid}.ring-4{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-amber-400\/50{--tw-ring-color:rgba(251,191,36,.5)}.ring-ninja-purple{--tw-ring-opacity:1;--tw-ring-color:rgb(192 132 252/var(--tw-ring-opacity,1))}.ring-offset-4{--tw-ring-offset-width:4px}.ring-offset-slate-900{--tw-ring-offset-color:#0f172a}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.selection\:bg-ninja-slime ::-moz-selection{--tw-bg-opacity:1;background-color:rgb(163 230 53/var(--tw-bg-opacity,1))}.selection\:bg-ninja-slime ::selection{--tw-bg-opacity:1;background-color:rgb(163 230 53/var(--tw-bg-opacity,1))}.selection\:text-slate-900 ::-moz-selection{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.selection\:text-slate-900 ::selection{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.selection\:bg-ninja-slime::-moz-selection{--tw-bg-opacity:1;background-color:rgb(163 230 53/var(--tw-bg-opacity,1))}.selection\:bg-ninja-slime::selection{--tw-bg-opacity:1;background-color:rgb(163 230 53/var(--tw-bg-opacity,1))}.selection\:text-slate-900::-moz-selection{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.selection\:text-slate-900::selection{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\:-translate-y-1:hover{--tw-translate-y:-0.25rem;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:bg-amber-400:hover{--tw-bg-opacity:1;background-color:rgb(251 191 36/var(--tw-bg-opacity,1))}.hover\:bg-amber-500\/20:hover{background-color:rgba(245,158,11,.2)}.hover\:bg-ninja-blue\/30:hover{background-color:rgba(56,189,248,.3)}.hover\:bg-ninja-orange\/30:hover{background-color:rgba(251,146,60,.3)}.hover\:bg-ninja-purple\/20:hover{background-color:rgba(192,132,252,.2)}.hover\:bg-ninja-purple\/30:hover{background-color:rgba(192,132,252,.3)}.hover\:bg-orange-300:hover{--tw-bg-opacity:1;background-color:rgb(253 186 116/var(--tw-bg-opacity,1))}.hover\:bg-purple-600:hover{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.hover\:bg-sky-300:hover{--tw-bg-opacity:1;background-color:rgb(125 211 252/var(--tw-bg-opacity,1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.hover\:bg-slate-800:hover{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.hover\:bg-turtle-500:hover{--tw-bg-opacity:1;background-color:rgb(34 197 94/var(--tw-bg-opacity,1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\:underline:hover{text-decoration-line:underline}.focus\:not-sr-only:focus{position:static;width:auto;height:auto;padding:0;margin:0;overflow:visible;clip:auto;white-space:normal}.focus\:absolute:focus{position:absolute}.focus\:left-2:focus{left:.5rem}.focus\:top-2:focus{top:.5rem}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.focus\:ring-turtle-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(34 197 94/var(--tw-ring-opacity,1))}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.disabled\:opacity-40:disabled{opacity:.4}@media (min-width:640px){.sm\:w-auto{width:auto}.sm\:max-w-\[150px\]{max-width:150px}.sm\:flex-1{flex:1 1 0%}.sm\:flex-initial{flex:0 1 auto}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:flex-row{flex-direction:row}.sm\:flex-col{flex-direction:column}.sm\:items-end{align-items:flex-end}.sm\:gap-1{gap:.25rem}.sm\:p-8{padding:2rem}.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-6xl{font-size:3.75rem;line-height:1}.sm\:text-sm{font-size:.875rem;line-height:1.25rem}}
+/* TAILWIND:END */
+  </style>
+
+  <style>
+    :root {
+      --bg-main: #0f172a;
+      --bg-card: #1e293b;
+      --bg-surface: #1e293b;
+      --text-main: #f8fafc;
+      --border-color: #334155;
+      --accent-color: #a3e635;
+    }
+
+    [data-theme="cyber"] {
+      --bg-main: #0b0f19;
+      --bg-card: #161e31;
+      --bg-surface: #1e293b;
+      --text-main: #f1f5f9;
+      --border-color: #38bdf8;
+      --accent-color: #38bdf8;
+    }
+
+    [data-theme="comic"] {
+      --bg-main: #18181b;
+      --bg-card: #27272a;
+      --bg-surface: #3f3f46;
+      --text-main: #ffffff;
+      --border-color: #fbbf24;
+      --accent-color: #fbbf24;
+    }
+
+    [data-theme="fortress"] {
+      --bg-main: #1e0a10;
+      --bg-card: #2f0d19;
+      --bg-surface: #451225;
+      --text-main: #ffe4e6;
+      --border-color: #f43f5e;
+      --accent-color: #f43f5e;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .font-display {
+      font-family: 'Fredoka', ui-rounded, system-ui, sans-serif;
+    }
+
+    /* Built-in icons (see ICONS in the script) */
+    .fa-solid, .fa-regular { display: inline-block; line-height: 1; font-style: normal; }
+    .fa-solid svg, .fa-regular svg { height: 1em; width: auto; vertical-align: -0.125em; fill: currentColor; overflow: visible; }
+
+    /* K-12 Focus State for Keyboard Accessibility */
+    a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible {
+      outline: 3px solid #fbbf24 !important;
+      outline-offset: 3px !important;
+    }
+
+    /* Ninja Number Cards */
+    .ninja-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+      border: 3px solid #0f172a;
+      box-shadow: 0 6px 0 0 #020617;
+      color: #020617;
+    }
+
+    .ninja-card-selected {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 3px solid #a3e635;
+      box-shadow: 0 0 15px rgba(163, 230, 53, 0.4);
+      color: #a3e635;
+    }
+
+    /* Katana Slash Canvas */
+    #katana-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* Projector Mode: big, readable from the back of the room */
+    .pj-only, .pj-only-flex { display: none !important; }
+    body.projector .pj-only { display: grid !important; }
+    body.projector .pj-only-flex { display: flex !important; }
+    body.projector .pj-hide { display: none !important; }
+    body.projector .pj-wide { max-width: 72rem !important; }
+    body.projector #target-number-badge { font-size: 8rem; padding: 1rem 3rem; }
+    body.projector #cards-container { max-width: 64rem; gap: 2rem; }
+    body.projector .card-btn { min-height: 220px; max-width: 260px; }
+    body.projector .card-value { font-size: 6rem; }
+    body.projector .card-expr { font-size: 1rem; }
+    body.projector .op-btn { font-size: 3.5rem; min-height: 96px; }
+    body.projector #operator-bar { max-width: 48rem; }
+    body.projector #history-box { max-width: 48rem; font-size: 1.35rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body data-theme="sewer" class="selection:bg-ninja-slime selection:text-slate-900">
+
+  <!-- Confetti Overlay -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Toast Notifications -->
+  <div id="toast" role="status" aria-live="polite" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[70] max-w-md w-[calc(100%-2rem)] bg-slate-800 text-white text-sm font-bold px-4 py-3 rounded-2xl border-2 border-amber-400 shadow-2xl text-center"></div>
+
+  <div id="app-shell" class="min-h-screen flex flex-col justify-between">
+
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-amber-400 text-slate-950 px-4 py-2 rounded-lg font-bold z-50">
+    Skip to main content
+  </a>
+
+  <!-- HEADER -->
+  <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-700 sticky top-0 z-30 shadow-lg">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+
+      <!-- Brand Logo & Belt Rank -->
+      <div class="flex items-center gap-3">
+        <button type="button" onclick="app.resetToHome()" aria-label="Target Ninja home: start a new Easy puzzle" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-turtle-700 via-turtle-500 to-ninja-slime flex items-center justify-center text-white text-2xl shadow-lg border-2 border-ninja-slime flex-shrink-0">
+          <i class="fa-solid fa-user-ninja" aria-hidden="true"></i>
+        </button>
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <h1 class="font-display font-black text-2xl text-white tracking-wide uppercase italic">Target Ninja</h1>
+            <span id="header-belt-badge" class="bg-slate-800 text-amber-300 border border-amber-400/50 text-xs font-black px-2 py-0.5 rounded-full flex items-center gap-1">
+              ⚪ White Belt
+            </span>
+          </div>
+          <p class="text-xs text-ninja-slime font-bold flex items-center gap-1">
+            <i class="fa-solid fa-pizza-slice text-amber-400" aria-hidden="true"></i> <span id="header-pizza-count">0</span> Slices | <span id="active-hero-name" class="text-ninja-blue font-black">Kai</span> Active
+          </p>
+        </div>
+      </div>
+
+      <!-- Control Bar -->
+      <div class="flex flex-wrap items-center gap-2">
+        <button type="button" onclick="app.openModal('char-select-modal')" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 transition-colors border border-slate-700" title="Choose Ninja Hero" aria-label="Choose Ninja Hero">
+          <i class="fa-solid fa-user-shield text-lg" aria-hidden="true"></i>
+        </button>
+
+        <button type="button" onclick="app.openModal('shop-modal')" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 transition-colors border border-slate-700" title="Pizza Shop & Power-ups" aria-label="Pizza Shop">
+          <i class="fa-solid fa-store text-lg" aria-hidden="true"></i>
+        </button>
+
+        <button type="button" id="projector-btn" onclick="app.toggleProjector()" aria-pressed="false" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-ninja-slime transition-colors border border-slate-700" title="Projector Mode (big screen + team scores)" aria-label="Projector Mode">
+          <i class="fa-solid fa-tv text-lg" aria-hidden="true"></i>
+        </button>
+
+        <button type="button" id="sound-btn" onclick="app.toggleSound()" aria-pressed="true" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors border border-slate-700" title="Sound Effects" aria-label="Sound Effects">
+          <i id="sound-icon" class="fa-solid fa-volume-high text-lg" aria-hidden="true"></i>
+        </button>
+
+        <button type="button" onclick="app.openModal('theme-modal')" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-ninja-purple transition-colors border border-slate-700" title="Change Theme" aria-label="Change Theme">
+          <i class="fa-solid fa-palette text-lg" aria-hidden="true"></i>
+        </button>
+
+        <button type="button" onclick="app.openModal('stats-modal')" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-ninja-blue transition-colors border border-slate-700" title="Statistics & Belts" aria-label="Statistics and Belts">
+          <i class="fa-solid fa-chart-column text-lg" aria-hidden="true"></i>
+        </button>
+
+        <button type="button" onclick="app.openModal('help-modal')" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-ninja-orange transition-colors border border-slate-700" title="How to Play" aria-label="How to Play">
+          <i class="fa-solid fa-circle-question text-lg" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN PLAY AREA -->
+  <main id="main-content" class="max-w-5xl mx-auto px-4 py-6 flex-1 w-full flex flex-col justify-center items-center">
+
+    <!-- Mode Selector & Difficulty Bar -->
+    <div class="pj-wide w-full max-w-2xl bg-slate-900/90 p-3 rounded-2xl shadow-xl border border-slate-700 mb-5 flex flex-wrap gap-2 items-center justify-between">
+
+      <!-- Difficulty Buttons -->
+      <div class="flex items-center bg-slate-950 p-1 rounded-xl w-full sm:w-auto border border-slate-800" role="group" aria-label="Difficulty">
+        <button type="button" id="diff-easy" onclick="app.setDifficulty('easy')" aria-pressed="true" class="min-h-[44px] flex-1 sm:flex-initial px-4 py-2 rounded-lg text-sm font-extrabold transition-all">
+          <i class="fa-solid fa-mask text-ninja-blue mr-1" aria-hidden="true"></i> Easy
+        </button>
+        <button type="button" id="diff-medium" onclick="app.setDifficulty('medium')" aria-pressed="false" class="min-h-[44px] flex-1 sm:flex-initial px-4 py-2 rounded-lg text-sm font-extrabold transition-all">
+          <i class="fa-solid fa-mask text-ninja-orange mr-1" aria-hidden="true"></i> Medium
+        </button>
+        <button type="button" id="diff-hard" onclick="app.setDifficulty('hard')" aria-pressed="false" class="min-h-[44px] flex-1 sm:flex-initial px-4 py-2 rounded-lg text-sm font-extrabold transition-all">
+          <i class="fa-solid fa-mask text-ninja-red mr-1" aria-hidden="true"></i> Hard
+        </button>
+        <button type="button" id="diff-master" onclick="app.setDifficulty('master')" aria-pressed="false" class="min-h-[44px] flex-1 sm:flex-initial px-4 py-2 rounded-lg text-sm font-extrabold transition-all">
+          <i class="fa-solid fa-crown text-amber-400 mr-1" aria-hidden="true"></i> 5-Card
+        </button>
+      </div>
+
+      <!-- Game Mode, Whole Numbers & Presets -->
+      <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
+        <label for="game-mode-select" class="sr-only">Game Mode</label>
+        <select id="game-mode-select" onchange="app.setGameMode(this.value)" class="min-h-[44px] bg-slate-950 border border-slate-700 text-white text-sm font-extrabold rounded-xl px-3 py-2 outline-none cursor-pointer hover:bg-slate-800 transition-colors">
+          <option value="practice">🥋 Training Dojo</option>
+          <option value="blitz">⏱️ Sewer Speed Blitz</option>
+          <option value="daily">📅 Daily Dojo Challenge</option>
+          <option value="ironfang">🦹 Vs. Iron Fang AI</option>
+        </select>
+
+        <button type="button" id="whole-only-btn" onclick="app.toggleWholeOnly()" aria-pressed="true" class="min-h-[44px] px-3 py-2 rounded-xl text-sm font-bold transition-colors flex items-center gap-1.5 border" title="Whole Numbers Only: no fractions or negative numbers">
+          🔢 Whole #s <span id="whole-only-state" class="text-[11px] font-black px-1.5 py-0.5 rounded-md">ON</span>
+        </button>
+
+        <button type="button" onclick="app.openModal('custom-target-modal')" class="min-h-[44px] px-3.5 py-2 bg-ninja-purple/20 border border-ninja-purple/50 text-purple-200 hover:bg-ninja-purple/30 rounded-xl text-sm font-bold transition-colors flex items-center gap-1.5" title="Preset & Custom Targets">
+          <i class="fa-solid fa-sliders" aria-hidden="true"></i> Presets
+        </button>
+      </div>
+    </div>
+
+    <!-- Team Scoreboard (Projector Mode only) -->
+    <div id="team-board" class="pj-only pj-wide w-full max-w-2xl grid-cols-2 gap-4 mb-5" aria-label="Team scores">
+      <div class="bg-slate-900 border-2 border-ninja-blue rounded-2xl p-4 text-center">
+        <label for="team-name-0" class="sr-only">Team 1 name</label>
+        <input id="team-name-0" value="Blue Team" oninput="app.updateTeamUI()" class="w-full bg-transparent text-center font-display font-black text-3xl text-ninja-blue outline-none rounded-lg" />
+        <div id="team-score-0" class="font-display font-black text-7xl text-white my-2" aria-live="polite">0</div>
+        <div class="flex justify-center gap-3">
+          <button type="button" onclick="app.changeTeamScore(0, -1)" class="min-w-[56px] min-h-[56px] rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-2xl text-white" aria-label="Take a point from team 1"><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
+          <button type="button" onclick="app.changeTeamScore(0, 1)" class="min-w-[56px] min-h-[56px] rounded-xl bg-ninja-blue hover:bg-sky-300 text-2xl text-slate-950" aria-label="Give a point to team 1"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <div class="bg-slate-900 border-2 border-ninja-orange rounded-2xl p-4 text-center">
+        <label for="team-name-1" class="sr-only">Team 2 name</label>
+        <input id="team-name-1" value="Orange Team" oninput="app.updateTeamUI()" class="w-full bg-transparent text-center font-display font-black text-3xl text-ninja-orange outline-none rounded-lg" />
+        <div id="team-score-1" class="font-display font-black text-7xl text-white my-2" aria-live="polite">0</div>
+        <div class="flex justify-center gap-3">
+          <button type="button" onclick="app.changeTeamScore(1, -1)" class="min-w-[56px] min-h-[56px] rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-2xl text-white" aria-label="Take a point from team 2"><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
+          <button type="button" onclick="app.changeTeamScore(1, 1)" class="min-w-[56px] min-h-[56px] rounded-xl bg-ninja-orange hover:bg-orange-300 text-2xl text-slate-950" aria-label="Give a point to team 2"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <div class="col-span-2 text-center">
+        <button type="button" onclick="app.resetTeams()" class="min-h-[44px] px-4 py-2 text-sm text-slate-300 font-bold hover:text-white hover:underline">
+          <i class="fa-solid fa-arrows-rotate mr-1" aria-hidden="true"></i> Reset team scores
+        </button>
+      </div>
+    </div>
+
+    <!-- Iron Fang AI Live Status Bar (Hidden by Default) -->
+    <div id="ironfang-ai-bar" class="pj-wide w-full max-w-2xl bg-slate-900 border-2 border-rose-600/80 p-3 rounded-2xl mb-4 hidden shadow-xl">
+      <div class="flex items-center justify-between text-xs font-black uppercase text-rose-300 mb-1.5">
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-user-ninja text-rose-500" aria-hidden="true"></i> Iron Fang AI Solver</span>
+        <span id="ironfang-status-text">Computing Solution...</span>
+      </div>
+      <div class="w-full bg-slate-950 rounded-full h-3 border border-slate-700 overflow-hidden">
+        <div id="ironfang-progress-fill" class="bg-gradient-to-r from-rose-600 to-amber-500 h-full w-0 transition-all duration-300"></div>
+      </div>
+    </div>
+
+    <!-- Hero Skill Quick Trigger Bar -->
+    <div class="pj-wide w-full max-w-2xl bg-slate-900/80 px-4 py-2.5 rounded-2xl border border-slate-700 mb-4 flex items-center justify-between gap-3 text-xs font-bold">
+      <div class="flex items-center space-x-2">
+        <span id="hero-avatar-icon" class="text-xl" aria-hidden="true">⚔️</span>
+        <div>
+          <span id="hero-ability-title" class="text-white block font-extrabold">Kai's Skill</span>
+          <span id="hero-ability-desc" class="text-slate-300 text-[11px]">Free hint once per puzzle (keeps your streak)</span>
+        </div>
+      </div>
+      <button type="button" id="hero-active-btn" onclick="app.useHeroAbility()" class="min-h-[44px] px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl shadow-md transition-all active:scale-95 flex items-center gap-1.5 flex-shrink-0">
+        <i class="fa-solid fa-bolt" aria-hidden="true"></i> Use Skill
+      </button>
+    </div>
+
+    <!-- MAIN GAME CARD -->
+    <div class="pj-wide w-full max-w-2xl bg-slate-900 rounded-3xl shadow-2xl border-2 border-slate-700 overflow-hidden flex flex-col relative">
+
+      <!-- Target Display Banner -->
+      <div class="bg-slate-950 p-6 text-white text-center relative overflow-hidden border-b border-slate-700">
+        <div class="absolute right-3 -bottom-6 text-slate-800/40 pointer-events-none select-none" aria-hidden="true">
+          <svg class="w-32 h-32 animate-spin-slow" viewBox="0 0 100 100" fill="currentColor"><path d="M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z"/><circle cx="50" cy="50" r="8" fill="#020617"/></svg>
+        </div>
+
+        <div class="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-left">
+            <span id="mission-mode-tag" class="text-xs font-black uppercase tracking-wider text-ninja-slime bg-ninja-slime/10 px-3 py-1 rounded-full border border-ninja-slime/30 flex items-center gap-1 w-max">
+              <i class="fa-solid fa-bullseye" aria-hidden="true"></i> Target Mission
+            </span>
+            <p class="text-slate-200 text-xs mt-1.5 font-bold">Use all numbers to calculate the exact goal!</p>
+          </div>
+
+          <!-- Target Goal Badge -->
+          <div class="flex items-center justify-center">
+            <div id="target-number-badge" aria-live="polite" aria-label="Target number" class="font-display text-5xl sm:text-6xl font-black text-amber-300 tracking-wider bg-slate-900 px-7 py-2.5 rounded-2xl border-2 border-amber-400/80 shadow-2xl min-w-[130px] text-center transition-all duration-300">
+              10
+            </div>
+          </div>
+
+          <!-- Score & Timer Display -->
+          <div class="text-right flex flex-row sm:flex-col gap-4 sm:gap-1 items-center sm:items-end justify-between w-full sm:w-auto">
+            <div id="blitz-timer-container" class="hidden items-center space-x-1.5 text-rose-400 font-display font-black text-xl">
+              <i class="fa-solid fa-stopwatch animate-pulse" aria-hidden="true"></i>
+              <span id="blitz-time">60s</span>
+            </div>
+            <div class="text-right">
+              <span class="text-xs text-slate-300 block font-bold uppercase tracking-wider">Ninja Streak</span>
+              <span id="streak-counter" class="font-display font-black text-2xl text-amber-400">0 🍕</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLAYFIELD & KATANA CANVAS -->
+      <div class="p-6 sm:p-8 bg-slate-900/90 flex-1 flex flex-col items-center justify-center min-h-[250px] relative">
+
+        <svg id="katana-canvas" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <line id="katana-slash-line" x1="0" y1="0" x2="0" y2="0" stroke="#a3e635" stroke-width="6" stroke-linecap="round" opacity="0"/>
+        </svg>
+
+        <!-- CARDS CONTAINER -->
+        <div id="cards-container" class="flex flex-wrap justify-center gap-4 w-full max-w-lg mb-6 relative z-10" role="group" aria-label="Number cards">
+          <!-- Dynamically injected -->
+        </div>
+
+        <!-- MATH OPERATORS -->
+        <div id="operator-bar" class="w-full max-w-md bg-slate-950 p-3 rounded-2xl shadow-xl border border-slate-700 flex items-center justify-between gap-2 relative z-10" role="group" aria-label="Operators">
+          <button type="button" onclick="app.selectOperator('+')" id="op-add" aria-label="Add" aria-pressed="false" class="op-btn">+</button>
+          <button type="button" onclick="app.selectOperator('-')" id="op-sub" aria-label="Subtract" aria-pressed="false" class="op-btn">−</button>
+          <button type="button" onclick="app.selectOperator('*')" id="op-mul" aria-label="Multiply" aria-pressed="false" class="op-btn">×</button>
+          <button type="button" onclick="app.selectOperator('/')" id="op-div" aria-label="Divide" aria-pressed="false" class="op-btn">÷</button>
+        </div>
+
+        <!-- History & Accessible Status Announcements -->
+        <div id="history-box" class="mt-4 text-xs font-bold text-slate-200 bg-slate-950 border border-slate-700 px-4 py-3 rounded-xl min-h-[40px] flex items-center justify-center gap-2 text-center w-full max-w-md" aria-live="polite" aria-atomic="true">
+          <i class="fa-solid fa-user-ninja text-ninja-slime" aria-hidden="true"></i>
+          <span id="history-text">Select a card, then an operator (+, −, ×, ÷), then another card!</span>
+        </div>
+      </div>
+
+      <!-- LOWER UTILITIES BAR -->
+      <div class="bg-slate-950 border-t border-slate-700 px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center space-x-2">
+          <button type="button" onclick="app.undo()" id="btn-undo" disabled class="min-h-[44px] px-3.5 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-200 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 border border-slate-700" aria-label="Undo move">
+            <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Undo
+          </button>
+          <button type="button" onclick="app.resetPuzzle()" class="min-h-[44px] px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 border border-slate-700" aria-label="Reset puzzle">
+            <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Reset
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" onclick="app.getHint()" class="min-h-[44px] px-3.5 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 border border-amber-500/40" aria-label="Strategic Hint">
+            <i class="fa-regular fa-lightbulb" aria-hidden="true"></i> Strategic Hint
+          </button>
+          <button type="button" onclick="app.showSolution()" class="min-h-[44px] px-3.5 py-2 bg-ninja-purple/10 hover:bg-ninja-purple/20 text-purple-200 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 border border-ninja-purple/40" aria-label="View Solution">
+            <i class="fa-solid fa-scroll" aria-hidden="true"></i> Solution
+          </button>
+          <button type="button" onclick="app.skipPuzzle()" class="min-h-[44px] px-4 py-2 bg-turtle-600 hover:bg-turtle-500 text-white text-xs font-extrabold rounded-xl transition-all shadow-lg active:scale-95 flex items-center gap-1.5 border border-ninja-slime" aria-label="Skip to next puzzle">
+            <i class="fa-solid fa-forward" aria-hidden="true"></i> Next
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="pj-hide max-w-5xl mx-auto px-4 py-4 text-center text-xs text-slate-300 font-semibold">
+    Target Ninja 🥷 • K-12 Accessible Math Learning Platform
+  </footer>
+
+  </div><!-- /app-shell -->
+
+
+  <!-- MODAL: CHARACTER SELECT -->
+  <div id="char-select-modal" class="modal fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="char-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-lg w-full p-6 border-2 border-slate-700 animate-pop text-white max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h2 id="char-modal-title" class="font-display font-bold text-xl text-white flex items-center gap-2">
+          <i class="fa-solid fa-user-shield text-amber-400" aria-hidden="true"></i> Choose Ninja Hero
+        </h2>
+        <button type="button" onclick="app.closeModal('char-select-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close"><i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i></button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+        <button type="button" onclick="app.selectHero('kai')" class="text-left p-3.5 rounded-2xl bg-slate-950 border-2 border-ninja-blue hover:bg-slate-800 transition-all flex flex-col justify-between">
+          <span class="flex items-center justify-between w-full mb-1">
+            <span class="font-display font-bold text-ninja-blue text-lg">🐢 Kai ⚔️</span>
+            <span class="text-xs bg-ninja-blue/20 text-ninja-blue px-2 py-0.5 rounded-full font-bold">Leader</span>
+          </span>
+          <span class="text-xs text-slate-300 font-medium"><strong>Ability:</strong> <em>Leader's Insight</em>: 1 free strategic hint per puzzle that doesn't break your streak.</span>
+        </button>
+
+        <button type="button" onclick="app.selectHero('pep')" class="text-left p-3.5 rounded-2xl bg-slate-950 border-2 border-ninja-orange hover:bg-slate-800 transition-all flex flex-col justify-between">
+          <span class="flex items-center justify-between w-full mb-1">
+            <span class="font-display font-bold text-ninja-orange text-lg">🐢 Pep 🍕</span>
+            <span class="text-xs bg-ninja-orange/20 text-ninja-orange px-2 py-0.5 rounded-full font-bold">Party</span>
+          </span>
+          <span class="text-xs text-slate-300 font-medium"><strong>Ability:</strong> <em>Pizza Party Boost</em>: +5s in Blitz whenever you solve a puzzle in under 10s.</span>
+        </button>
+
+        <button type="button" onclick="app.selectHero('gizmo')" class="text-left p-3.5 rounded-2xl bg-slate-950 border-2 border-ninja-purple hover:bg-slate-800 transition-all flex flex-col justify-between">
+          <span class="flex items-center justify-between w-full mb-1">
+            <span class="font-display font-bold text-ninja-purple text-lg">🐢 Gizmo 🧪</span>
+            <span class="text-xs bg-ninja-purple/20 text-ninja-purple px-2 py-0.5 rounded-full font-bold">Tech</span>
+          </span>
+          <span class="text-xs text-slate-300 font-medium"><strong>Ability:</strong> <em>Tech Analysis</em>: highlights a first move that still leads to the target.</span>
+        </button>
+
+        <button type="button" onclick="app.selectHero('blaze')" class="text-left p-3.5 rounded-2xl bg-slate-950 border-2 border-ninja-red hover:bg-slate-800 transition-all flex flex-col justify-between">
+          <span class="flex items-center justify-between w-full mb-1">
+            <span class="font-display font-bold text-ninja-red text-lg">🐢 Blaze 🥊</span>
+            <span class="text-xs bg-ninja-red/20 text-ninja-red px-2 py-0.5 rounded-full font-bold">Brawler</span>
+          </span>
+          <span class="text-xs text-slate-300 font-medium"><strong>Ability:</strong> <em>Brawler Swap</em>: swap the selected card for a fresh 1–9 digit once per puzzle.</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: PIZZA SHOP -->
+  <div id="shop-modal" class="modal fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="shop-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-6 border-2 border-slate-700 animate-pop text-white max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h2 id="shop-modal-title" class="font-display font-bold text-xl text-white flex items-center gap-2">
+          <i class="fa-solid fa-store text-amber-400" aria-hidden="true"></i> Pizza Power Shop
+        </h2>
+        <button type="button" onclick="app.closeModal('shop-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close"><i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i></button>
+      </div>
+
+      <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800 mb-4 flex items-center justify-between">
+        <span class="text-sm font-bold text-slate-200">Your Pizza Balance:</span>
+        <span id="shop-pizza-balance" class="text-xl font-display font-black text-amber-400">0 🍕</span>
+      </div>
+
+      <div class="space-y-3">
+        <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-between gap-3">
+          <div>
+            <div class="font-bold text-slate-100 text-sm flex items-center gap-1.5">
+              <span>💨 Smoke Bomb</span>
+              <span class="text-[10px] bg-slate-800 text-amber-300 px-2 py-0.5 rounded">10 🍕</span>
+            </div>
+            <p class="text-xs text-slate-300 mt-0.5">Skip a tricky puzzle without breaking your streak!</p>
+          </div>
+          <button type="button" onclick="app.buyPowerUp('smoke')" class="min-h-[44px] px-3 py-1.5 bg-turtle-600 hover:bg-turtle-500 text-white font-bold rounded-xl text-xs flex-shrink-0">
+            Buy & Use
+          </button>
+        </div>
+
+        <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-between gap-3">
+          <div>
+            <div class="font-bold text-slate-100 text-sm flex items-center gap-1.5">
+              <span>❄️ Time Freeze</span>
+              <span class="text-[10px] bg-slate-800 text-amber-300 px-2 py-0.5 rounded">12 🍕</span>
+            </div>
+            <p class="text-xs text-slate-300 mt-0.5">Add 15 bonus seconds during a Blitz!</p>
+          </div>
+          <button type="button" onclick="app.buyPowerUp('freeze')" class="min-h-[44px] px-3 py-1.5 bg-turtle-600 hover:bg-turtle-500 text-white font-bold rounded-xl text-xs flex-shrink-0">
+            Buy & Use
+          </button>
+        </div>
+
+        <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-between gap-3">
+          <div>
+            <div class="font-bold text-slate-100 text-sm flex items-center gap-1.5">
+              <span>⚔️ Nunchaku Factor Slice</span>
+              <span class="text-[10px] bg-slate-800 text-amber-300 px-2 py-0.5 rounded">15 🍕</span>
+            </div>
+            <p class="text-xs text-slate-300 mt-0.5">Split the selected composite card into two factors!</p>
+          </div>
+          <button type="button" onclick="app.buyPowerUp('slice')" class="min-h-[44px] px-3 py-1.5 bg-turtle-600 hover:bg-turtle-500 text-white font-bold rounded-xl text-xs flex-shrink-0">
+            Buy & Use
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: THEME CUSTOMIZER -->
+  <div id="theme-modal" class="modal fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="theme-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-6 border-2 border-slate-700 animate-pop text-white">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h2 id="theme-modal-title" class="font-display font-bold text-xl text-white flex items-center gap-2">
+          <i class="fa-solid fa-palette text-ninja-purple" aria-hidden="true"></i> Dojo Themes
+        </h2>
+        <button type="button" onclick="app.closeModal('theme-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close"><i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i></button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <button type="button" onclick="app.setTheme('sewer')" class="p-4 rounded-2xl bg-slate-950 border-2 border-ninja-slime text-left hover:bg-slate-800 transition-all min-h-[80px]">
+          <span class="font-extrabold text-ninja-slime block text-sm">🐢 Sewer Dark</span>
+          <span class="text-xs text-slate-300">Classic Sewer Slime</span>
+        </button>
+
+        <button type="button" onclick="app.setTheme('cyber')" class="p-4 rounded-2xl bg-slate-950 border-2 border-sky-400 text-left hover:bg-slate-800 transition-all min-h-[80px]">
+          <span class="font-extrabold text-sky-400 block text-sm">🌆 Cyber Dojo</span>
+          <span class="text-xs text-slate-300">Neon Purple & Cyan</span>
+        </button>
+
+        <button type="button" onclick="app.setTheme('comic')" class="p-4 rounded-2xl bg-slate-950 border-2 border-amber-400 text-left hover:bg-slate-800 transition-all min-h-[80px]">
+          <span class="font-extrabold text-amber-400 block text-sm">🗯️ Comic B&W</span>
+          <span class="text-xs text-slate-300">High-Contrast Manga</span>
+        </button>
+
+        <button type="button" onclick="app.setTheme('fortress')" class="p-4 rounded-2xl bg-slate-950 border-2 border-rose-500 text-left hover:bg-slate-800 transition-all min-h-[80px]">
+          <span class="font-extrabold text-rose-400 block text-sm">🦹 Iron Fortress</span>
+          <span class="text-xs text-slate-300">Dark Crimson Villain Lair</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: CUSTOM TARGET & PRESETS -->
+  <div id="custom-target-modal" class="modal fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="custom-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-6 border-2 border-slate-700 animate-pop text-white max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h2 id="custom-modal-title" class="font-display font-bold text-lg text-white flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-ninja-purple" aria-hidden="true"></i> Math Target Presets
+        </h2>
+        <button type="button" onclick="app.closeModal('custom-target-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close"><i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i></button>
+      </div>
+
+      <div class="mb-4">
+        <span class="text-xs font-bold text-slate-300 uppercase block mb-2">Quick Famous Math Presets:</span>
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" onclick="app.loadPresetTarget(24)" class="min-h-[44px] p-2 bg-slate-950 hover:bg-slate-800 border border-slate-700 rounded-xl text-xs font-extrabold text-amber-300">
+            🎯 Classic 24 Game
+          </button>
+          <button type="button" onclick="app.loadPresetTarget(10)" class="min-h-[44px] p-2 bg-slate-950 hover:bg-slate-800 border border-slate-700 rounded-xl text-xs font-extrabold text-ninja-slime">
+            🎯 Target 10 (Elementary)
+          </button>
+          <button type="button" onclick="app.loadPresetTarget(50)" class="min-h-[44px] p-2 bg-slate-950 hover:bg-slate-800 border border-slate-700 rounded-xl text-xs font-extrabold text-sky-300">
+            🎯 Target 50
+          </button>
+          <button type="button" onclick="app.loadPresetTarget(100)" class="min-h-[44px] p-2 bg-slate-950 hover:bg-slate-800 border border-slate-700 rounded-xl text-xs font-extrabold text-rose-300">
+            🎯 Target 100
+          </button>
+        </div>
+      </div>
+
+      <div class="space-y-4 border-t border-slate-800 pt-4">
+        <div>
+          <label for="custom-target-input" class="block text-xs font-bold text-slate-300 uppercase mb-1">Custom Target Goal</label>
+          <input type="number" id="custom-target-input" value="10" min="1" max="999" class="min-h-[44px] w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-amber-300 focus:ring-2 focus:ring-turtle-500 text-xl font-black font-display" />
+        </div>
+
+        <fieldset>
+          <legend class="block text-xs font-bold text-slate-300 uppercase mb-1">Custom Source Numbers (optional, fill all 4)</legend>
+          <div class="grid grid-cols-4 gap-2">
+            <input type="number" id="c-num-1" aria-label="Custom number 1" placeholder="Auto" min="1" max="99" class="min-h-[44px] px-2 py-2 text-center rounded-xl bg-slate-950 border border-slate-700 text-white font-bold text-sm" />
+            <input type="number" id="c-num-2" aria-label="Custom number 2" placeholder="Auto" min="1" max="99" class="min-h-[44px] px-2 py-2 text-center rounded-xl bg-slate-950 border border-slate-700 text-white font-bold text-sm" />
+            <input type="number" id="c-num-3" aria-label="Custom number 3" placeholder="Auto" min="1" max="99" class="min-h-[44px] px-2 py-2 text-center rounded-xl bg-slate-950 border border-slate-700 text-white font-bold text-sm" />
+            <input type="number" id="c-num-4" aria-label="Custom number 4" placeholder="Auto" min="1" max="99" class="min-h-[44px] px-2 py-2 text-center rounded-xl bg-slate-950 border border-slate-700 text-white font-bold text-sm" />
+          </div>
+        </fieldset>
+
+        <div id="custom-error-msg" role="alert" class="hidden text-xs text-rose-300 bg-rose-950/80 border border-rose-700 p-3 rounded-xl font-bold"></div>
+
+        <button type="button" onclick="app.applyCustomTarget()" class="min-h-[44px] w-full py-3 bg-ninja-purple hover:bg-purple-600 text-slate-950 hover:text-white font-extrabold rounded-xl text-sm transition-all shadow-lg">
+          Generate Custom Puzzle
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: HINT & SOLUTION PLAYER -->
+  <div id="hint-modal" class="modal fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="hint-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-6 border-2 border-slate-700 animate-pop text-white max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4 flex-shrink-0">
+        <h2 id="hint-modal-title" class="font-display font-bold text-lg text-white">
+          Sensei Breakdown
+        </h2>
+        <button type="button" onclick="app.closeModal('hint-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close"><i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i></button>
+      </div>
+
+      <div id="hint-modal-content" class="text-slate-200 text-sm space-y-3 font-medium overflow-y-auto" aria-live="polite">
+        <!-- Injected dynamically -->
+      </div>
+
+      <div class="mt-6 flex flex-wrap justify-end gap-2 flex-shrink-0">
+        <button type="button" id="hint-more-btn" onclick="app.getHint()" class="hidden min-h-[44px] px-4 py-2.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/40 font-extrabold rounded-xl text-sm transition-colors">
+          <i class="fa-regular fa-lightbulb mr-1" aria-hidden="true"></i> Need more help?
+        </button>
+        <button type="button" data-autofocus onclick="app.closeModal('hint-modal')" class="min-h-[44px] px-5 py-2.5 bg-turtle-600 text-white font-extrabold rounded-xl text-sm hover:bg-turtle-500 transition-colors">
+          Got it, Sensei!
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: STATS & BELT PROGRESSION -->
+  <div id="stats-modal" class="modal fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="stats-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-6 border-2 border-slate-700 animate-pop text-white">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h2 id="stats-modal-title" class="font-display font-bold text-lg text-white"><i class="fa-solid fa-shield-halved text-ninja-blue mr-2" aria-hidden="true"></i> Ninja Rank & Stats</h2>
+        <button type="button" onclick="app.closeModal('stats-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close"><i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i></button>
+      </div>
+
+      <div id="belt-rank-display" class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center mb-4">
+        <!-- Injected dynamically -->
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+          <span class="text-xs text-slate-300 font-bold block">Puzzles Solved</span>
+          <span id="stat-solved" class="text-2xl font-display font-black text-turtle-400">0</span>
+        </div>
+        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+          <span class="text-xs text-slate-300 font-bold block">Best Streak</span>
+          <span id="stat-streak" class="text-2xl font-display font-black text-amber-400">0 🍕</span>
+        </div>
+        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+          <span class="text-xs text-slate-300 font-bold block">Blitz Record</span>
+          <span id="stat-blitz" class="text-2xl font-display font-black text-rose-400">0</span>
+        </div>
+        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+          <span class="text-xs text-slate-300 font-bold block">Hints Used</span>
+          <span id="stat-hints" class="text-2xl font-display font-black text-purple-300">0</span>
+        </div>
+      </div>
+
+      <div class="text-right">
+        <button type="button" onclick="app.resetStats()" class="min-h-[44px] px-3 py-1 text-xs text-rose-300 font-bold hover:underline">Reset Ninja Stats</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: HELP & INSTRUCTIONS -->
+  <div id="help-modal" class="modal fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-lg w-full p-6 border-2 border-slate-700 animate-pop max-h-[90vh] overflow-y-auto text-white">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h2 id="help-modal-title" class="font-display font-bold text-lg text-white"><i class="fa-solid fa-graduation-cap text-ninja-orange mr-2" aria-hidden="true"></i> How to Play Target Ninja</h2>
+        <button type="button" onclick="app.closeModal('help-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close"><i class="fa-solid fa-xmark text-lg" aria-hidden="true"></i></button>
+      </div>
+
+      <div class="space-y-4 text-sm text-slate-200 leading-relaxed">
+        <div class="bg-ninja-slime/10 p-3.5 rounded-2xl border border-ninja-slime/30">
+          <h3 class="font-bold text-ninja-slime mb-1 text-base">🥷 Objective</h3>
+          <p>Combine all the number cards using +, −, ×, and ÷ to make the target number exactly!</p>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="font-bold text-white">🕹️ How to make moves:</h3>
+          <ol class="list-decimal list-inside space-y-1.5 pl-1 text-xs sm:text-sm">
+            <li>Select a <strong>Number Card</strong>.</li>
+            <li>Select an <strong>Operator (+, −, ×, ÷)</strong>.</li>
+            <li>Select a second <strong>Number Card</strong> to do the math!</li>
+            <li>The two cards combine into one new card.</li>
+            <li>Keep combining until 1 card is left that matches the target!</li>
+          </ol>
+        </div>
+
+        <div class="space-y-1">
+          <h3 class="font-bold text-white">🔢 Whole Numbers Only</h3>
+          <p class="text-xs sm:text-sm">When this is <strong>ON</strong>, every step must give a whole number (0, 1, 2, 3…). No fractions or negative numbers. Turn it <strong>OFF</strong> for a bigger challenge.</p>
+        </div>
+
+        <div class="space-y-1">
+          <h3 class="font-bold text-white">💡 Hints come in 3 steps</h3>
+          <p class="text-xs sm:text-sm">First a nudge about which operation to try, then the first move, then the full answer. Only ask for as much help as you need!</p>
+        </div>
+
+        <div class="space-y-1">
+          <h3 class="font-bold text-white">🍕 Keeping your streak</h3>
+          <p class="text-xs sm:text-sm">Your streak grows with every solve. It resets if you skip a puzzle with <strong>Next</strong>, reveal the <strong>Solution</strong>, or use a <strong>Strategic Hint</strong>. Kai's free hint and the Smoke Bomb keep your streak safe!</p>
+        </div>
+
+        <div class="space-y-1">
+          <h3 class="font-bold text-white">⌨️ Keyboard shortcuts</h3>
+          <p class="text-xs sm:text-sm">Press <strong>1–5</strong> to pick a card, <strong>+ − * /</strong> for operators, <strong>U</strong> to undo, and <strong>Esc</strong> to close a window.</p>
+        </div>
+
+        <div class="space-y-1">
+          <h3 class="font-bold text-white">📺 Projector Mode</h3>
+          <p class="text-xs sm:text-sm">Tap the <i class="fa-solid fa-tv" aria-hidden="true"></i> button for giant cards and a two-team scoreboard. Great for whole-class warm-ups!</p>
+        </div>
+      </div>
+
+      <div class="mt-6 text-right">
+        <button type="button" onclick="app.closeModal('help-modal')" class="min-h-[44px] px-5 py-2.5 bg-turtle-600 text-white font-extrabold rounded-xl text-sm hover:bg-turtle-500 transition-colors">
+          Hi-YAH! Let's Play!
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: VICTORY & DAILY SHARE -->
+  <div id="victory-modal" class="modal fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="victory-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-lg w-full p-6 text-center border-2 border-ninja-slime animate-pop max-h-[90vh] flex flex-col text-white">
+      <div class="w-16 h-16 bg-turtle-500/20 text-ninja-slime border-2 border-ninja-slime rounded-full flex items-center justify-center text-3xl mx-auto mb-3 shadow-lg flex-shrink-0" aria-hidden="true">
+        🍕
+      </div>
+      <h2 id="victory-title" class="font-display font-black text-3xl text-white mb-1 uppercase tracking-wider italic">Hi-YAH!</h2>
+      <p id="victory-subtext" class="text-ninja-slime text-sm font-extrabold mb-3">Target Mission Accomplished!</p>
+
+      <div id="victory-steps-container" class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs text-slate-200 mb-4 text-left overflow-y-auto flex-1 space-y-3">
+        <!-- Injected dynamically -->
+      </div>
+
+      <!-- Team points (Projector Mode only) -->
+      <div class="pj-only-flex gap-2 mb-2">
+        <button type="button" id="victory-team-0" onclick="app.awardTeam(0)" class="min-h-[44px] flex-1 py-2 bg-ninja-blue/20 hover:bg-ninja-blue/30 border-2 border-ninja-blue text-sky-200 font-black rounded-2xl text-sm">+1 Blue Team</button>
+        <button type="button" id="victory-team-1" onclick="app.awardTeam(1)" class="min-h-[44px] flex-1 py-2 bg-ninja-orange/20 hover:bg-ninja-orange/30 border-2 border-ninja-orange text-orange-200 font-black rounded-2xl text-sm">+1 Orange Team</button>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="button" id="daily-share-btn" onclick="app.copyDailySummary()" class="hidden min-h-[44px] flex-1 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-2xl text-sm transition-all">
+          <i class="fa-solid fa-share-nodes mr-1" aria-hidden="true"></i> Copy Daily Result
+        </button>
+        <button type="button" data-autofocus onclick="app.nextVictoryPuzzle()" class="min-h-[44px] flex-1 py-3 bg-turtle-600 hover:bg-turtle-500 text-white font-black font-display rounded-2xl text-base transition-all border-2 border-ninja-slime">
+          Next Mission <i class="fa-solid fa-arrow-right ml-1" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: GENERAL MESSAGE (replaces pop-up alerts) -->
+  <div id="message-modal" class="modal fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="message-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-6 text-center border-2 border-amber-400 animate-pop max-h-[90vh] flex flex-col text-white">
+      <h2 id="message-title" class="font-display font-black text-2xl text-white mb-3"></h2>
+      <div id="message-body" class="text-sm text-slate-200 space-y-3 text-left overflow-y-auto"></div>
+      <button type="button" id="message-btn" data-autofocus onclick="app.closeModal('message-modal')" class="mt-5 min-h-[44px] w-full py-3 bg-turtle-600 hover:bg-turtle-500 text-white font-black font-display rounded-2xl text-base transition-all border-2 border-ninja-slime">OK</button>
+    </div>
+  </div>
+
+
+  <!-- SCRIPT ENGINE -->
+  <script>
+    /* ICONS:START */
+    // Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com (Icons: CC BY 4.0 License)
+    const ICONS = {"solid:user-ninja":[448,512,"M224 256c-57.2 0-105.6-37.5-122-89.3c-1.1 1.3-2.2 2.6-3.5 3.8c-15.8 15.8-38.8 20.7-53.6 22.1c-8.1 .8-14.6-5.7-13.8-13.8c1.4-14.7 6.3-37.8 22.1-53.6c5.8-5.8 12.6-10.1 19.6-13.4c-7-3.2-13.8-7.6-19.6-13.4C37.4 82.7 32.6 59.7 31.1 44.9c-.8-8.1 5.7-14.6 13.8-13.8c14.7 1.4 37.8 6.3 53.6 22.1c4.8 4.8 8.7 10.4 11.7 16.1C131.4 28.2 174.4 0 224 0c70.7 0 128 57.3 128 128s-57.3 128-128 128zM0 482.3C0 399.5 56.4 330 132.8 309.9c6-1.6 12.2 .9 15.9 5.8l62.5 83.3c6.4 8.5 19.2 8.5 25.6 0l62.5-83.3c3.7-4.9 9.9-7.4 15.9-5.8C391.6 330 448 399.5 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM160 96c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H160z"],"solid:pizza-slice":[512,512,"M169.7 .9c-22.8-1.6-41.9 14-47.5 34.7L110.4 80c.5 0 1.1 0 1.6 0c176.7 0 320 143.3 320 320c0 .5 0 1.1 0 1.6l44.4-11.8c20.8-5.5 36.3-24.7 34.7-47.5C498.5 159.5 352.5 13.5 169.7 .9zM399.8 410.2c.1-3.4 .2-6.8 .2-10.2c0-159.1-128.9-288-288-288c-3.4 0-6.8 .1-10.2 .2L.5 491.9c-1.5 5.5 .1 11.4 4.1 15.4s9.9 5.6 15.4 4.1L399.8 410.2zM176 208a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm64 128a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM96 384a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"],"solid:user-shield":[640,512,"M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c1.8 0 3.5-.2 5.3-.5c-76.3-55.1-99.8-141-103.1-200.2c-16.1-4.8-33.1-7.3-50.7-7.3H178.3zm308.8-78.3l-120 48C358 277.4 352 286.2 352 296c0 63.3 25.9 168.8 134.8 214.2c5.9 2.5 12.6 2.5 18.5 0C614.1 464.8 640 359.3 640 296c0-9.8-6-18.6-15.1-22.3l-120-48c-5.7-2.3-12.1-2.3-17.8 0zM591.4 312c-3.9 50.7-27.2 116.7-95.4 149.7V273.8L591.4 312z"],"solid:store":[576,512,"M547.6 103.8L490.3 13.1C485.2 5 476.1 0 466.4 0H109.6C99.9 0 90.8 5 85.7 13.1L28.3 103.8c-29.6 46.8-3.4 111.9 51.9 119.4c4 .5 8.1 .8 12.1 .8c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.2 0 49.3-11.4 65.2-29c16 17.6 39.1 29 65.2 29c4.1 0 8.1-.3 12.1-.8c55.5-7.4 81.8-72.5 52.1-119.4zM499.7 254.9l-.1 0c-5.3 .7-10.7 1.1-16.2 1.1c-12.4 0-24.3-1.9-35.4-5.3V384H128V250.6c-11.2 3.5-23.2 5.4-35.6 5.4c-5.5 0-11-.4-16.3-1.1l-.1 0c-4.1-.6-8.1-1.3-12-2.3V384v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V384 252.6c-4 1-8 1.8-12.3 2.3z"],"solid:tv":[640,512,"M64 64V352H576V64H64zM0 64C0 28.7 28.7 0 64 0H576c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zM128 448H512c17.7 0 32 14.3 32 32s-14.3 32-32 32H128c-17.7 0-32-14.3-32-32s14.3-32 32-32z"],"solid:volume-high":[640,512,"M533.6 32.5C598.5 85.3 640 165.8 640 256s-41.5 170.8-106.4 223.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C557.5 398.2 592 331.2 592 256s-34.5-142.2-88.7-186.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM473.1 107c43.2 35.2 70.9 88.9 70.9 149s-27.7 113.8-70.9 149c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C475.3 341.3 496 301.1 496 256s-20.7-85.3-53.2-111.8c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zm-60.5 74.5C434.1 199.1 448 225.9 448 256s-13.9 56.9-35.4 74.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C393.1 284.4 400 271 400 256s-6.9-28.4-17.7-37.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM301.1 34.8C312.6 40 320 51.4 320 64V448c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352H64c-35.3 0-64-28.7-64-64V224c0-35.3 28.7-64 64-64h67.8L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3z"],"solid:palette":[512,512,"M512 256c0 .9 0 1.8 0 2.7c-.4 36.5-33.6 61.3-70.1 61.3H344c-26.5 0-48 21.5-48 48c0 3.4 .4 6.7 1 9.9c2.1 10.2 6.5 20 10.8 29.9c6.1 13.8 12.1 27.5 12.1 42c0 31.8-21.6 60.7-53.4 62c-3.5 .1-7 .2-10.6 .2C114.6 512 0 397.4 0 256S114.6 0 256 0S512 114.6 512 256zM128 288a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm0-96a32 32 0 1 0 0-64 32 32 0 1 0 0 64zM288 96a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm96 96a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"],"solid:chart-column":[512,512,"M32 32c17.7 0 32 14.3 32 32V400c0 8.8 7.2 16 16 16H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H80c-44.2 0-80-35.8-80-80V64C0 46.3 14.3 32 32 32zM160 224c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm128-64V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V160c0-17.7 14.3-32 32-32s32 14.3 32 32zm64 32c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V224c0-17.7 14.3-32 32-32zM480 96V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32s32 14.3 32 32z"],"solid:circle-question":[512,512,"M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"],"solid:mask":[576,512,"M288 64C64 64 0 160 0 272S80 448 176 448h8.4c24.2 0 46.4-13.7 57.2-35.4l23.2-46.3c4.4-8.8 13.3-14.3 23.2-14.3s18.8 5.5 23.2 14.3l23.2 46.3c10.8 21.7 33 35.4 57.2 35.4H400c96 0 176-64 176-176s-64-208-288-208zM96 256a64 64 0 1 1 128 0A64 64 0 1 1 96 256zm320-64a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"],"solid:crown":[576,512,"M309 106c11.4-7 19-19.7 19-34c0-22.1-17.9-40-40-40s-40 17.9-40 40c0 14.4 7.6 27 19 34L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c5-6.7 8-15 8-24c0-22.1-17.9-40-40-40S0 113.9 0 136s17.9 40 40 40c.2 0 .5 0 .7 0L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c.2 0 .5 0 .7 0c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40c0 9 3 17.3 8 24l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106z"],"solid:sliders":[512,512,"M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"],"solid:minus":[448,512,"M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"],"solid:plus":[448,512,"M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"],"solid:arrows-rotate":[512,512,"M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H463.5c0 0 0 0 0 0h.4c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1V448c0 17.7 14.3 32 32 32s32-14.3 32-32V396.9l17.6 17.5 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352H176c17.7 0 32-14.3 32-32s-14.3-32-32-32H48.4c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z"],"solid:bolt":[448,512,"M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z"],"solid:bullseye":[512,512,"M448 256A192 192 0 1 0 64 256a192 192 0 1 0 384 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 80a80 80 0 1 0 0-160 80 80 0 1 0 0 160zm0-224a144 144 0 1 1 0 288 144 144 0 1 1 0-288zM224 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"],"solid:stopwatch":[448,512,"M176 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h16V98.4C92.3 113.8 16 200 16 304c0 114.9 93.1 208 208 208s208-93.1 208-208c0-41.8-12.3-80.7-33.5-113.2l24.1-24.1c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L355.7 143c-28.1-23-62.2-38.8-99.7-44.6V64h16c17.7 0 32-14.3 32-32s-14.3-32-32-32H224 176zm72 192V320c0 13.3-10.7 24-24 24s-24-10.7-24-24V192c0-13.3 10.7-24 24-24s24 10.7 24 24z"],"solid:rotate-left":[512,512,"M48.5 224H40c-13.3 0-24-10.7-24-24V72c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2L98.6 96.6c87.6-86.5 228.7-86.2 315.8 1c87.5 87.5 87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3c-62.2-62.2-162.7-62.5-225.3-1L185 183c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8H48.5z"],"regular:lightbulb":[384,512,"M297.2 248.9C311.6 228.3 320 203.2 320 176c0-70.7-57.3-128-128-128S64 105.3 64 176c0 27.2 8.4 52.3 22.8 72.9c3.7 5.3 8.1 11.3 12.8 17.7l0 0c12.9 17.7 28.3 38.9 39.8 59.8c10.4 19 15.7 38.8 18.3 57.5H109c-2.2-12-5.9-23.7-11.8-34.5c-9.9-18-22.2-34.9-34.5-51.8l0 0 0 0c-5.2-7.1-10.4-14.2-15.4-21.4C27.6 247.9 16 213.3 16 176C16 78.8 94.8 0 192 0s176 78.8 176 176c0 37.3-11.6 71.9-31.4 100.3c-5 7.2-10.2 14.3-15.4 21.4l0 0 0 0c-12.3 16.8-24.6 33.7-34.5 51.8c-5.9 10.8-9.6 22.5-11.8 34.5H226.4c2.6-18.7 7.9-38.6 18.3-57.5c11.5-20.9 26.9-42.1 39.8-59.8l0 0 0 0 0 0c4.7-6.4 9-12.4 12.7-17.7zM192 128c-26.5 0-48 21.5-48 48c0 8.8-7.2 16-16 16s-16-7.2-16-16c0-44.2 35.8-80 80-80c8.8 0 16 7.2 16 16s-7.2 16-16 16zm0 384c-44.2 0-80-35.8-80-80V416H272v16c0 44.2-35.8 80-80 80z"],"solid:scroll":[576,512,"M0 80v48c0 17.7 14.3 32 32 32H48 96V80c0-26.5-21.5-48-48-48S0 53.5 0 80zM112 32c10 13.4 16 30 16 48V384c0 35.3 28.7 64 64 64s64-28.7 64-64v-5.3c0-32.4 26.3-58.7 58.7-58.7H480V128c0-53-43-96-96-96H112zM464 480c61.9 0 112-50.1 112-112c0-8.8-7.2-16-16-16H314.7c-14.7 0-26.7 11.9-26.7 26.7V384c0 53-43 96-96 96H368h96z"],"solid:forward":[512,512,"M52.5 440.6c-9.5 7.9-22.8 9.7-34.1 4.4S0 428.4 0 416V96C0 83.6 7.2 72.3 18.4 67s24.5-3.6 34.1 4.4L224 214.3V256v41.7L52.5 440.6zM256 352V256 128 96c0-12.4 7.2-23.7 18.4-29s24.5-3.6 34.1 4.4l192 160c7.3 6.1 11.5 15.1 11.5 24.6s-4.2 18.5-11.5 24.6l-192 160c-9.5 7.9-22.8 9.7-34.1 4.4s-18.4-16.6-18.4-29V352z"],"solid:xmark":[384,512,"M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"],"solid:shield-halved":[512,512,"M256 0c4.6 0 9.2 1 13.4 2.9L457.7 82.8c22 9.3 38.4 31 38.3 57.2c-.5 99.2-41.3 280.7-213.6 363.2c-16.7 8-36.1 8-52.8 0C57.3 420.7 16.5 239.2 16 140c-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.8 1 251.4 0 256 0zm0 66.8V444.8C394 378 431.1 230.1 432 141.4L256 66.8l0 0z"],"solid:graduation-cap":[640,512,"M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9v28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.9 25.8-22.5 37.6C0 442.7-.9 448.3 .9 453.4s6 8.9 11.2 10.2l64 16c4.2 1.1 8.7 .3 12.4-2s6.3-6.1 7.1-10.4c8.6-42.8 4.3-81.2-2.1-108.7C90.3 344.3 86 329.8 80 316.5V291.9c0-30.2 10.2-58.7 27.9-81.5c12.9-15.5 29.6-28 49.2-35.7l157-61.7c8.2-3.2 17.5 .8 20.7 9s-.8 17.5-9 20.7l-157 61.7c-12.4 4.9-23.3 12.4-32.2 21.6l159.6 57.6c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L624.2 182.6c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1C336.1 33.4 328.1 32 320 32zM128 408c0 35.3 86 72 192 72s192-36.7 192-72L496.7 262.6 354.5 314c-11.1 4-22.8 6-34.5 6s-23.5-2-34.5-6L143.3 262.6 128 408z"],"solid:share-nodes":[448,512,"M352 224c53 0 96-43 96-96s-43-96-96-96s-96 43-96 96c0 4 .2 8 .7 11.9l-94.1 47C145.4 170.2 121.9 160 96 160c-53 0-96 43-96 96s43 96 96 96c25.9 0 49.4-10.2 66.6-26.9l94.1 47c-.5 3.9-.7 7.8-.7 11.9c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-25.9 0-49.4 10.2-66.6 26.9l-94.1-47c.5-3.9 .7-7.8 .7-11.9s-.2-8-.7-11.9l94.1-47C302.6 213.8 326.1 224 352 224z"],"solid:arrow-right":[448,512,"M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"],"solid:volume-xmark":[576,512,"M301.1 34.8C312.6 40 320 51.4 320 64V448c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352H64c-35.3 0-64-28.7-64-64V224c0-35.3 28.7-64 64-64h67.8L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3zM425 167l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"],"solid:calendar-day":[448,512,"M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm80 64c-8.8 0-16 7.2-16 16v96c0 8.8 7.2 16 16 16h96c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80z"],"solid:circle-check":[512,512,"M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"]};
+    /* ICONS:END */
+
+    /**
+     * Swap Font Awesome icon placeholders (i tags) for built-in SVG icons (no outside CDN needed)
+     */
+    const ICON_SELECTOR = 'i.fa-solid, i.fa-regular';
+    function renderIcon(el) {
+      if (typeof ICONS === 'undefined') return;
+      const style = el.classList.contains('fa-regular') ? 'regular' : 'solid';
+      const name = [...el.classList].find(c => c.startsWith('fa-') && c !== 'fa-solid' && c !== 'fa-regular');
+      if (!name) return;
+      const key = `${style}:${name.slice(3)}`;
+      if (el.dataset.icon === key || !ICONS[key]) return;
+      const [w, h, path] = ICONS[key];
+      el.dataset.icon = key;
+      el.setAttribute('aria-hidden', 'true');
+      el.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" focusable="false"><path d="${path}"/></svg>`;
+    }
+    function renderIcons(root) {
+      root.querySelectorAll(ICON_SELECTOR).forEach(renderIcon);
+    }
+    renderIcons(document);
+    new MutationObserver(mutations => {
+      for (const m of mutations) {
+        if (m.type === 'attributes') {
+          if (m.target.matches && m.target.matches(ICON_SELECTOR)) renderIcon(m.target);
+          continue;
+        }
+        m.addedNodes.forEach(node => {
+          if (node.nodeType !== 1) return;
+          if (node.matches(ICON_SELECTOR)) renderIcon(node);
+          renderIcons(node);
+        });
+      }
+    }).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['class'] });
+
+
+    const OP_SYMBOL = { '+': '+', '-': '−', '*': '×', '/': '÷' };
+    const OP_WORD = { '+': 'adding', '-': 'subtracting', '*': 'multiplying', '/': 'dividing' };
+    const OP_VERB = { '+': 'add', '-': 'subtract', '*': 'multiply', '/': 'divide' };
+    const OP_PREC = { '+': 1, '-': 1, '*': 2, '/': 2 };
+
+    /**
+     * Exact Fraction class for precise arithmetic without float rounding errors
+     */
+    class Fraction {
+      constructor(n, d = 1) {
+        if (d === 0) throw new Error("Division by zero");
+        if (d < 0) { n = -n; d = -d; }
+        const g = Fraction.gcd(Math.abs(n), Math.abs(d)) || 1;
+        this.n = n / g;
+        this.d = d / g;
+      }
+
+      static gcd(a, b) { return b === 0 ? a : Fraction.gcd(b, a % b); }
+      add(f) { return new Fraction(this.n * f.d + f.n * this.d, this.d * f.d); }
+      sub(f) { return new Fraction(this.n * f.d - f.n * this.d, this.d * f.d); }
+      mul(f) { return new Fraction(this.n * f.n, this.d * f.d); }
+      div(f) {
+        if (f.n === 0) return null;
+        return new Fraction(this.n * f.d, this.d * f.n);
+      }
+      equals(num) { return Math.abs((this.n / this.d) - num) < 1e-7; }
+      isInteger() { return this.d === 1; }
+      isWhole() { return this.d === 1 && this.n >= 0; }
+      toNumber() { return this.n / this.d; }
+      toString() { return this.d === 1 ? `${this.n}` : `${this.n}/${this.d}`; }
+      toDisplay() { return this.toString().replace('-', '−'); }
+    }
+
+    /**
+     * Expression trees: every card remembers how it was made, so we can show
+     * answers as steps and tell when two answers are really the same.
+     */
+    const Expr = {
+      leaf(val) { return { op: 'num', val }; },
+      node(op, a, b, val) { return { op, a, b, val }; },
+
+      leafText(val) {
+        return val.isWhole() ? val.toDisplay() : `(${val.toDisplay()})`;
+      },
+
+      // One-line form with only the parentheses that are needed, e.g. "(2 + 3) × 4"
+      format(t) {
+        if (t.op === 'num') return Expr.leafText(t.val);
+        const p = OP_PREC[t.op];
+        let left = Expr.format(t.a);
+        let right = Expr.format(t.b);
+        if (t.a.op !== 'num' && OP_PREC[t.a.op] < p) left = `(${left})`;
+        if (t.b.op !== 'num' && (OP_PREC[t.b.op] < p || (OP_PREC[t.b.op] === p && (t.op === '-' || t.op === '/')))) right = `(${right})`;
+        return `${left} ${OP_SYMBOL[t.op]} ${right}`;
+      },
+
+      // Step-by-step list: [{ a, op, b, res }, ...] in the order you'd do them
+      steps(t) {
+        if (t.op === 'num') return [];
+        return [...Expr.steps(t.a), ...Expr.steps(t.b), { a: t.a.val, op: t.op, b: t.b.val, res: t.val }];
+      },
+
+      stepText(s) {
+        return `${s.a.toDisplay()} ${OP_SYMBOL[s.op]} ${s.b.toDisplay()} = ${s.res.toDisplay()}`;
+      },
+
+      // Same key = same answer, just reordered (e.g. 1+2+3+4 and 4+3+2+1)
+      key(t) {
+        if (t.op === 'num') return t.val.toString();
+        const additive = t.op === '+' || t.op === '-';
+        const parts = [];
+        Expr.collect(t, true, parts, additive ? '+' : '*', additive ? '-' : '/');
+        parts.sort();
+        return `${additive ? 'S' : 'P'}(${parts.join(',')})`;
+      },
+
+      collect(t, positive, out, joinOp, invertOp) {
+        if (t.op === joinOp) {
+          Expr.collect(t.a, positive, out, joinOp, invertOp);
+          Expr.collect(t.b, positive, out, joinOp, invertOp);
+        } else if (t.op === invertOp) {
+          Expr.collect(t.a, positive, out, joinOp, invertOp);
+          Expr.collect(t.b, !positive, out, joinOp, invertOp);
+        } else {
+          out.push((positive ? '+' : '~') + Expr.key(t));
+        }
+      },
+
+      // "Nice" = every step gives a whole number (no fractions or negatives)
+      isNice(t) {
+        if (t.op === 'num') return true;
+        return t.val.isWhole() && Expr.isNice(t.a) && Expr.isNice(t.b);
+      }
+    };
+
+    /**
+     * TargetSolver: finds every way to reach the target
+     */
+    class TargetSolver {
+      static toFraction(n) {
+        return n instanceof Fraction ? n : new Fraction(n);
+      }
+
+      static combine(a, b, op) {
+        if (op === '+') return a.add(b);
+        if (op === '-') return a.sub(b);
+        if (op === '*') return a.mul(b);
+        return a.div(b);
+      }
+
+      static allowed(res, wholeOnly) {
+        return !!res && (!wholeOnly || res.isWhole());
+      }
+
+      // Every way to combine the pair (i, j): + and × once, − and ÷ both directions
+      static pairMoves(i, j) {
+        return [[i, j, '+'], [i, j, '*'], [i, j, '-'], [j, i, '-'], [i, j, '/'], [j, i, '/']];
+      }
+
+      // Fast yes/no check: can these values reach the target? Stops at the first success.
+      static canReach(values, target, wholeOnly = false) {
+        const vals = values.map(TargetSolver.toFraction);
+        if (vals.length === 1) return vals[0].equals(target);
+        for (let i = 0; i < vals.length; i++) {
+          for (let j = i + 1; j < vals.length; j++) {
+            const rest = vals.filter((_, idx) => idx !== i && idx !== j);
+            for (const [x, y, op] of TargetSolver.pairMoves(i, j)) {
+              const res = TargetSolver.combine(vals[x], vals[y], op);
+              if (TargetSolver.allowed(res, wholeOnly) && TargetSolver.canReach([...rest, res], target, wholeOnly)) return true;
+            }
+          }
+        }
+        return false;
+      }
+
+      // First move { i, j, op, res } that still leads to the target (prefers whole-number moves), or null
+      static findFirstStep(values, target, wholeOnly = false) {
+        const vals = values.map(TargetSolver.toFraction);
+        let fallback = null;
+        for (let i = 0; i < vals.length; i++) {
+          for (let j = i + 1; j < vals.length; j++) {
+            const rest = vals.filter((_, idx) => idx !== i && idx !== j);
+            for (const [x, y, op] of TargetSolver.pairMoves(i, j)) {
+              const res = TargetSolver.combine(vals[x], vals[y], op);
+              if (!TargetSolver.allowed(res, wholeOnly)) continue;
+              if (!TargetSolver.canReach([...rest, res], target, wholeOnly)) continue;
+              const step = { i: x, j: y, op, res };
+              if (res.isWhole()) return step;
+              if (!fallback) fallback = step;
+            }
+          }
+        }
+        return fallback;
+      }
+
+      // Turn plain numbers into solver items
+      static leaves(values) {
+        return values.map(v => {
+          const val = TargetSolver.toFraction(v);
+          return { val, tree: Expr.leaf(val) };
+        });
+      }
+
+      // All truly different answers (duplicates removed), whole-number answers first
+      static solve(items, target, wholeOnly = false) {
+        const byKey = new Map();
+
+        function search(nodes) {
+          if (nodes.length === 1) {
+            if (nodes[0].val.equals(target)) {
+              const k = Expr.key(nodes[0].tree);
+              if (!byKey.has(k)) byKey.set(k, nodes[0].tree);
+            }
+            return;
+          }
+          for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+              const rest = nodes.filter((_, idx) => idx !== i && idx !== j);
+              for (const [x, y, op] of TargetSolver.pairMoves(i, j)) {
+                const res = TargetSolver.combine(nodes[x].val, nodes[y].val, op);
+                if (!TargetSolver.allowed(res, wholeOnly)) continue;
+                search([...rest, { val: res, tree: Expr.node(op, nodes[x].tree, nodes[y].tree, res) }]);
+              }
+            }
+          }
+        }
+
+        search(items);
+        const trees = [...byKey.values()];
+        return trees.filter(Expr.isNice).concat(trees.filter(t => !Expr.isNice(t)));
+      }
+    }
+
+    /**
+     * Web Audio Synth Sound FX Engine
+     */
+    class AudioEngine {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+      }
+
+      playTone(freq, type = 'sine', duration = 0.15, vol = 0.1) {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {}
+      }
+
+      playSelect() { this.playTone(440, 'sine', 0.08, 0.08); }
+      playOp() { this.playTone(587.33, 'triangle', 0.1, 0.1); }
+      playMerge() {
+        this.playTone(523.25, 'sine', 0.1, 0.12);
+        setTimeout(() => this.playTone(659.25, 'sine', 0.15, 0.12), 60);
+      }
+      playUndo() { this.playTone(300, 'sawtooth', 0.12, 0.05); }
+      playVictory() {
+        if (!this.enabled) return;
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          setTimeout(() => this.playTone(freq, 'triangle', 0.3, 0.15), idx * 100);
+        });
+      }
+      playError() { this.playTone(200, 'sawtooth', 0.2, 0.1); }
+    }
+
+    /**
+     * Today's date in the player's local time zone, e.g. "2026-10-15"
+     */
+    function localDateKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    /**
+     * Seeded random number generator so every player gets the same Daily puzzles
+     */
+    function makeSeededRandom(seedStr) {
+      let h = 2166136261;
+      for (let i = 0; i < seedStr.length; i++) {
+        h ^= seedStr.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      let a = h >>> 0;
+      return function() {
+        a |= 0; a = a + 0x6D2B79F5 | 0;
+        let t = Math.imul(a ^ a >>> 15, 1 | a);
+        t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+      };
+    }
+
+    const HEROES = {
+      kai:   { name: 'Kai',   icon: '⚔️', color: 'text-ninja-blue',   desc: 'Free hint once per puzzle (keeps your streak)' },
+      pep:   { name: 'Pep',   icon: '🍕', color: 'text-ninja-orange', desc: '+5s in Blitz when you solve in under 10s' },
+      gizmo: { name: 'Gizmo', icon: '🧪', color: 'text-ninja-purple', desc: 'Highlights a first move that works' },
+      blaze: { name: 'Blaze', icon: '🥊', color: 'text-ninja-red',    desc: 'Swap the selected card for a new 1–9 digit' }
+    };
+
+    const FOCUSABLE = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea, [tabindex]:not([tabindex="-1"])';
+
+    /**
+     * Main Target Ninja App Engine
+     */
+    class AppController {
+      constructor() {
+        this.audio = new AudioEngine();
+        this.difficulty = 'easy'; // easy, medium, hard, master
+        this.mode = 'practice'; // practice, blitz, daily, ironfang
+        this.target = 10;
+        this.initialNumbers = [1, 2, 3, 4];
+        this.cards = [];
+        this.nextCardId = 1;
+        this.selectedCardId = null;
+        this.selectedOperator = null;
+        this.moveHistory = [];
+        this.solutionCache = [];
+        this.streak = 0;
+        this.pizzaSlices = 10;
+        this.activeHero = 'kai';
+        this.heroAbilityUsed = false;
+        this.highlightCardIds = [];
+        this.hintLevel = 0;
+        this.puzzleStartTime = Date.now();
+        this.dailyIndex = 1;
+        this.dailyPuzzleNumber = 1;
+        this.wholeOnly = true;
+        this.projector = false;
+        this.teamScores = [0, 0];
+
+        this.blitzTimer = null;
+        this.blitzTimeLeft = 60;
+        this.blitzSolved = 0;
+
+        this.ironfangTimer = null;
+        this.ironfangProgress = 0;
+
+        this.openModals = [];
+        this.modalReturnFocus = new Map();
+        this.messageOnClose = null;
+        this.toastTimer = null;
+
+        this.stats = {
+          solved: 0,
+          bestStreak: 0,
+          blitzScore: 0,
+          hintsUsed: 0
+        };
+
+        this.loadStats();
+        this.loadSettings();
+      }
+
+      init() {
+        this.updateStatsUI();
+        this.updateWholeOnlyUI();
+        this.selectHero(this.activeHero, false);
+        this.setDifficulty('easy', false);
+        this.generateNewPuzzle();
+
+        document.addEventListener('keydown', (e) => this.handleKeydown(e));
+        document.querySelectorAll('.modal').forEach(modal => {
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) this.closeTopModal();
+          });
+        });
+      }
+
+      // ---------- Saving ----------
+
+      loadStats() {
+        try {
+          const saved = localStorage.getItem('target_ninja_stats');
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            this.stats = { ...this.stats, ...parsed };
+            delete this.stats.pizzaSlices;
+            if (typeof parsed.pizzaSlices === 'number') this.pizzaSlices = parsed.pizzaSlices;
+          }
+        } catch (e) {}
+      }
+
+      saveStats() {
+        try {
+          localStorage.setItem('target_ninja_stats', JSON.stringify({
+            ...this.stats,
+            pizzaSlices: this.pizzaSlices
+          }));
+        } catch (e) {}
+        this.updateStatsUI();
+      }
+
+      loadSettings() {
+        try {
+          const saved = JSON.parse(localStorage.getItem('target_ninja_settings') || '{}');
+          if (typeof saved.wholeOnly === 'boolean') this.wholeOnly = saved.wholeOnly;
+          if (HEROES[saved.hero]) this.activeHero = saved.hero;
+        } catch (e) {}
+      }
+
+      saveSettings() {
+        try {
+          localStorage.setItem('target_ninja_settings', JSON.stringify({ wholeOnly: this.wholeOnly, hero: this.activeHero }));
+        } catch (e) {}
+      }
+
+      resetStats() {
+        this.stats = { solved: 0, bestStreak: 0, blitzScore: 0, hintsUsed: 0 };
+        this.pizzaSlices = 10;
+        this.saveStats();
+        this.closeModal('stats-modal');
+        this.showToast('Ninja stats reset.');
+      }
+
+      getBeltRank() {
+        const s = this.stats.solved;
+        if (s >= 100 && this.stats.blitzScore >= 20) return { name: '🥋 Grand Sensei', color: 'text-amber-400' };
+        if (s >= 76) return { name: '⬛ Black Belt', color: 'text-slate-100' };
+        if (s >= 51) return { name: '🔴 Red Belt', color: 'text-rose-400' };
+        if (s >= 31) return { name: '🔵 Blue Belt', color: 'text-sky-400' };
+        if (s >= 16) return { name: '🟢 Green Belt', color: 'text-turtle-400' };
+        if (s >= 6)  return { name: '🟡 Yellow Belt', color: 'text-amber-300' };
+        return { name: '⚪ White Belt', color: 'text-slate-200' };
+      }
+
+      updateStatsUI() {
+        document.getElementById('stat-solved').textContent = this.stats.solved;
+        document.getElementById('stat-streak').textContent = `${this.stats.bestStreak} 🍕`;
+        document.getElementById('stat-blitz').textContent = this.stats.blitzScore;
+        document.getElementById('stat-hints').textContent = this.stats.hintsUsed;
+        document.getElementById('streak-counter').textContent = `${this.streak} 🍕`;
+
+        document.getElementById('header-pizza-count').textContent = this.pizzaSlices;
+        document.getElementById('shop-pizza-balance').textContent = `${this.pizzaSlices} 🍕`;
+
+        const belt = this.getBeltRank();
+        document.getElementById('header-belt-badge').textContent = belt.name;
+
+        document.getElementById('belt-rank-display').innerHTML = `
+          <span class="text-xs font-bold text-slate-300 uppercase block">Current Ninja Rank</span>
+          <span class="font-display font-black text-2xl ${belt.color}">${belt.name}</span>
+          <p class="text-xs text-slate-300 mt-1">Solve more puzzles to advance through the belts!</p>
+        `;
+      }
+
+      // ---------- Settings & Display ----------
+
+      toggleSound() {
+        this.audio.enabled = !this.audio.enabled;
+        const icon = document.getElementById('sound-icon');
+        const btn = document.getElementById('sound-btn');
+        btn.setAttribute('aria-pressed', String(this.audio.enabled));
+        if (this.audio.enabled) {
+          icon.className = 'fa-solid fa-volume-high text-lg text-slate-200';
+          btn.classList.remove('bg-rose-900/50');
+        } else {
+          icon.className = 'fa-solid fa-volume-xmark text-lg text-rose-400';
+          btn.classList.add('bg-rose-900/50');
+        }
+      }
+
+      setTheme(themeName) {
+        document.body.setAttribute('data-theme', themeName);
+        this.closeModal('theme-modal');
+      }
+
+      toggleProjector() {
+        this.projector = !this.projector;
+        document.body.classList.toggle('projector', this.projector);
+        document.getElementById('projector-btn').setAttribute('aria-pressed', String(this.projector));
+        this.updateTeamUI();
+        this.showToast(this.projector ? '📺 Projector Mode on: big cards and team scores!' : 'Projector Mode off.');
+      }
+
+      teamName(i) {
+        return document.getElementById(`team-name-${i}`).value.trim() || `Team ${i + 1}`;
+      }
+
+      updateTeamUI() {
+        [0, 1].forEach(i => {
+          document.getElementById(`team-score-${i}`).textContent = this.teamScores[i];
+          document.getElementById(`victory-team-${i}`).textContent = `+1 ${this.teamName(i)}`;
+        });
+      }
+
+      changeTeamScore(i, delta) {
+        this.teamScores[i] = Math.max(0, this.teamScores[i] + delta);
+        this.updateTeamUI();
+      }
+
+      awardTeam(i) {
+        this.changeTeamScore(i, 1);
+        this.showToast(`🏆 +1 point for ${this.teamName(i)}!`);
+      }
+
+      resetTeams() {
+        this.teamScores = [0, 0];
+        this.updateTeamUI();
+      }
+
+      toggleWholeOnly() {
+        this.wholeOnly = !this.wholeOnly;
+        this.saveSettings();
+        this.updateWholeOnlyUI();
+        this.dailyIndex = 1;
+        this.generateNewPuzzle();
+        this.showToast(this.wholeOnly
+          ? '🔢 Whole Numbers Only: ON. Every step must be a whole number.'
+          : '🔢 Whole Numbers Only: OFF. Fractions and negatives are allowed!');
+      }
+
+      updateWholeOnlyUI() {
+        const btn = document.getElementById('whole-only-btn');
+        const state = document.getElementById('whole-only-state');
+        btn.setAttribute('aria-pressed', String(this.wholeOnly));
+        state.textContent = this.wholeOnly ? 'ON' : 'OFF';
+        btn.className = `min-h-[44px] px-3 py-2 rounded-xl text-sm font-bold transition-colors flex items-center gap-1.5 border ${
+          this.wholeOnly ? 'bg-turtle-900/60 border-ninja-slime/60 text-turtle-100' : 'bg-slate-950 border-slate-700 text-slate-300 hover:bg-slate-800'}`;
+        state.className = `text-[11px] font-black px-1.5 py-0.5 rounded-md ${
+          this.wholeOnly ? 'bg-ninja-slime text-slate-950' : 'bg-slate-700 text-slate-200'}`;
+      }
+
+      // ---------- Heroes ----------
+
+      selectHero(heroId, close = true) {
+        const hero = HEROES[heroId];
+        if (!hero) return;
+        this.activeHero = heroId;
+        this.saveSettings();
+
+        const nameEl = document.getElementById('active-hero-name');
+        nameEl.textContent = hero.name;
+        nameEl.className = `${hero.color} font-black`;
+        document.getElementById('hero-avatar-icon').textContent = hero.icon;
+        document.getElementById('hero-ability-title').textContent = `${hero.name}'s Skill`;
+        document.getElementById('hero-ability-desc').textContent = hero.desc;
+
+        if (close) this.closeModal('char-select-modal');
+      }
+
+      useHeroAbility() {
+        if (this.heroAbilityUsed) {
+          this.updateHistoryText("⚠️ Hero skill already used on this puzzle!");
+          this.audio.playError();
+          return;
+        }
+
+        if (this.activeHero === 'kai') {
+          if (this.getHint(true)) this.heroAbilityUsed = true;
+        } else if (this.activeHero === 'gizmo') {
+          if (this.cards.length < 2) {
+            this.updateHistoryText("🧪 Nothing left to combine!");
+            return;
+          }
+          const step = TargetSolver.findFirstStep(this.cards.map(c => c.value), this.target, this.wholeOnly);
+          if (!step) {
+            this.audio.playError();
+            this.updateHistoryText(`🧪 Tech Analysis: These cards can't reach ${this.target}. Try Undo or Reset first!`);
+            return;
+          }
+          const a = this.cards[step.i];
+          const b = this.cards[step.j];
+          this.highlightCardIds = [a.id, b.id];
+          this.heroAbilityUsed = true;
+          this.renderCards();
+          this.updateHistoryText(`🧪 Tech Analysis: Try ${a.value.toDisplay()} ${OP_SYMBOL[step.op]} ${b.value.toDisplay()} = ${step.res.toDisplay()} first!`);
+        } else if (this.activeHero === 'blaze') {
+          const card = this.cards.find(c => c.id === this.selectedCardId);
+          if (!card || this.cards.length < 2) {
+            this.updateHistoryText("Select a card first to swap it with Blaze's skill!");
+            return;
+          }
+          // Prefer a digit that keeps the puzzle solvable
+          const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9].sort(() => Math.random() - 0.5);
+          const newDigit = digits.find(d => TargetSolver.canReach(
+            this.cards.map(c => c.id === card.id ? new Fraction(d) : c.value), this.target, this.wholeOnly
+          )) || digits[0];
+          card.value = new Fraction(newDigit);
+          card.tree = Expr.leaf(card.value);
+          this.highlightCardIds = [];
+          this.refreshSolutions();
+          this.renderCards();
+          this.updateHistoryText(`🥊 Blaze swapped the card to [${newDigit}]!`);
+          this.heroAbilityUsed = true;
+        } else if (this.activeHero === 'pep') {
+          this.updateHistoryText("🍕 Pep's Pizza Party adds +5s automatically in Blitz mode when you solve in under 10 seconds!");
+        }
+      }
+
+      // ---------- Modes & Timers ----------
+
+      setDifficulty(diff, generate = true) {
+        this.difficulty = diff;
+        ['easy', 'medium', 'hard', 'master'].forEach(d => {
+          const btn = document.getElementById(`diff-${d}`);
+          if (!btn) return;
+          if (d === diff) {
+            btn.className = 'min-h-[44px] flex-1 sm:flex-initial px-4 py-2 rounded-lg text-sm font-black bg-ninja-slime text-slate-950 shadow-md transition-all';
+            btn.setAttribute('aria-pressed', 'true');
+          } else {
+            btn.className = 'min-h-[44px] flex-1 sm:flex-initial px-4 py-2 rounded-lg text-sm font-extrabold text-slate-300 hover:text-white transition-all';
+            btn.setAttribute('aria-pressed', 'false');
+          }
+        });
+
+        this.dailyIndex = 1;
+        if (generate) this.generateNewPuzzle();
+      }
+
+      setGameMode(mode) {
+        this.mode = mode;
+        document.getElementById('game-mode-select').value = mode;
+        const timerContainer = document.getElementById('blitz-timer-container');
+        const ironfangBar = document.getElementById('ironfang-ai-bar');
+
+        this.stopBlitzTimer();
+        this.stopIronFangAI();
+        this.dailyIndex = 1;
+
+        timerContainer.classList.toggle('hidden', mode !== 'blitz');
+        timerContainer.classList.toggle('flex', mode === 'blitz');
+        ironfangBar.classList.toggle('hidden', mode !== 'ironfang');
+
+        if (mode === 'blitz') this.startBlitzTimer();
+        this.generateNewPuzzle();
+      }
+
+      // Timers stop counting while any window is open
+      isPaused() {
+        return this.openModals.length > 0;
+      }
+
+      startBlitzTimer() {
+        this.stopBlitzTimer();
+        this.blitzTimeLeft = 60;
+        this.blitzSolved = 0;
+        this.updateTimerDisplay();
+
+        this.blitzTimer = setInterval(() => {
+          if (this.isPaused()) return;
+          this.blitzTimeLeft--;
+          this.updateTimerDisplay();
+          if (this.blitzTimeLeft <= 0) this.endBlitz();
+        }, 1000);
+      }
+
+      endBlitz() {
+        this.stopBlitzTimer();
+        this.audio.playError();
+        const solved = this.blitzSolved;
+        let record = '';
+        if (solved > this.stats.blitzScore) {
+          this.stats.blitzScore = solved;
+          record = '<p class="text-amber-300 font-bold">🏆 New Blitz record!</p>';
+        }
+        this.streak = 0;
+        this.saveStats();
+        this.showMessage({
+          title: "⏱️ Time's up!",
+          body: `<p class="text-center text-base">You solved <strong class="text-amber-300 text-2xl">${solved}</strong> puzzle${solved === 1 ? '' : 's'} in Blitz mode!</p>${record}`,
+          button: 'Play Again',
+          onClose: () => {
+            if (this.mode !== 'blitz') return;
+            this.startBlitzTimer();
+            this.generateNewPuzzle();
+          }
+        });
+      }
+
+      stopBlitzTimer() {
+        if (this.blitzTimer) {
+          clearInterval(this.blitzTimer);
+          this.blitzTimer = null;
+        }
+      }
+
+      updateTimerDisplay() {
+        document.getElementById('blitz-time').textContent = `${this.blitzTimeLeft}s`;
+      }
+
+      startIronFangAI() {
+        this.stopIronFangAI();
+        this.ironfangProgress = 0;
+        const fill = document.getElementById('ironfang-progress-fill');
+        const status = document.getElementById('ironfang-status-text');
+        fill.style.width = '0%';
+        status.textContent = "Computing Solution...";
+
+        this.ironfangTimer = setInterval(() => {
+          if (this.isPaused()) return;
+          this.ironfangProgress += 5;
+          fill.style.width = `${this.ironfangProgress}%`;
+          if (this.ironfangProgress >= 100) this.ironfangWins();
+        }, 1000);
+      }
+
+      ironfangWins() {
+        this.stopIronFangAI();
+        this.audio.playError();
+        document.getElementById('ironfang-status-text').textContent = "🦹 Iron Fang Solved First!";
+        this.streak = 0;
+        this.updateStatsUI();
+        const best = this.solutionCache[0];
+        this.showMessage({
+          title: '🦹 Iron Fang solved it first!',
+          body: best
+            ? `<p>Here's how Iron Fang made <strong class="text-amber-300">${this.target}</strong>:</p>${this.stepsHTML(best)}<p>You'll get the next one!</p>`
+            : `<p>You'll get the next one!</p>`,
+          button: 'Next Mission',
+          onClose: () => this.generateNewPuzzle()
+        });
+      }
+
+      stopIronFangAI() {
+        if (this.ironfangTimer) {
+          clearInterval(this.ironfangTimer);
+          this.ironfangTimer = null;
+        }
+      }
+
+      // ---------- Puzzles ----------
+
+      loadPresetTarget(targetNum) {
+        this.target = targetNum;
+        this.closeModal('custom-target-modal');
+        this.generateNewPuzzle(false);
+      }
+
+      generateNewPuzzle(randomizeTarget = true) {
+        const cardCount = this.difficulty === 'master' ? 5 : 4;
+
+        // Daily mode: everyone gets the same sequence of puzzles today
+        let rand = Math.random;
+        if (this.mode === 'daily') {
+          this.dailyPuzzleNumber = this.dailyIndex++;
+          rand = makeSeededRandom(`${localDateKey()}|${this.difficulty}|${this.dailyPuzzleNumber}|${this.wholeOnly}|${randomizeTarget ? 'r' : this.target}`);
+        }
+
+        if (randomizeTarget) {
+          if (this.difficulty === 'easy') {
+            this.target = [10, 12, 15, 16, 20][Math.floor(rand() * 5)];
+          } else if (this.difficulty === 'medium') {
+            this.target = [12, 18, 20, 24, 28, 30, 32, 36][Math.floor(rand() * 8)];
+          } else if (this.difficulty === 'hard') {
+            this.target = Math.floor(rand() * 85) + 15;
+          } else {
+            this.target = Math.floor(rand() * 90) + 10;
+          }
+        }
+
+        const numRange = { easy: [1, 8], medium: [1, 12], hard: [1, 15], master: [1, 12] }[this.difficulty];
+
+        let nums = null;
+        for (let attempt = 0; attempt < 500 && !nums; attempt++) {
+          const candidate = Array.from({ length: cardCount }, () => Math.floor(rand() * (numRange[1] - numRange[0] + 1)) + numRange[0]);
+          if (TargetSolver.canReach(candidate, this.target, this.wholeOnly)) nums = candidate;
+        }
+
+        if (!nums) {
+          if (!randomizeTarget) this.showToast(`Couldn't find numbers that make ${this.target} on this level. Here's a Target 10 puzzle instead.`);
+          this.target = 10;
+          nums = [1, 2, 3, 4];
+        }
+
+        this.loadPuzzle(nums, TargetSolver.solve(TargetSolver.leaves(nums), this.target, this.wholeOnly));
+      }
+
+      loadPuzzle(nums, solutions, isCustom = false) {
+        this.initialNumbers = nums;
+        this.solutionCache = solutions;
+        this.heroAbilityUsed = false;
+        this.hintLevel = 0;
+        this.puzzleStartTime = Date.now();
+
+        document.getElementById('target-number-badge').textContent = this.target;
+
+        const tag = document.getElementById('mission-mode-tag');
+        if (isCustom) {
+          tag.innerHTML = `<i class="fa-solid fa-sliders" aria-hidden="true"></i> Custom Mission`;
+        } else if (this.mode === 'daily') {
+          tag.innerHTML = `<i class="fa-solid fa-calendar-day" aria-hidden="true"></i> Daily #${this.dailyPuzzleNumber} · ${localDateKey()}`;
+        } else {
+          tag.innerHTML = `<i class="fa-solid fa-bullseye" aria-hidden="true"></i> Target Mission`;
+        }
+
+        if (this.mode === 'ironfang') this.startIronFangAI();
+
+        this.resetPuzzleState();
+      }
+
+      // Recompute the answer list from the cards on the table (after a swap or slice)
+      refreshSolutions() {
+        this.solutionCache = TargetSolver.solve(this.cards.map(c => ({ val: c.value, tree: c.tree })), this.target, this.wholeOnly);
+      }
+
+      skipPuzzle() {
+        // Skipping breaks the streak (use a Smoke Bomb to skip safely)
+        this.streak = 0;
+        this.updateStatsUI();
+        this.generateNewPuzzle();
+      }
+
+      makeCard(value, tree) {
+        return { id: `card-${this.nextCardId++}`, value, tree: tree || Expr.leaf(value) };
+      }
+
+      resetPuzzleState() {
+        this.cards = this.initialNumbers.map(num => this.makeCard(new Fraction(num)));
+        this.selectedCardId = null;
+        this.selectedOperator = null;
+        this.highlightCardIds = [];
+        this.moveHistory = [];
+
+        this.updateHistoryText("Select a card, then an operator (+, −, ×, ÷), then another card!");
+        this.renderCards();
+        this.renderOperators();
+        this.updateUndoButton();
+      }
+
+      resetPuzzle() {
+        this.audio.playUndo();
+        this.resetPuzzleState();
+      }
+
+      updateHistoryText(msg) {
+        document.getElementById('history-text').textContent = msg;
+      }
+
+      // ---------- Playing ----------
+
+      handleCardClick(cardId) {
+        const card = this.cards.find(c => c.id === cardId);
+        if (!card) return;
+
+        if (this.selectedCardId === null) {
+          this.selectedCardId = cardId;
+          this.audio.playSelect();
+          this.updateHistoryText(`Selected card [${card.value.toDisplay()}]. Now choose an operator (+, −, ×, ÷).`);
+        } else if (this.selectedCardId === cardId) {
+          this.selectedCardId = null;
+          this.selectedOperator = null;
+          this.audio.playSelect();
+          this.updateHistoryText("Selection cleared.");
+        } else if (this.selectedOperator !== null) {
+          this.executeOperation(this.selectedCardId, cardId, this.selectedOperator);
+          return;
+        } else {
+          this.selectedCardId = cardId;
+          this.audio.playSelect();
+          this.updateHistoryText(`Switched selection to [${card.value.toDisplay()}]. Choose an operator.`);
+        }
+
+        this.renderCards();
+        this.renderOperators();
+      }
+
+      selectOperator(op) {
+        if (this.selectedCardId === null) {
+          this.audio.playError();
+          this.updateHistoryText("⚠️ Select a number card first before choosing an operator!");
+          return;
+        }
+
+        this.selectedOperator = op;
+        this.audio.playOp();
+
+        const card = this.cards.find(c => c.id === this.selectedCardId);
+        this.updateHistoryText(`Selected [${card ? card.value.toDisplay() : ''}] ${OP_SYMBOL[op]} ... Now pick the second card!`);
+        this.renderOperators();
+      }
+
+      renderOperators() {
+        const ops = [
+          { id: 'op-add', symbol: '+' },
+          { id: 'op-sub', symbol: '-' },
+          { id: 'op-mul', symbol: '*' },
+          { id: 'op-div', symbol: '/' }
+        ];
+
+        ops.forEach(item => {
+          const btn = document.getElementById(item.id);
+          const active = this.selectedOperator === item.symbol;
+          btn.setAttribute('aria-pressed', String(active));
+          btn.className = active
+            ? 'op-btn min-h-[48px] flex-1 py-3 bg-amber-400 text-slate-950 font-black rounded-xl text-2xl font-display shadow-lg ring-4 ring-amber-400/50 flex items-center justify-center'
+            : 'op-btn min-h-[48px] flex-1 py-3 bg-slate-800 text-white hover:bg-slate-700 rounded-xl text-2xl font-black font-display transition-all border border-slate-700 active:scale-95 flex items-center justify-center';
+        });
+      }
+
+      executeOperation(c1Id, c2Id, op) {
+        const c1 = this.cards.find(c => c.id === c1Id);
+        const c2 = this.cards.find(c => c.id === c2Id);
+        if (!c1 || !c2) return;
+
+        const a = c1.value.toDisplay();
+        const b = c2.value.toDisplay();
+        const sym = OP_SYMBOL[op];
+        const resultVal = TargetSolver.combine(c1.value, c2.value, op);
+
+        if (!resultVal) {
+          this.audio.playError();
+          this.selectedOperator = null;
+          this.renderOperators();
+          this.updateHistoryText("⚠️ You can't divide by zero! Pick a different operator.");
+          return;
+        }
+
+        if (this.wholeOnly && !resultVal.isWhole()) {
+          this.audio.playError();
+          const swapped = TargetSolver.combine(c2.value, c1.value, op);
+          let msg = resultVal.isInteger()
+            ? `${a} ${sym} ${b} would be negative.`
+            : `${a} ${sym} ${b} isn't a whole number.`;
+          msg += (swapped && swapped.isWhole() && (op === '-' || op === '/'))
+            ? ` Try ${b} ${sym} ${a} instead!`
+            : ' Try a different operation!';
+          this.selectedOperator = null;
+          this.renderOperators();
+          this.updateHistoryText(`🔢 Whole Numbers Only: ${msg}`);
+          return;
+        }
+
+        this.moveHistory.push(this.cards.map(c => ({ ...c })));
+        this.triggerKatanaSlash();
+
+        // The new card takes the place of the second card you picked
+        const newCard = this.makeCard(resultVal, Expr.node(op, c1.tree, c2.tree, resultVal));
+        this.cards = this.cards
+          .map(c => (c.id === c2Id ? newCard : c))
+          .filter(c => c.id !== c1Id);
+
+        this.selectedCardId = null;
+        this.selectedOperator = null;
+        this.highlightCardIds = [];
+        this.audio.playMerge();
+
+        this.renderCards();
+        this.renderOperators();
+        this.updateUndoButton();
+        this.updateHistoryText(`Calculated: ${a} ${sym} ${b} = ${resultVal.toDisplay()}`);
+
+        if (this.cards.length === 1) {
+          const finalVal = this.cards[0].value;
+          if (finalVal.equals(this.target)) {
+            this.handleVictory();
+          } else {
+            this.updateHistoryText(`Result is ${finalVal.toDisplay()}, but the target is ${this.target}. Press Undo to try again!`);
+          }
+        }
+      }
+
+      triggerKatanaSlash() {
+        const line = document.getElementById('katana-slash-line');
+        line.setAttribute('x1', '10');
+        line.setAttribute('y1', '10');
+        line.setAttribute('x2', '300');
+        line.setAttribute('y2', '200');
+        line.setAttribute('opacity', '1');
+        setTimeout(() => line.setAttribute('opacity', '0'), 300);
+      }
+
+      updateUndoButton() {
+        document.getElementById('btn-undo').disabled = this.moveHistory.length === 0;
+      }
+
+      undo() {
+        if (this.moveHistory.length === 0) return;
+        this.audio.playUndo();
+        this.cards = this.moveHistory.pop();
+        this.selectedCardId = null;
+        this.selectedOperator = null;
+        this.highlightCardIds = [];
+
+        this.renderCards();
+        this.renderOperators();
+        this.updateUndoButton();
+        this.updateHistoryText("Undid last move.");
+      }
+
+      renderCards() {
+        const container = document.getElementById('cards-container');
+        container.innerHTML = '';
+
+        this.cards.forEach((card, idx) => {
+          const cardEl = document.createElement('button');
+          cardEl.type = 'button';
+          const isSelected = this.selectedCardId === card.id;
+          const isHinted = !isSelected && this.highlightCardIds.includes(card.id);
+
+          cardEl.className = `card-btn relative rounded-2xl p-4 transition-all cursor-pointer flex flex-col items-center justify-center min-h-[110px] active:scale-95 w-[calc(50%-0.5rem)] sm:w-auto sm:flex-1 sm:max-w-[150px] ${
+            isSelected ? 'ninja-card-selected' : 'ninja-card hover:-translate-y-1'} ${
+            isHinted ? 'ring-4 ring-ninja-purple ring-offset-4 ring-offset-slate-900' : ''}`;
+
+          cardEl.setAttribute('aria-pressed', String(isSelected));
+          cardEl.setAttribute('aria-label', `Card ${idx + 1}: ${card.value.toDisplay()}${isHinted ? ' (suggested)' : ''}`);
+          cardEl.onclick = () => this.handleCardClick(card.id);
+
+          const valText = document.createElement('span');
+          valText.className = 'card-value font-display font-black text-3xl sm:text-4xl';
+          valText.textContent = card.value.toDisplay();
+          cardEl.appendChild(valText);
+
+          if (card.tree.op !== 'num') {
+            const exprText = document.createElement('span');
+            exprText.className = `card-expr text-[11px] ${isSelected ? 'text-slate-300' : 'text-slate-600'} font-bold mt-1 truncate max-w-full`;
+            exprText.textContent = Expr.format(card.tree);
+            cardEl.appendChild(exprText);
+          }
+
+          container.appendChild(cardEl);
+        });
+      }
+
+      // ---------- Showing answers as steps ----------
+
+      stepsHTML(tree) {
+        const steps = Expr.steps(tree);
+        return `<ol class="space-y-1.5">${steps.map((s, i) => `
+          <li class="flex items-center gap-2">
+            <span class="w-6 h-6 flex-shrink-0 rounded-full bg-slate-800 text-amber-300 text-[11px] font-black flex items-center justify-center">${i + 1}</span>
+            <span class="font-mono font-bold text-white text-sm">${Expr.stepText(s)}</span>
+          </li>`).join('')}</ol>`;
+      }
+
+      solutionListHTML(trees, userKey = null, limit = 60) {
+        const shown = trees.slice(0, limit);
+        const items = shown.map((t, idx) => {
+          const isUser = userKey !== null && Expr.key(t) === userKey;
+          const chain = Expr.steps(t).map(Expr.stepText).join('  →  ');
+          return `
+            <li class="p-2.5 rounded-xl border ${isUser ? 'bg-turtle-900/40 border-turtle-500/60' : 'bg-slate-900/90 border-slate-800'}">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-start gap-2 min-w-0">
+                  <span class="text-[10px] font-bold bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded flex-shrink-0">#${idx + 1}</span>
+                  <span class="font-mono font-bold text-xs ${isUser ? 'text-turtle-200' : 'text-slate-100'}">${chain}</span>
+                </div>
+                ${isUser ? '<span class="text-[10px] bg-turtle-500/20 text-turtle-300 px-2 py-0.5 rounded-full font-extrabold flex-shrink-0 border border-turtle-500/40">You used this!</span>' : ''}
+              </div>
+              <div class="text-[11px] text-slate-400 font-mono mt-1 pl-8">${Expr.format(t)} = ${this.target}</div>
+            </li>`;
+        }).join('');
+        const more = trees.length > limit
+          ? `<p class="text-[11px] text-slate-400 text-center pt-1">…and ${trees.length - limit} more ways!</p>` : '';
+        return `<ul class="space-y-2">${items}</ul>${more}`;
+      }
+
+      // ---------- Winning ----------
+
+      handleVictory() {
+        this.stopIronFangAI();
+        this.audio.playVictory();
+        this.triggerConfetti();
+
+        this.streak++;
+        this.pizzaSlices += 1;
+        this.stats.solved++;
+        if (this.streak > this.stats.bestStreak) this.stats.bestStreak = this.streak;
+        this.saveStats();
+
+        let subtext = 'Target Mission Accomplished!';
+        if (this.mode === 'blitz') {
+          this.blitzSolved++;
+          // Pep's Pizza Party Boost: +5s for solving in under 10 seconds
+          if (this.activeHero === 'pep' && Date.now() - this.puzzleStartTime < 10000) {
+            this.blitzTimeLeft += 5;
+            this.updateTimerDisplay();
+            subtext = '🍕 Pizza Party Boost! +5 seconds for a speedy solve!';
+          }
+        }
+        document.getElementById('victory-subtext').textContent = subtext;
+
+        const userTree = this.cards[0].tree;
+        const userKey = Expr.key(userTree);
+        const others = this.solutionCache;
+
+        document.getElementById('victory-steps-container').innerHTML = `
+          <div class="bg-turtle-950 border-2 border-turtle-500 p-3.5 rounded-2xl shadow-md space-y-2">
+            <div class="text-[11px] font-black text-turtle-400 uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-check" aria-hidden="true"></i> Your Winning Steps
+            </div>
+            ${this.stepsHTML(userTree)}
+            <div class="text-[11px] text-turtle-200 font-mono pt-1 border-t border-turtle-800">In one line: ${Expr.format(userTree)} = ${this.target}</div>
+          </div>
+          <div class="space-y-2">
+            <div class="text-xs font-extrabold text-amber-300 uppercase tracking-wider flex items-center justify-between pb-1 border-b border-slate-800">
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-scroll text-amber-400" aria-hidden="true"></i> Different Ways to Make ${this.target} (${others.length})</span>
+            </div>
+            ${this.solutionListHTML(others, userKey)}
+          </div>
+        `;
+
+        document.getElementById('daily-share-btn').classList.toggle('hidden', this.mode !== 'daily');
+        this.updateTeamUI();
+        this.openModal('victory-modal');
+      }
+
+      async copyDailySummary() {
+        const diffNames = { easy: 'Easy', medium: 'Medium', hard: 'Hard', master: '5-Card' };
+        const text = `Target Ninja 🥷 Daily Challenge (${localDateKey()}) — ${diffNames[this.difficulty]} #${this.dailyPuzzleNumber}\n🎯 Target Hit: ${this.target}!\n🍕 Current Streak: ${this.streak}\n🥋 Rank: ${this.getBeltRank().name}`;
+        try {
+          await navigator.clipboard.writeText(text);
+          this.showToast('📋 Daily result copied!');
+        } catch (e) {
+          this.showMessage({ title: '📋 Your Daily Result', body: `<pre class="whitespace-pre-wrap font-mono text-xs bg-slate-950 p-3 rounded-xl border border-slate-700">${text}</pre><p class="text-xs text-slate-400">Copying isn't allowed here. Select the text above to copy it.</p>` });
+        }
+      }
+
+      nextVictoryPuzzle() {
+        this.closeModal('victory-modal');
+        this.generateNewPuzzle();
+      }
+
+      triggerConfetti() {
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = Array.from({ length: 70 }, () => ({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 14,
+          vy: (Math.random() - 0.7) * 16,
+          color: ['#a3e635', '#38bdf8', '#fb923c', '#f43f5e', '#c084fc'][Math.floor(Math.random() * 5)],
+          size: Math.random() * 8 + 4,
+          life: 1
+        }));
+
+        let frame = 0;
+        function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.4;
+            p.life -= 0.015;
+
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, p.life);
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+          });
+
+          if (frame++ < 80) requestAnimationFrame(animate);
+          else ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        animate();
+      }
+
+      // ---------- Pizza Shop ----------
+
+      buyPowerUp(type) {
+        const prices = { smoke: 10, freeze: 12, slice: 15 };
+        const price = prices[type];
+
+        if (this.pizzaSlices < price) {
+          this.audio.playError();
+          this.showToast("🍕 Not enough Pizza Slices! Solve more puzzles to earn pizza!");
+          return;
+        }
+
+        // Check the power-up can actually be used BEFORE charging any pizza
+        let card = null;
+        let factors = null;
+        if (type === 'freeze' && !this.blitzTimer) {
+          this.showToast("❄️ Time Freeze only works during a Sewer Speed Blitz!");
+          return;
+        }
+        if (type === 'slice') {
+          card = this.cards.find(c => c.id === this.selectedCardId);
+          if (!card) {
+            this.showToast("Select a composite number card first, then open the shop to use Nunchaku Slice!");
+            return;
+          }
+          if (this.cards.length >= 5) {
+            this.showToast("Too many cards to slice! Combine two cards first.");
+            return;
+          }
+          factors = this.findFactorPair(card.value);
+          if (!factors) {
+            this.showToast(`[${card.value.toDisplay()}] can't be sliced! Pick a composite number like 4, 6, 8, 9, or 12 (not a prime, 1, or a fraction).`);
+            return;
+          }
+        }
+
+        this.pizzaSlices -= price;
+        this.saveStats();
+        this.closeModal('shop-modal');
+
+        if (type === 'smoke') {
+          this.generateNewPuzzle();
+          this.updateHistoryText("💨 Smoke Bomb used! Safely skipped the puzzle!");
+        } else if (type === 'freeze') {
+          this.blitzTimeLeft += 15;
+          this.updateTimerDisplay();
+          this.updateHistoryText("❄️ Time Freeze activated! +15 seconds added!");
+        } else if (type === 'slice') {
+          const [f1, f2] = factors;
+          this.moveHistory.push(this.cards.map(c => ({ ...c })));
+          const pieces = [this.makeCard(new Fraction(f1)), this.makeCard(new Fraction(f2))];
+          this.cards = this.cards.flatMap(c => (c.id === card.id ? pieces : [c]));
+          this.selectedCardId = null;
+          this.selectedOperator = null;
+          this.highlightCardIds = [];
+          this.refreshSolutions();
+          this.renderCards();
+          this.renderOperators();
+          this.updateUndoButton();
+          this.updateHistoryText(`⚔️ Nunchaku Slice split [${card.value.toDisplay()}] into [${f1}] × [${f2}]!`);
+        }
+      }
+
+      // A real factor pair [a, b] with a × b = n (both > 1), or null for primes, 1–3, and fractions
+      findFactorPair(value) {
+        if (!value.isInteger()) return null;
+        const n = value.n;
+        if (n < 4) return null;
+        for (let f = Math.floor(Math.sqrt(n)); f >= 2; f--) {
+          if (n % f === 0) return [f, n / f];
+        }
+        return null;
+      }
+
+      // ---------- Hints (3 levels: nudge → first step → full answer) ----------
+
+      // Returns true if a hint was shown
+      getHint(free = false) {
+        const titleEl = document.getElementById('hint-modal-title');
+        const contentEl = document.getElementById('hint-modal-content');
+        const moreBtn = document.getElementById('hint-more-btn');
+
+        if (this.cards.length < 2) {
+          this.showToast("Only one card left! Press Undo or Reset to keep working.");
+          return false;
+        }
+
+        const values = this.cards.map(c => c.value);
+        const step = TargetSolver.findFirstStep(values, this.target, this.wholeOnly);
+        titleEl.innerHTML = `<i class="fa-solid fa-user-ninja text-ninja-slime mr-2" aria-hidden="true"></i> Sensei Hint`;
+
+        if (!step) {
+          contentEl.innerHTML = `
+            <div class="bg-rose-500/10 p-4 rounded-2xl border border-rose-500/40">
+              <p class="font-bold text-rose-300 mb-1">🚧 Dead end!</p>
+              <p>These cards can't make <strong>${this.target}</strong> anymore. Press <strong>Undo</strong> to step back and try a different move.</p>
+            </div>`;
+          moreBtn.classList.add('hidden');
+          this.openModal('hint-modal');
+          return true;
+        }
+
+        this.hintLevel = Math.min(this.hintLevel + 1, 3);
+        if (!free) {
+          this.stats.hintsUsed++;
+          this.streak = 0;
+          this.saveStats();
+        }
+
+        const a = this.cards[step.i];
+        const b = this.cards[step.j];
+        let body = '';
+        if (this.hintLevel === 1) {
+          body = `
+            <p class="font-bold text-amber-300 mb-1">💡 Hint 1 of 3: A nudge</p>
+            <p>Try <strong>${OP_WORD[step.op]}</strong> (${OP_SYMBOL[step.op]}) two of your cards.</p>
+            <p class="text-xs text-slate-300 mt-2">Which two cards could you ${OP_VERB[step.op]} to get closer to ${this.target}?</p>`;
+        } else if (this.hintLevel === 2) {
+          this.highlightCardIds = [a.id, b.id];
+          this.renderCards();
+          body = `
+            <p class="font-bold text-amber-300 mb-1">💡 Hint 2 of 3: The first move</p>
+            <p class="font-mono text-lg font-bold text-amber-300 my-2 bg-slate-950 p-2.5 rounded-xl border border-amber-500/30 text-center">${Expr.stepText({ a: a.value, op: step.op, b: b.value, res: step.res })}</p>
+            <p class="text-xs text-slate-300">Those two cards are now outlined in purple. Can you finish from there?</p>`;
+        } else {
+          const finish = TargetSolver.solve(TargetSolver.leaves(values), this.target, this.wholeOnly)[0];
+          body = `
+            <p class="font-bold text-amber-300 mb-2">💡 Hint 3 of 3: Every step from here</p>
+            ${this.stepsHTML(finish)}`;
+        }
+
+        const note = free
+          ? `<p class="text-xs text-turtle-300 font-bold">⚔️ Kai's free hint: your streak is safe!</p>`
+          : `<p class="text-xs text-slate-400">Hints reset your streak.</p>`;
+        contentEl.innerHTML = `<div class="bg-amber-500/10 p-4 rounded-2xl border border-amber-500/40">${body}</div>${note}`;
+        moreBtn.classList.toggle('hidden', this.hintLevel >= 3);
+        this.openModal('hint-modal');
+        return true;
+      }
+
+      showSolution() {
+        const titleEl = document.getElementById('hint-modal-title');
+        const contentEl = document.getElementById('hint-modal-content');
+        document.getElementById('hint-more-btn').classList.add('hidden');
+
+        titleEl.innerHTML = `<i class="fa-solid fa-scroll text-purple-300 mr-2" aria-hidden="true"></i> Ninja Scroll Solutions`;
+
+        // Revealing the answer breaks the streak
+        this.streak = 0;
+        this.hintLevel = 3;
+        this.updateStatsUI();
+
+        if (this.solutionCache.length === 0) {
+          contentEl.innerHTML = `<p>No solution found.</p>`;
+        } else {
+          contentEl.innerHTML = `
+            <p class="text-slate-200 text-xs">${this.solutionCache.length === 1 ? 'The only way' : `All <strong>${this.solutionCache.length}</strong> different ways`} to make <strong>${this.target}</strong>, step by step:</p>
+            ${this.solutionListHTML(this.solutionCache)}`;
+        }
+
+        this.openModal('hint-modal');
+      }
+
+      // ---------- Custom Puzzles ----------
+
+      applyCustomTarget() {
+        const errBox = document.getElementById('custom-error-msg');
+        const showError = (msg) => {
+          errBox.textContent = msg;
+          errBox.classList.remove('hidden');
+        };
+
+        const customTarget = parseInt(document.getElementById('custom-target-input').value);
+        if (isNaN(customTarget) || customTarget < 1) {
+          showError("Please enter a valid positive target number.");
+          return;
+        }
+
+        const raw = [1, 2, 3, 4].map(i => document.getElementById(`c-num-${i}`).value.trim());
+        const filledCount = raw.filter(v => v !== '').length;
+
+        if (filledCount === 0) {
+          this.target = customTarget;
+          this.generateNewPuzzle(false);
+        } else {
+          if (filledCount !== 4) {
+            showError("Fill in all 4 numbers, or leave them all blank for random numbers.");
+            return;
+          }
+          const nums = raw.map(Number);
+          if (nums.some(n => !Number.isInteger(n) || n < 1 || n > 99)) {
+            showError("Custom numbers must be whole numbers from 1 to 99.");
+            return;
+          }
+          const solutions = TargetSolver.solve(TargetSolver.leaves(nums), customTarget, this.wholeOnly);
+          if (solutions.length === 0) {
+            const needsFractions = this.wholeOnly && TargetSolver.canReach(nums, customTarget, false);
+            showError(needsFractions
+              ? `${nums.join(', ')} can only make ${customTarget} using fractions or negative numbers. Turn off "Whole #s" to allow that, or try different numbers.`
+              : `There's no way to make ${customTarget} from ${nums.join(', ')}. Try different numbers or a different target!`);
+            return;
+          }
+          this.target = customTarget;
+          this.loadPuzzle(nums, solutions, true);
+        }
+
+        errBox.classList.add('hidden');
+        this.closeModal('custom-target-modal');
+      }
+
+      resetToHome() {
+        this.setDifficulty('easy');
+      }
+
+      // ---------- Windows, Messages & Keyboard ----------
+
+      openModal(id) {
+        if (this.openModals.includes(id)) return;
+        const el = document.getElementById(id);
+        this.modalReturnFocus.set(id, document.activeElement);
+        el.classList.remove('hidden');
+        this.openModals.forEach(m => { document.getElementById(m).inert = true; });
+        this.openModals.push(id);
+        document.getElementById('app-shell').inert = true;
+
+        const first = el.querySelector('[data-autofocus]') || el.querySelector(FOCUSABLE);
+        if (first) first.focus();
+      }
+
+      closeModal(id) {
+        const el = document.getElementById(id);
+        el.classList.add('hidden');
+        if (!this.openModals.includes(id)) return;
+
+        this.openModals = this.openModals.filter(m => m !== id);
+        const top = this.openModals[this.openModals.length - 1];
+        if (top) document.getElementById(top).inert = false;
+        else document.getElementById('app-shell').inert = false;
+
+        const ret = this.modalReturnFocus.get(id);
+        this.modalReturnFocus.delete(id);
+        if (ret && document.body.contains(ret) && !ret.closest('[inert]')) ret.focus();
+
+        if (id === 'message-modal' && this.messageOnClose) {
+          const cb = this.messageOnClose;
+          this.messageOnClose = null;
+          cb();
+        }
+      }
+
+      closeTopModal() {
+        const top = this.openModals[this.openModals.length - 1];
+        if (!top) return;
+        if (top === 'victory-modal') this.nextVictoryPuzzle();
+        else this.closeModal(top);
+      }
+
+      showMessage({ title, body, button = 'OK', onClose = null }) {
+        document.getElementById('message-title').textContent = title;
+        document.getElementById('message-body').innerHTML = body;
+        document.getElementById('message-btn').textContent = button;
+        this.messageOnClose = onClose;
+        this.openModal('message-modal');
+      }
+
+      showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.remove('hidden');
+        clearTimeout(this.toastTimer);
+        this.toastTimer = setTimeout(() => toast.classList.add('hidden'), 3500);
+      }
+
+      handleKeydown(e) {
+        const top = this.openModals[this.openModals.length - 1];
+
+        if (e.key === 'Escape' && top) {
+          e.preventDefault();
+          this.closeTopModal();
+          return;
+        }
+
+        // Keep keyboard focus inside the open window
+        if (e.key === 'Tab' && top) {
+          const modal = document.getElementById(top);
+          const items = [...modal.querySelectorAll(FOCUSABLE)].filter(el => el.offsetParent !== null);
+          if (items.length === 0) return;
+          const first = items[0];
+          const last = items[items.length - 1];
+          if (!modal.contains(document.activeElement)) {
+            e.preventDefault();
+            first.focus();
+          } else if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+          return;
+        }
+
+        // Game shortcuts (only when no window is open and not typing)
+        if (top || e.ctrlKey || e.metaKey || e.altKey) return;
+        const tag = (e.target.tagName || '').toLowerCase();
+        if (tag === 'input' || tag === 'select' || tag === 'textarea') return;
+
+        const opKeys = { '+': '+', '-': '-', '*': '*', 'x': '*', '/': '/' };
+        if (opKeys[e.key]) {
+          e.preventDefault();
+          this.selectOperator(opKeys[e.key]);
+        } else if (/^[1-5]$/.test(e.key)) {
+          const card = this.cards[Number(e.key) - 1];
+          if (card) {
+            e.preventDefault();
+            this.handleCardClick(card.id);
+          }
+        } else if (e.key === 'u' || e.key === 'U') {
+          this.undo();
+        }
+      }
+    }
+
+    // Start right away (don't wait for web fonts, which may be blocked on school networks)
+    const app = new AppController();
+    app.init();
+  </script>
+</body>
+</html>

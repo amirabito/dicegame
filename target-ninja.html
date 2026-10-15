@@ -380,7 +380,7 @@
           <button onclick="app.showSolution()" class="min-h-[44px] px-3.5 py-2 bg-ninja-donnie/10 hover:bg-ninja-donnie/20 text-purple-200 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 border border-ninja-donnie/40" aria-label="View Solution">
             <i class="fa-solid fa-scroll" aria-hidden="true"></i> Solution
           </button>
-          <button onclick="app.generateNewPuzzle()" class="min-h-[44px] px-4 py-2 bg-turtle-600 hover:bg-turtle-500 text-white text-xs font-extrabold rounded-xl transition-all shadow-lg active:scale-95 flex items-center gap-1.5 border border-ninja-slime" aria-label="Next Puzzle">
+          <button onclick="app.skipPuzzle()" class="min-h-[44px] px-4 py-2 bg-turtle-600 hover:bg-turtle-500 text-white text-xs font-extrabold rounded-xl transition-all shadow-lg active:scale-95 flex items-center gap-1.5 border border-ninja-slime" aria-label="Skip to next puzzle">
             <i class="fa-solid fa-forward" aria-hidden="true"></i> Next
           </button>
         </div>
@@ -413,7 +413,7 @@
             <span class="font-display font-bold text-ninja-leo text-lg">Leonardo ⚔️</span>
             <span class="text-xs bg-ninja-leo/20 text-ninja-leo px-2 py-0.5 rounded-full font-bold">Leader</span>
           </div>
-          <p class="text-xs text-slate-300 font-medium"><strong>Ability:</strong> <em>Master's Insight</em> (1 free strategic hint per game without breaking streak).</p>
+          <p class="text-xs text-slate-300 font-medium"><strong>Ability:</strong> <em>Master's Insight</em> (1 free strategic hint per puzzle without breaking streak).</p>
         </div>
 
         <!-- Michelangelo -->
@@ -440,7 +440,7 @@
             <span class="font-display font-bold text-ninja-raph text-lg">Raphael 🥊</span>
             <span class="text-xs bg-ninja-raph/20 text-ninja-raph px-2 py-0.5 rounded-full font-bold">Brawler</span>
           </div>
-          <p class="text-xs text-slate-300 font-medium"><strong>Ability:</strong> <em>Brawler Swap</em> (Swap any selected card for a fresh random 1–9 digit once per game).</p>
+          <p class="text-xs text-slate-300 font-medium"><strong>Ability:</strong> <em>Brawler Swap</em> (Swap any selected card for a fresh random 1–9 digit once per puzzle).</p>
         </div>
       </div>
     </div>
@@ -684,6 +684,11 @@
             <li>Continue combining until 1 card remains matching the goal!</li>
           </ol>
         </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-white">🍕 Keeping your streak:</h4>
+          <p class="text-xs sm:text-sm">Your streak grows with every solve. It resets if you skip a puzzle with <strong>Next</strong>, reveal the <strong>Solution</strong>, or use a <strong>Strategic Hint</strong>. Leonardo's free hint and the Smoke Bomb keep your streak safe!</p>
+        </div>
       </div>
 
       <div class="mt-6 text-right">
@@ -753,12 +758,59 @@
      * TargetSolver evaluating binary expression trees
      */
     class TargetSolver {
+      static toFraction(n) {
+        return n instanceof Fraction ? n : new Fraction(n);
+      }
+
+      static combine(a, b, op) {
+        if (op === '+') return a.add(b);
+        if (op === '-') return a.sub(b);
+        if (op === '*') return a.mul(b);
+        return a.div(b);
+      }
+
+      // Fast yes/no check: can these values reach the target? Stops at the first success.
+      static canReach(values, target) {
+        const vals = values.map(TargetSolver.toFraction);
+        if (vals.length === 1) return vals[0].equals(target);
+        for (let i = 0; i < vals.length; i++) {
+          for (let j = 0; j < vals.length; j++) {
+            if (i === j) continue;
+            const rest = vals.filter((_, idx) => idx !== i && idx !== j);
+            for (const op of ['+', '-', '*', '/']) {
+              const res = TargetSolver.combine(vals[i], vals[j], op);
+              if (res && TargetSolver.canReach([...rest, res], target)) return true;
+            }
+          }
+        }
+        return false;
+      }
+
+      // Returns the first move { i, j, op, res } that still leads to the target, or null.
+      static findFirstStep(values, target) {
+        const vals = values.map(TargetSolver.toFraction);
+        for (let i = 0; i < vals.length; i++) {
+          for (let j = 0; j < vals.length; j++) {
+            if (i === j) continue;
+            const rest = vals.filter((_, idx) => idx !== i && idx !== j);
+            for (const op of ['+', '-', '*', '/']) {
+              const res = TargetSolver.combine(vals[i], vals[j], op);
+              if (res && TargetSolver.canReach([...rest, res], target)) return { i, j, op, res };
+            }
+          }
+        }
+        return null;
+      }
+
       static solve(numbers, target) {
-        const initialNodes = numbers.map(n => ({
-          val: new Fraction(n),
-          expr: `${n}`,
-          isIntegerPath: true
-        }));
+        const initialNodes = numbers.map(n => {
+          const val = TargetSolver.toFraction(n);
+          return {
+            val,
+            expr: val.isInteger() ? `${val.n}` : `(${val.toString()})`,
+            isIntegerPath: val.isInteger()
+          };
+        });
 
         const solutions = [];
         const seenExprs = new Set();
@@ -866,6 +918,32 @@
     }
 
     /**
+     * Today's date in the player's local time zone, e.g. "2026-10-15"
+     */
+    function localDateKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    /**
+     * Seeded random number generator so every player gets the same Daily puzzles
+     */
+    function makeSeededRandom(seedStr) {
+      let h = 2166136261;
+      for (let i = 0; i < seedStr.length; i++) {
+        h ^= seedStr.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      let a = h >>> 0;
+      return function() {
+        a |= 0; a = a + 0x6D2B79F5 | 0;
+        let t = Math.imul(a ^ a >>> 15, 1 | a);
+        t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+      };
+    }
+
+    /**
      * Main Target Ninja App Engine
      */
     class AppController {
@@ -884,9 +962,14 @@
         this.pizzaSlices = 10;
         this.activeHero = 'leo'; // leo, mikey, donnie, raph
         this.heroAbilityUsed = false;
+        this.highlightCardIds = [];
+        this.puzzleStartTime = Date.now();
+        this.dailyIndex = 1;
+        this.dailyPuzzleNumber = 1;
 
         this.blitzTimer = null;
         this.blitzTimeLeft = 60;
+        this.blitzSolved = 0;
 
         this.shredderTimer = null;
         this.shredderProgress = 0;
@@ -951,6 +1034,7 @@
         document.getElementById('stat-streak').textContent = `${this.stats.bestStreak} 🍕`;
         document.getElementById('stat-blitz').textContent = this.stats.blitzScore;
         document.getElementById('stat-hints').textContent = this.stats.hintsUsed;
+        document.getElementById('streak-counter').textContent = `${this.streak} 🍕`;
 
         document.getElementById('header-pizza-count').textContent = this.pizzaSlices;
         document.getElementById('shop-pizza-balance').textContent = `${this.pizzaSlices} 🍕`;
@@ -1014,20 +1098,38 @@
         }
 
         if (this.activeHero === 'leo') {
+          this.heroAbilityUsed = true;
           this.getHint(true);
         } else if (this.activeHero === 'donnie') {
-          if (this.solutionCache.length > 0) {
-            this.updateHistoryText(`🧪 Tech Analysis: Try combining numbers in the formula!`);
-            this.getHint(true);
+          if (this.cards.length < 2) {
+            this.updateHistoryText("🧪 Nothing left to combine!");
+            return;
           }
+          const step = TargetSolver.findFirstStep(this.cards.map(c => c.value), this.target);
+          if (!step) {
+            this.audio.playError();
+            this.updateHistoryText(`🧪 Tech Analysis: These cards can't reach ${this.target}. Try Undo or Reset first!`);
+            return;
+          }
+          const a = this.cards[step.i];
+          const b = this.cards[step.j];
+          this.highlightCardIds = [a.id, b.id];
+          this.heroAbilityUsed = true;
+          this.renderCards();
+          this.updateHistoryText(`🧪 Tech Analysis: Try ${a.value.toString()} ${this.opDisplay(step.op)} ${b.value.toString()} = ${step.res.toString()} first!`);
         } else if (this.activeHero === 'raph') {
           if (this.selectedCardId && this.cards.length > 1) {
             const card = this.cards.find(c => c.id === this.selectedCardId);
             if (card) {
-              const newDigit = Math.floor(Math.random() * 9) + 1;
+              // Prefer a digit that keeps the puzzle solvable
+              const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9].sort(() => Math.random() - 0.5);
+              const newDigit = digits.find(d => TargetSolver.canReach(
+                this.cards.map(c => c.id === card.id ? new Fraction(d) : c.value), this.target
+              )) || digits[0];
               card.value = new Fraction(newDigit);
               card.expr = `${newDigit}`;
-              this.solutionCache = TargetSolver.solve(this.cards.map(c => c.value.toNumber()), this.target);
+              this.highlightCardIds = [];
+              this.solutionCache = TargetSolver.solve(this.cards.map(c => c.value), this.target);
               this.renderCards();
               this.updateHistoryText(`🥊 Raphael swapped card to [${newDigit}]!`);
               this.heroAbilityUsed = true;
@@ -1055,6 +1157,7 @@
           }
         });
 
+        this.dailyIndex = 1;
         if (generate) this.generateNewPuzzle();
       }
 
@@ -1065,9 +1168,11 @@
 
         this.stopBlitzTimer();
         this.stopShredderAI();
+        this.dailyIndex = 1;
 
         if (mode === 'blitz') {
           timerContainer.classList.remove('hidden');
+          shredderBar.classList.add('hidden');
           this.startBlitzTimer();
         } else if (mode === 'shredder') {
           timerContainer.classList.add('hidden');
@@ -1084,6 +1189,7 @@
       startBlitzTimer() {
         this.stopBlitzTimer();
         this.blitzTimeLeft = 60;
+        this.blitzSolved = 0;
         this.updateTimerDisplay();
 
         this.blitzTimer = setInterval(() => {
@@ -1093,9 +1199,9 @@
           if (this.blitzTimeLeft <= 0) {
             this.stopBlitzTimer();
             this.audio.playError();
-            alert(`⏱️ Time's up! You solved ${this.streak} puzzles in Blitz Mode!`);
-            if (this.streak > this.stats.blitzScore) {
-              this.stats.blitzScore = this.streak;
+            alert(`⏱️ Time's up! You solved ${this.blitzSolved} puzzles in Blitz Mode!`);
+            if (this.blitzSolved > this.stats.blitzScore) {
+              this.stats.blitzScore = this.blitzSolved;
               this.saveStats();
             }
             this.streak = 0;
@@ -1122,6 +1228,8 @@
         this.shredderProgress = 0;
         const fill = document.getElementById('shredder-progress-fill');
         const status = document.getElementById('shredder-status-text');
+        if (fill) fill.style.width = '0%';
+        if (status) status.textContent = "Computing Solution...";
 
         this.shredderTimer = setInterval(() => {
           this.shredderProgress += 5;
@@ -1132,6 +1240,8 @@
             this.audio.playError();
             if (status) status.textContent = "🦹 Shredder Solved First!";
             alert("🦹 Shredder AI beat you to the solution! Try again!");
+            this.streak = 0;
+            this.updateStatsUI();
             this.generateNewPuzzle();
           }
         }, 1000);
@@ -1154,21 +1264,29 @@
         let cardCount = this.difficulty === 'master' ? 5 : 4;
         let numRange = [1, 9];
 
+        // Daily mode: everyone gets the same sequence of puzzles today
+        let rand = Math.random;
+        if (this.mode === 'daily') {
+          this.dailyPuzzleNumber = this.dailyIndex++;
+          rand = makeSeededRandom(`${localDateKey()}|${this.difficulty}|${this.dailyPuzzleNumber}|${randomizeTarget ? 'r' : this.target}`);
+        }
+
         if (randomizeTarget) {
           if (this.difficulty === 'easy') {
-            this.target = [10, 12, 15, 16, 20][Math.floor(Math.random() * 5)];
-            numRange = [1, 8];
+            this.target = [10, 12, 15, 16, 20][Math.floor(rand() * 5)];
           } else if (this.difficulty === 'medium') {
-            this.target = [12, 18, 20, 24, 28, 30, 32, 36][Math.floor(Math.random() * 8)];
-            numRange = [1, 12];
+            this.target = [12, 18, 20, 24, 28, 30, 32, 36][Math.floor(rand() * 8)];
           } else if (this.difficulty === 'hard') {
-            this.target = Math.floor(Math.random() * 85) + 15;
-            numRange = [1, 15];
+            this.target = Math.floor(rand() * 85) + 15;
           } else if (this.difficulty === 'master') {
-            this.target = Math.floor(Math.random() * 90) + 10;
-            numRange = [1, 12];
+            this.target = Math.floor(rand() * 90) + 10;
           }
         }
+
+        if (this.difficulty === 'easy') numRange = [1, 8];
+        else if (this.difficulty === 'medium') numRange = [1, 12];
+        else if (this.difficulty === 'hard') numRange = [1, 15];
+        else if (this.difficulty === 'master') numRange = [1, 12];
 
         let foundSolvable = false;
         let attempts = 0;
@@ -1177,7 +1295,7 @@
 
         while (!foundSolvable && attempts < 500) {
           attempts++;
-          selectedNums = Array.from({ length: cardCount }, () => Math.floor(Math.random() * (numRange[1] - numRange[0] + 1)) + numRange[0]);
+          selectedNums = Array.from({ length: cardCount }, () => Math.floor(rand() * (numRange[1] - numRange[0] + 1)) + numRange[0]);
           solutions = TargetSolver.solve(selectedNums, this.target);
           if (solutions.length > 0) foundSolvable = true;
         }
@@ -1188,12 +1306,26 @@
           solutions = TargetSolver.solve(selectedNums, 10);
         }
 
-        this.initialNumbers = selectedNums;
+        this.loadPuzzle(selectedNums, solutions);
+      }
+
+      loadPuzzle(nums, solutions, isCustom = false) {
+        this.initialNumbers = nums;
         this.solutionCache = solutions;
         this.heroAbilityUsed = false;
+        this.puzzleStartTime = Date.now();
 
         const targetBadge = document.getElementById('target-number-badge');
         targetBadge.textContent = this.target;
+
+        const tag = document.getElementById('mission-mode-tag');
+        if (isCustom) {
+          tag.innerHTML = `<i class="fa-solid fa-sliders" aria-hidden="true"></i> Custom Mission`;
+        } else if (this.mode === 'daily') {
+          tag.innerHTML = `<i class="fa-solid fa-calendar-day" aria-hidden="true"></i> Daily #${this.dailyPuzzleNumber} · ${localDateKey()}`;
+        } else {
+          tag.innerHTML = `<i class="fa-solid fa-bullseye" aria-hidden="true"></i> Target Mission`;
+        }
 
         if (this.mode === 'shredder') {
           this.startShredderAI();
@@ -1202,7 +1334,19 @@
         this.resetPuzzleState();
       }
 
+      skipPuzzle() {
+        // Skipping breaks the streak (use a Smoke Bomb to skip safely)
+        this.streak = 0;
+        this.updateStatsUI();
+        this.generateNewPuzzle();
+      }
+
+      opDisplay(op) {
+        return op === '*' ? '×' : op === '/' ? '÷' : op === '-' ? '−' : op;
+      }
+
       resetPuzzleState() {
+        this.highlightCardIds = [];
         this.cards = this.initialNumbers.map((num, idx) => ({
           id: `card-${idx}-${Date.now()}`,
           value: new Fraction(num),
@@ -1298,6 +1442,7 @@
 
         if (!c1 || !c2) return;
 
+        this.highlightCardIds = [];
         this.triggerKatanaSlash();
 
         this.moveHistory.push({
@@ -1384,6 +1529,7 @@
         }));
         this.selectedCardId = null;
         this.selectedOperator = null;
+        this.highlightCardIds = [];
 
         this.renderCards();
         this.renderOperators();
@@ -1398,12 +1544,14 @@
         this.cards.forEach(card => {
           const cardEl = document.createElement('button');
           const isSelected = this.selectedCardId === card.id;
+          const isHinted = !isSelected && this.highlightCardIds.includes(card.id);
 
           cardEl.className = `
             relative rounded-2xl p-4 transition-all cursor-pointer flex flex-col items-center justify-center min-h-[110px] active:scale-95 border-2
             ${isSelected
               ? 'ninja-card-selected text-ninja-slime'
               : 'ninja-card text-slate-950 hover:-translate-y-1'}
+            ${isHinted ? 'ring-4 ring-ninja-donnie ring-offset-2 ring-offset-slate-900' : ''}
           `;
 
           cardEl.setAttribute('aria-label', `Card value ${card.value.toString()}`);
@@ -1433,6 +1581,18 @@
         this.stats.solved++;
         if (this.streak > this.stats.bestStreak) this.stats.bestStreak = this.streak;
         this.saveStats();
+
+        let subtext = 'Target Mission Accomplished!';
+        if (this.mode === 'blitz') {
+          this.blitzSolved++;
+          // Michelangelo's Pizza Party Boost: +5s for solving in under 10 seconds
+          if (this.activeHero === 'mikey' && Date.now() - this.puzzleStartTime < 10000) {
+            this.blitzTimeLeft += 5;
+            this.updateTimerDisplay();
+            subtext = '🍕 Pizza Party Boost! +5 seconds for a speedy solve!';
+          }
+        }
+        document.getElementById('victory-subtext').textContent = subtext;
 
         const stepsContainer = document.getElementById('victory-steps-container');
         stepsContainer.innerHTML = '';
@@ -1502,15 +1662,15 @@
       }
 
       copyDailySummary() {
-        const today = new Date().toISOString().slice(0, 10);
-        const text = `Target Ninja 🥷 Daily Challenge (${today})\n🎯 Target Hit: ${this.target}!\n🍕 Current Streak: ${this.streak}\n🥋 Rank: ${this.getBeltRank().name}`;
+        const today = localDateKey();
+        const diffNames = { easy: 'Easy', medium: 'Medium', hard: 'Hard', master: '5-Card' };
+        const text = `Target Ninja 🥷 Daily Challenge (${today}) — ${diffNames[this.difficulty]} #${this.dailyPuzzleNumber}\n🎯 Target Hit: ${this.target}!\n🍕 Current Streak: ${this.streak}\n🥋 Rank: ${this.getBeltRank().name}`;
         navigator.clipboard.writeText(text);
         alert("📋 Daily Result copied to clipboard!");
       }
 
       nextVictoryPuzzle() {
         this.closeModal('victory-modal');
-        if (this.mode === 'blitz') this.blitzTimeLeft += 5;
         this.generateNewPuzzle();
       }
 
@@ -1562,6 +1722,26 @@
           return;
         }
 
+        // Check the power-up can actually be used BEFORE charging any pizza
+        let card = null;
+        let factors = null;
+        if (type === 'freeze' && !this.blitzTimer) {
+          alert("❄️ Time Freeze only works during a Sewer Speed Blitz!");
+          return;
+        }
+        if (type === 'slice') {
+          card = this.cards.find(c => c.id === this.selectedCardId);
+          if (!card) {
+            alert("Select a composite number card first to use Nunchaku Slice!");
+            return;
+          }
+          factors = this.findFactorPair(card.value);
+          if (!factors) {
+            alert(`[${card.value.toString()}] can't be sliced! Pick a composite number like 4, 6, 8, 9, or 12 (not a prime, 1, or a fraction).`);
+            return;
+          }
+        }
+
         this.pizzaSlices -= price;
         this.saveStats();
 
@@ -1573,32 +1753,42 @@
           this.updateTimerDisplay();
           this.updateHistoryText("❄️ Time Freeze activated! +15 seconds added!");
         } else if (type === 'slice') {
-          if (this.selectedCardId) {
-            const card = this.cards.find(c => c.id === this.selectedCardId);
-            if (card && card.value.isInteger() && card.value.toNumber() > 3) {
-              const num = card.value.toNumber();
-              const f1 = Math.floor(Math.sqrt(num));
-              const f2 = Math.floor(num / f1);
-              this.cards = this.cards.filter(c => c.id !== this.selectedCardId);
-              this.cards.push({ id: `c-${Date.now()}-1`, value: new Fraction(f1), expr: `${f1}` });
-              this.cards.push({ id: `c-${Date.now()}-2`, value: new Fraction(f2), expr: `${f2}` });
-              this.renderCards();
-              this.updateHistoryText(`⚔️ Nunchaku Slice split [${num}] into [${f1}] and [${f2}]!`);
-            }
-          } else {
-            alert("Select a composite number card first to use Nunchaku Slice!");
-            this.pizzaSlices += price;
-            this.saveStats();
-            return;
-          }
+          const [f1, f2] = factors;
+          // Save a snapshot so Undo can reverse the slice
+          this.moveHistory.push({
+            cards: this.cards.map(c => ({ id: c.id, value: new Fraction(c.value.n, c.value.d), expr: c.expr }))
+          });
+          this.cards = this.cards.filter(c => c.id !== card.id);
+          this.cards.push({ id: `c-${Date.now()}-1`, value: new Fraction(f1), expr: `${f1}` });
+          this.cards.push({ id: `c-${Date.now()}-2`, value: new Fraction(f2), expr: `${f2}` });
+          this.selectedCardId = null;
+          this.selectedOperator = null;
+          this.highlightCardIds = [];
+          this.renderCards();
+          this.renderOperators();
+          this.updateUndoButton();
+          this.updateHistoryText(`⚔️ Nunchaku Slice split [${card.value.toString()}] into [${f1}] × [${f2}]!`);
         }
 
         this.closeModal('shop-modal');
       }
 
+      // Returns a real factor pair [a, b] with a × b = n (both > 1), or null for primes, 1–3, and fractions
+      findFactorPair(value) {
+        if (!value.isInteger()) return null;
+        const n = value.n;
+        if (n < 4) return null;
+        for (let f = Math.floor(Math.sqrt(n)); f >= 2; f--) {
+          if (n % f === 0) return [f, n / f];
+        }
+        return null;
+      }
+
       getHint(free = false) {
         if (!free) {
+          // Paid hints break the streak (Leonardo's free hint does not)
           this.stats.hintsUsed++;
+          this.streak = 0;
           this.saveStats();
         }
 
@@ -1629,6 +1819,10 @@
 
         titleEl.innerHTML = `<i class="fa-solid fa-scroll text-purple-300 mr-2"></i> Ninja Scroll Solutions`;
 
+        // Revealing the answer breaks the streak
+        this.streak = 0;
+        this.updateStatsUI();
+
         if (this.solutionCache.length === 0) {
           contentEl.innerHTML = `<p>No solution found.</p>`;
         } else {
@@ -1656,15 +1850,43 @@
         const targetInput = document.getElementById('custom-target-input');
         const errBox = document.getElementById('custom-error-msg');
 
+        const showError = (msg) => {
+          errBox.textContent = msg;
+          errBox.classList.remove('hidden');
+        };
+
         const customTarget = parseInt(targetInput.value);
         if (isNaN(customTarget) || customTarget < 1) {
-          errBox.textContent = "Please enter a valid positive target number.";
-          errBox.classList.remove('hidden');
+          showError("Please enter a valid positive target number.");
           return;
         }
 
-        this.target = customTarget;
-        this.generateNewPuzzle(false);
+        const raw = [1, 2, 3, 4].map(i => document.getElementById(`c-num-${i}`).value.trim());
+        const filledCount = raw.filter(v => v !== '').length;
+
+        if (filledCount === 0) {
+          // No custom numbers: pick random numbers that can reach the target
+          this.target = customTarget;
+          this.generateNewPuzzle(false);
+        } else {
+          if (filledCount !== 4) {
+            showError("Fill in all 4 numbers, or leave them all blank for random numbers.");
+            return;
+          }
+          const nums = raw.map(Number);
+          if (nums.some(n => !Number.isInteger(n) || n < 1 || n > 99)) {
+            showError("Custom numbers must be whole numbers from 1 to 99.");
+            return;
+          }
+          const solutions = TargetSolver.solve(nums, customTarget);
+          if (solutions.length === 0) {
+            showError(`There's no way to make ${customTarget} from ${nums.join(', ')}. Try different numbers or a different target!`);
+            return;
+          }
+          this.target = customTarget;
+          this.loadPuzzle(nums, solutions, true);
+        }
+
         errBox.classList.add('hidden');
         this.closeModal('custom-target-modal');
       }

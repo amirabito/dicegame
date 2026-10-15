@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Target Ninja 🥷 Math Quest</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fredoka', 'sans-serif'],
+            body: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            turtle: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            },
+            ninja: {
+              leo: '#38bdf8',    /* High contrast Sky Blue */
+              raph: '#f43f5e',   /* High contrast Crimson */
+              donnie: '#c084fc', /* High contrast Purple */
+              mikey: '#fb923c',  /* High contrast Orange */
+              slime: '#a3e635',  /* High contrast Slime Green */
+              sewer: '#0f172a',  /* Sewer Dark Slate */
+              dojo: '#1e293b',   /* Dark Dojo Base */
+            }
+          },
+          animation: {
+            'bounce-short': 'bounce 0.5s ease-in-out 1',
+            'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'pop': 'pop 0.3s ease-out forwards',
+            'spin-slow': 'spin 8s linear infinite',
+            'slash': 'slash 0.3s ease-out forwards',
+          },
+          keyframes: {
+            pop: {
+              '0%': { transform: 'scale(0.85)', opacity: '0' },
+              '70%': { transform: 'scale(1.05)' },
+              '100%': { transform: 'scale(1)', opacity: '1' },
+            },
+            slash: {
+              '0%': { strokeDashoffset: '1000', opacity: '1' },
+              '100%': { strokeDashoffset: '0', opacity: '0' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-main: #0f172a;
+      --bg-card: #1e293b;
+      --bg-surface: #1e293b;
+      --text-main: #f8fafc;
+      --border-color: #334155;
+      --accent-color: #a3e635;
+    }
+
+    [data-theme="cyber"] {
+      --bg-main: #0b0f19;
+      --bg-card: #161e31;
+      --bg-surface: #1e293b;
+      --text-main: #f1f5f9;
+      --border-color: #38bdf8;
+      --accent-color: #38bdf8;
+    }
+
+    [data-theme="comic"] {
+      --bg-main: #18181b;
+      --bg-card: #27272a;
+      --bg-surface: #3f3f46;
+      --text-main: #ffffff;
+      --border-color: #fbbf24;
+      --accent-color: #fbbf24;
+    }
+
+    [data-theme="technodrome"] {
+      --bg-main: #1e0a10;
+      --bg-card: #2f0d19;
+      --bg-surface: #451225;
+      --text-main: #ffe4e6;
+      --border-color: #f43f5e;
+      --accent-color: #f43f5e;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .font-display {
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    /* K-12 Focus State for Keyboard Accessibility */
+    a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible {
+      outline: 3px solid #fbbf24 !important;
+      outline-offset: 3px !important;
+    }
+
+    /* Custom Ninja Playing Cards */
+    .ninja-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+      border: 3px solid #0f172a;
+      box-shadow: 0 6px 0 0 #020617;
+      min-height: 110px;
+    }
+
+    .ninja-card-selected {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 3px solid #a3e635;
+      box-shadow: 0 0 15px rgba(163, 230, 53, 0.4);
+    }
+
+    /* Katana Slash Canvas */
+    #katana-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body data-theme="sewer" class="min-h-screen flex flex-col justify-between selection:bg-ninja-slime selection:text-slate-900">
+
+  <!-- Confetti Overlay -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-amber-400 text-slate-950 px-4 py-2 rounded-lg font-bold z-50">
+    Skip to main content
+  </a>
+
+  <!-- HEADER -->
+  <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-700 sticky top-0 z-30 shadow-lg" role="banner">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+
+      <!-- Brand Logo & Belt Rank -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="app.resetToHome()" role="button" tabindex="0" aria-label="Target Ninja Home">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-turtle-700 via-turtle-500 to-ninja-slime flex items-center justify-center text-white text-2xl shadow-lg border-2 border-ninja-slime flex-shrink-0">
+          <i class="fa-solid fa-user-ninja" aria-hidden="true"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="font-display font-black text-2xl text-white tracking-wide uppercase italic">Target Ninja</h1>
+            <span id="header-belt-badge" class="bg-slate-800 text-amber-300 border border-amber-400/50 text-xs font-black px-2 py-0.5 rounded-full flex items-center gap-1">
+              ⚪ White Belt
+            </span>
+          </div>
+          <p class="text-xs text-ninja-slime font-bold flex items-center gap-1">
+            <i class="fa-solid fa-pizza-slice text-amber-400" aria-hidden="true"></i> <span id="header-pizza-count">0</span> Slices | <span id="active-hero-name" class="text-ninja-leo font-black">Leonardo</span> Active
+          </p>
+        </div>
+      </div>
+
+      <!-- Control Bar -->
+      <div class="flex items-center space-x-2">
+        <button onclick="app.openModal('char-select-modal')" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 transition-colors border border-slate-700" title="Select Ninja Hero" aria-label="Select Ninja Hero">
+          <i class="fa-solid fa-user-shield text-lg" aria-hidden="true"></i>
+        </button>
+
+        <button onclick="app.openModal('shop-modal')" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 transition-colors border border-slate-700" title="Pizza Shop & Power-ups" aria-label="Pizza Shop">
+          <i class="fa-solid fa-store text-lg" aria-hidden="true"></i>
+        </button>
+
+        <button id="sound-btn" onclick="app.toggleSound()" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors border border-slate-700" title="Toggle Sound FX" aria-label="Toggle Sound">
+          <i id="sound-icon" class="fa-solid fa-volume-high text-lg" aria-hidden="true"></i>
+        </button>
+
+        <button onclick="app.openModal('theme-modal')" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-ninja-donnie transition-colors border border-slate-700" title="Change Theme" aria-label="Change Theme">
+          <i class="fa-solid fa-palette text-lg" aria-hidden="true"></i>
+        </button>
+
+        <button onclick="app.openModal('stats-modal')" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-ninja-leo transition-colors border border-slate-700" title="View Statistics & Belts" aria-label="View Statistics">
+          <i class="fa-solid fa-chart-column text-lg" aria-hidden="true"></i>
+        </button>
+
+        <button onclick="app.openModal('help-modal')" class="p-2.5 min-w-[44px] min-h-[44px] rounded-xl bg-slate-800 hover:bg-slate-700 text-ninja-mikey transition-colors border border-slate-700" title="How to Play" aria-label="How to Play">
+          <i class="fa-solid fa-circle-question text-lg" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN PLAY AREA -->
+  <main id="main-content" class="max-w-5xl mx-auto px-4 py-6 flex-1 w-full flex flex-col justify-center items-center" role="main">
+
+    <!-- Mode Selector & Difficulty Bar -->
+    <div class="w-full max-w-2xl bg-slate-900/90 p-3 rounded-2xl shadow-xl border border-slate-700 mb-5 flex flex-wrap gap-2 items-center justify-between">
+
+      <!-- Difficulty Tabs -->
+      <div class="flex items-center bg-slate-950 p-1 rounded-xl w-full sm:w-auto border border-slate-800" role="tablist" aria-label="Game Difficulty">
+        <button id="diff-easy" onclick="app.setDifficulty('easy')" role="tab" aria-selected="true" class="min-h-[44px] flex-1 sm:flex-initial px-4 py-2 rounded-lg text-sm font-extrabold transition-all">
+          <i class="fa-solid fa-mask text-ninja-leo mr-1" aria-hidden="true"></i> Easy
+        </button>
+        <button id="diff-medium" onclick="app.setDifficulty('medium')" role="tab" aria-selected="false" class="min-h-[44px] flex-1 sm:flex-initial px-4 py-2 rounded-lg text-sm font-extrabold transition-all">
+          <i class="fa-solid fa-mask text-ninja-mikey mr-1" aria-hidden="true"></i> Medium
+        </button>
+        <button id="diff-hard" onclick="app.setDifficulty('hard')" role="tab" aria-selected="false" class="min-h-[44px] flex-1 sm:flex-initial px-4 py-2 rounded-lg text-sm font-extrabold transition-all">
+          <i class="fa-solid fa-mask text-ninja-raph mr-1" aria-hidden="true"></i> Hard
+        </button>
+        <button id="diff-master" onclick="app.setDifficulty('master')" role="tab" aria-selected="false" class="min-h-[44px] flex-1 sm:flex-initial px-4 py-2 rounded-lg text-sm font-extrabold transition-all">
+          <i class="fa-solid fa-crown text-amber-400 mr-1" aria-hidden="true"></i> 5-Card
+        </button>
+      </div>
+
+      <!-- Game Mode Dropdown -->
+      <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
+        <label for="game-mode-select" class="sr-only">Game Mode</label>
+        <select id="game-mode-select" onchange="app.setGameMode(this.value)" class="min-h-[44px] bg-slate-950 border border-slate-700 text-white text-sm font-extrabold rounded-xl px-3 py-2 outline-none cursor-pointer hover:bg-slate-800 transition-colors">
+          <option value="practice">🥋 Training Dojo</option>
+          <option value="blitz">⏱️ Sewer Speed Blitz</option>
+          <option value="daily">📅 Daily Dojo Challenge</option>
+          <option value="shredder">🦹 Vs. Shredder AI</option>
+        </select>
+
+        <button onclick="app.openModal('custom-target-modal')" class="min-h-[44px] px-3.5 py-2 bg-ninja-donnie/20 border border-ninja-donnie/50 text-purple-200 hover:bg-ninja-donnie/30 rounded-xl text-sm font-bold transition-colors flex items-center gap-1.5" title="Preset & Custom Targets">
+          <i class="fa-solid fa-sliders" aria-hidden="true"></i> Presets
+        </button>
+      </div>
+    </div>
+
+    <!-- Shredder AI Live Status Bar (Hidden by Default) -->
+    <div id="shredder-ai-bar" class="w-full max-w-2xl bg-slate-900 border-2 border-rose-600/80 p-3 rounded-2xl mb-4 hidden shadow-xl">
+      <div class="flex items-center justify-between text-xs font-black uppercase text-rose-300 mb-1.5">
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-user-ninja text-rose-500"></i> Shredder AI Solver</span>
+        <span id="shredder-status-text">Computing Solution...</span>
+      </div>
+      <div class="w-full bg-slate-950 rounded-full h-3 border border-slate-700 overflow-hidden">
+        <div id="shredder-progress-fill" class="bg-gradient-to-r from-rose-600 to-amber-500 h-full w-0 transition-all duration-300"></div>
+      </div>
+    </div>
+
+    <!-- Hero Skill Quick Trigger Bar -->
+    <div class="w-full max-w-2xl bg-slate-900/80 px-4 py-2.5 rounded-2xl border border-slate-700 mb-4 flex items-center justify-between text-xs font-bold">
+      <div class="flex items-center space-x-2">
+        <span id="hero-avatar-icon" class="text-xl">⚔️</span>
+        <div>
+          <span id="hero-ability-title" class="text-white block font-extrabold">Master Insight</span>
+          <span id="hero-ability-desc" class="text-slate-300 text-[11px]">Free hint without breaking streak</span>
+        </div>
+      </div>
+      <button id="hero-active-btn" onclick="app.useHeroAbility()" class="min-h-[44px] px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl shadow-md transition-all active:scale-95 flex items-center gap-1.5">
+        <i class="fa-solid fa-bolt" aria-hidden="true"></i> Use Skill
+      </button>
+    </div>
+
+    <!-- MAIN GAME CARD -->
+    <div class="w-full max-w-2xl bg-slate-900 rounded-3xl shadow-2xl border-2 border-slate-700 overflow-hidden flex flex-col relative">
+
+      <!-- Target Display Banner -->
+      <div class="bg-slate-950 p-6 text-white text-center relative overflow-hidden border-b border-slate-700">
+        <div class="absolute right-3 -bottom-6 text-slate-800/30 text-9xl pointer-events-none select-none" aria-hidden="true">
+          <i class="fa-solid fa-shuriken animate-spin-slow"></i>
+        </div>
+
+        <div class="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-left">
+            <span id="mission-mode-tag" class="text-xs font-black uppercase tracking-wider text-ninja-slime bg-ninja-slime/10 px-3 py-1 rounded-full border border-ninja-slime/30 flex items-center gap-1 w-max">
+              <i class="fa-solid fa-bullseye" aria-hidden="true"></i> Target Mission
+            </span>
+            <p class="text-slate-200 text-xs mt-1.5 font-bold">Use all numbers to calculate the exact goal!</p>
+          </div>
+
+          <!-- Target Goal Badge -->
+          <div class="flex items-center justify-center">
+            <div id="target-number-badge" class="font-display text-5xl sm:text-6xl font-black text-amber-300 tracking-wider bg-slate-900 px-7 py-2.5 rounded-2xl border-2 border-amber-400/80 shadow-2xl min-w-[130px] text-center transition-all duration-300">
+              10
+            </div>
+          </div>
+
+          <!-- Score & Timer Display -->
+          <div class="text-right flex flex-row sm:flex-col gap-4 sm:gap-1 items-center sm:items-end justify-between w-full sm:w-auto">
+            <div id="blitz-timer-container" class="hidden flex items-center space-x-1.5 text-rose-400 font-display font-black text-xl">
+              <i class="fa-solid fa-stopwatch animate-pulse" aria-hidden="true"></i>
+              <span id="blitz-time">60s</span>
+            </div>
+            <div class="text-right">
+              <span class="text-xs text-slate-300 block font-bold uppercase tracking-wider">Ninja Streak</span>
+              <span id="streak-counter" class="font-display font-black text-2xl text-amber-400">0 🍕</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLAYFIELD & KATANA CANVAS -->
+      <div class="p-6 sm:p-8 bg-slate-900/90 flex-1 flex flex-col items-center justify-center min-h-[250px] relative">
+
+        <svg id="katana-canvas" xmlns="http://www.w3.org/2000/svg">
+          <line id="katana-slash-line" x1="0" y1="0" x2="0" y2="0" stroke="#a3e635" stroke-width="6" stroke-linecap="round" opacity="0"/>
+        </svg>
+
+        <!-- CARDS CONTAINER -->
+        <div id="cards-container" class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-lg mb-6 relative z-10" role="region" aria-label="Number Cards">
+          <!-- Dynamically injected -->
+        </div>
+
+        <!-- MATH OPERATORS -->
+        <div class="w-full max-w-md bg-slate-950 p-3 rounded-2xl shadow-xl border border-slate-700 flex items-center justify-between gap-2 relative z-10" role="toolbar" aria-label="Operators">
+          <button onclick="app.selectOperator('+')" id="op-add" aria-label="Add" class="op-btn min-h-[48px] flex-1 py-3 bg-slate-800 text-white hover:bg-slate-700 rounded-xl text-2xl font-black font-display transition-all border border-slate-700 active:scale-95 flex items-center justify-center">
+            +
+          </button>
+          <button onclick="app.selectOperator('-')" id="op-sub" aria-label="Subtract" class="op-btn min-h-[48px] flex-1 py-3 bg-slate-800 text-white hover:bg-slate-700 rounded-xl text-2xl font-black font-display transition-all border border-slate-700 active:scale-95 flex items-center justify-center">
+            −
+          </button>
+          <button onclick="app.selectOperator('*')" id="op-mul" aria-label="Multiply" class="op-btn min-h-[48px] flex-1 py-3 bg-slate-800 text-white hover:bg-slate-700 rounded-xl text-2xl font-black font-display transition-all border border-slate-700 active:scale-95 flex items-center justify-center">
+            ×
+          </button>
+          <button onclick="app.selectOperator('/')" id="op-div" aria-label="Divide" class="op-btn min-h-[48px] flex-1 py-3 bg-slate-800 text-white hover:bg-slate-700 rounded-xl text-2xl font-black font-display transition-all border border-slate-700 active:scale-95 flex items-center justify-center">
+            ÷
+          </button>
+        </div>
+
+        <!-- History & Accessible Status Announcements -->
+        <div id="history-box" class="mt-4 text-xs font-bold text-slate-200 bg-slate-950 border border-slate-700 px-4 py-3 rounded-xl min-h-[40px] flex items-center justify-center gap-2 text-center w-full max-w-md" aria-live="polite" aria-atomic="true">
+          <i class="fa-solid fa-user-ninja text-ninja-slime" aria-hidden="true"></i>
+          <span id="history-text">Select a card, then an operator (+, −, ×, ÷), then another card!</span>
+        </div>
+      </div>
+
+      <!-- LOWER UTILITIES BAR -->
+      <div class="bg-slate-950 border-t border-slate-700 px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center space-x-2">
+          <button onclick="app.undo()" id="btn-undo" disabled class="min-h-[44px] px-3.5 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-200 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 border border-slate-700" aria-label="Undo move">
+            <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Undo
+          </button>
+          <button onclick="app.resetPuzzle()" class="min-h-[44px] px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 border border-slate-700" aria-label="Reset puzzle">
+            <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Reset
+          </button>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <button onclick="app.getHint()" class="min-h-[44px] px-3.5 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 border border-amber-500/40" aria-label="Sensei Hint">
+            <i class="fa-regular fa-lightbulb" aria-hidden="true"></i> Strategic Hint
+          </button>
+          <button onclick="app.showSolution()" class="min-h-[44px] px-3.5 py-2 bg-ninja-donnie/10 hover:bg-ninja-donnie/20 text-purple-200 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 border border-ninja-donnie/40" aria-label="View Solution">
+            <i class="fa-solid fa-scroll" aria-hidden="true"></i> Solution
+          </button>
+          <button onclick="app.generateNewPuzzle()" class="min-h-[44px] px-4 py-2 bg-turtle-600 hover:bg-turtle-500 text-white text-xs font-extrabold rounded-xl transition-all shadow-lg active:scale-95 flex items-center gap-1.5 border border-ninja-slime" aria-label="Next Puzzle">
+            <i class="fa-solid fa-forward" aria-hidden="true"></i> Next
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="max-w-5xl mx-auto px-4 py-4 text-center text-xs text-slate-300 font-semibold" role="contentinfo">
+    Target Ninja 🥷 • K-12 Accessible Math Learning Platform
+  </footer>
+
+
+  <!-- MODAL: CHARACTER SELECT -->
+  <div id="char-select-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="char-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-lg w-full p-6 border-2 border-slate-700 animate-pop text-white">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h3 id="char-modal-title" class="font-display font-bold text-xl text-white flex items-center gap-2">
+          <i class="fa-solid fa-user-shield text-amber-400" aria-hidden="true"></i> Choose Ninja Hero
+        </h3>
+        <button onclick="app.closeModal('char-select-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close modal"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+        <!-- Leonardo -->
+        <div onclick="app.selectHero('leo')" class="p-3.5 rounded-2xl bg-slate-950 border-2 border-ninja-leo cursor-pointer hover:bg-slate-800 transition-all flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-display font-bold text-ninja-leo text-lg">Leonardo ⚔️</span>
+            <span class="text-xs bg-ninja-leo/20 text-ninja-leo px-2 py-0.5 rounded-full font-bold">Leader</span>
+          </div>
+          <p class="text-xs text-slate-300 font-medium"><strong>Ability:</strong> <em>Master's Insight</em> (1 free strategic hint per game without breaking streak).</p>
+        </div>
+
+        <!-- Michelangelo -->
+        <div onclick="app.selectHero('mikey')" class="p-3.5 rounded-2xl bg-slate-950 border-2 border-ninja-mikey cursor-pointer hover:bg-slate-800 transition-all flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-display font-bold text-ninja-mikey text-lg">Michelangelo 🍕</span>
+            <span class="text-xs bg-ninja-mikey/20 text-ninja-mikey px-2 py-0.5 rounded-full font-bold">Party</span>
+          </div>
+          <p class="text-xs text-slate-300 font-medium"><strong>Ability:</strong> <em>Pizza Party Boost</em> (+5s added in Blitz whenever a puzzle is solved under 10s).</p>
+        </div>
+
+        <!-- Donatello -->
+        <div onclick="app.selectHero('donnie')" class="p-3.5 rounded-2xl bg-slate-950 border-2 border-ninja-donnie cursor-pointer hover:bg-slate-800 transition-all flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-display font-bold text-ninja-donnie text-lg">Donatello 🧪</span>
+            <span class="text-xs bg-ninja-donnie/20 text-ninja-donnie px-2 py-0.5 rounded-full font-bold">Tech</span>
+          </div>
+          <p class="text-xs text-slate-300 font-medium"><strong>Ability:</strong> <em>Tech Analysis</em> (Auto-highlights a guaranteed first step combination).</p>
+        </div>
+
+        <!-- Raphael -->
+        <div onclick="app.selectHero('raph')" class="p-3.5 rounded-2xl bg-slate-950 border-2 border-ninja-raph cursor-pointer hover:bg-slate-800 transition-all flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-display font-bold text-ninja-raph text-lg">Raphael 🥊</span>
+            <span class="text-xs bg-ninja-raph/20 text-ninja-raph px-2 py-0.5 rounded-full font-bold">Brawler</span>
+          </div>
+          <p class="text-xs text-slate-300 font-medium"><strong>Ability:</strong> <em>Brawler Swap</em> (Swap any selected card for a fresh random 1–9 digit once per game).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: PIZZA SHOP -->
+  <div id="shop-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="shop-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-6 border-2 border-slate-700 animate-pop text-white">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h3 id="shop-modal-title" class="font-display font-bold text-xl text-white flex items-center gap-2">
+          <i class="fa-solid fa-store text-amber-400" aria-hidden="true"></i> Pizza Power Shop
+        </h3>
+        <button onclick="app.closeModal('shop-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close modal"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800 mb-4 flex items-center justify-between">
+        <span class="text-sm font-bold text-slate-200">Your Pizza Balance:</span>
+        <span id="shop-pizza-balance" class="text-xl font-display font-black text-amber-400">0 🍕</span>
+      </div>
+
+      <div class="space-y-3">
+        <!-- Smoke Bomb -->
+        <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-between">
+          <div>
+            <div class="font-bold text-slate-100 text-sm flex items-center gap-1.5">
+              <span>💨 Smoke Bomb</span>
+              <span class="text-[10px] bg-slate-800 text-amber-300 px-2 py-0.5 rounded">10 🍕</span>
+            </div>
+            <p class="text-xs text-slate-300 mt-0.5">Skip tricky puzzle safely without breaking streak!</p>
+          </div>
+          <button onclick="app.buyPowerUp('smoke')" class="min-h-[44px] px-3 py-1.5 bg-turtle-600 hover:bg-turtle-500 text-white font-bold rounded-xl text-xs">
+            Buy & Use
+          </button>
+        </div>
+
+        <!-- Time Freeze -->
+        <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-between">
+          <div>
+            <div class="font-bold text-slate-100 text-sm flex items-center gap-1.5">
+              <span>❄️ Time Freeze</span>
+              <span class="text-[10px] bg-slate-800 text-amber-300 px-2 py-0.5 rounded">12 🍕</span>
+            </div>
+            <p class="text-xs text-slate-300 mt-0.5">Freeze Blitz timer for 15 bonus seconds!</p>
+          </div>
+          <button onclick="app.buyPowerUp('freeze')" class="min-h-[44px] px-3 py-1.5 bg-turtle-600 hover:bg-turtle-500 text-white font-bold rounded-xl text-xs">
+            Buy & Use
+          </button>
+        </div>
+
+        <!-- Nunchaku Slice -->
+        <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-between">
+          <div>
+            <div class="font-bold text-slate-100 text-sm flex items-center gap-1.5">
+              <span>⚔️ Nunchaku Factor Slice</span>
+              <span class="text-[10px] bg-slate-800 text-amber-300 px-2 py-0.5 rounded">15 🍕</span>
+            </div>
+            <p class="text-xs text-slate-300 mt-0.5">Split a selected composite card into factors!</p>
+          </div>
+          <button onclick="app.buyPowerUp('slice')" class="min-h-[44px] px-3 py-1.5 bg-turtle-600 hover:bg-turtle-500 text-white font-bold rounded-xl text-xs">
+            Buy & Use
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: THEME CUSTOMIZER -->
+  <div id="theme-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="theme-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-6 border-2 border-slate-700 animate-pop text-white">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h3 id="theme-modal-title" class="font-display font-bold text-xl text-white flex items-center gap-2">
+          <i class="fa-solid fa-palette text-ninja-donnie" aria-hidden="true"></i> Dojo Themes
+        </h3>
+        <button onclick="app.closeModal('theme-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close modal"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="app.setTheme('sewer')" class="p-4 rounded-2xl bg-slate-950 border-2 border-ninja-slime text-left hover:bg-slate-800 transition-all min-h-[80px]">
+          <span class="font-extrabold text-ninja-slime block text-sm">🐢 Sewer Dark</span>
+          <span class="text-xs text-slate-300">Classic TMNT Slime</span>
+        </button>
+
+        <button onclick="app.setTheme('cyber')" class="p-4 rounded-2xl bg-slate-950 border-2 border-sky-400 text-left hover:bg-slate-800 transition-all min-h-[80px]">
+          <span class="font-extrabold text-sky-400 block text-sm">🌆 Cyber Dojo</span>
+          <span class="text-xs text-slate-300">Neon Purple & Cyan</span>
+        </button>
+
+        <button onclick="app.setTheme('comic')" class="p-4 rounded-2xl bg-slate-950 border-2 border-amber-400 text-left hover:bg-slate-800 transition-all min-h-[80px]">
+          <span class="font-extrabold text-amber-400 block text-sm">🗯️ Comic B&W</span>
+          <span class="text-xs text-slate-300">High-Contrast Manga</span>
+        </button>
+
+        <button onclick="app.setTheme('technodrome')" class="p-4 rounded-2xl bg-slate-950 border-2 border-rose-500 text-left hover:bg-slate-800 transition-all min-h-[80px]">
+          <span class="font-extrabold text-rose-400 block text-sm">🦹 Technodrome</span>
+          <span class="text-xs text-slate-300">Dark Crimson Aesthetic</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: CUSTOM TARGET & PRESETS -->
+  <div id="custom-target-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="custom-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-6 border-2 border-slate-700 animate-pop text-white">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h3 id="custom-modal-title" class="font-display font-bold text-lg text-white flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-ninja-donnie" aria-hidden="true"></i> Math Target Presets
+        </h3>
+        <button onclick="app.closeModal('custom-target-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close modal"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <!-- Quick Preset Buttons -->
+      <div class="mb-4">
+        <span class="text-xs font-bold text-slate-300 uppercase block mb-2">Quick Famous Math Presets:</span>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="app.loadPresetTarget(24)" class="min-h-[44px] p-2 bg-slate-950 hover:bg-slate-800 border border-slate-700 rounded-xl text-xs font-extrabold text-amber-300">
+            🎯 Classic 24 Game
+          </button>
+          <button onclick="app.loadPresetTarget(10)" class="min-h-[44px] p-2 bg-slate-950 hover:bg-slate-800 border border-slate-700 rounded-xl text-xs font-extrabold text-ninja-slime">
+            🎯 Target 10 (Elementary)
+          </button>
+          <button onclick="app.loadPresetTarget(50)" class="min-h-[44px] p-2 bg-slate-950 hover:bg-slate-800 border border-slate-700 rounded-xl text-xs font-extrabold text-sky-300">
+            🎯 Target 50
+          </button>
+          <button onclick="app.loadPresetTarget(100)" class="min-h-[44px] p-2 bg-slate-950 hover:bg-slate-800 border border-slate-700 rounded-xl text-xs font-extrabold text-rose-300">
+            🎯 Target 100
+          </button>
+        </div>
+      </div>
+
+      <div class="space-y-4 border-t border-slate-800 pt-4">
+        <div>
+          <label for="custom-target-input" class="block text-xs font-bold text-slate-300 uppercase mb-1">Custom Target Goal</label>
+          <input type="number" id="custom-target-input" value="10" min="1" max="200" class="min-h-[44px] w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-amber-300 focus:ring-2 focus:ring-turtle-500 text-xl font-black font-display" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Custom Source Numbers (Optional 4 numbers)</label>
+          <div class="grid grid-cols-4 gap-2">
+            <input type="number" id="c-num-1" aria-label="Custom number 1" placeholder="Auto" min="1" max="99" class="min-h-[44px] px-2 py-2 text-center rounded-xl bg-slate-950 border border-slate-700 text-white font-bold text-sm" />
+            <input type="number" id="c-num-2" aria-label="Custom number 2" placeholder="Auto" min="1" max="99" class="min-h-[44px] px-2 py-2 text-center rounded-xl bg-slate-950 border border-slate-700 text-white font-bold text-sm" />
+            <input type="number" id="c-num-3" aria-label="Custom number 3" placeholder="Auto" min="1" max="99" class="min-h-[44px] px-2 py-2 text-center rounded-xl bg-slate-950 border border-slate-700 text-white font-bold text-sm" />
+            <input type="number" id="c-num-4" aria-label="Custom number 4" placeholder="Auto" min="1" max="99" class="min-h-[44px] px-2 py-2 text-center rounded-xl bg-slate-950 border border-slate-700 text-white font-bold text-sm" />
+          </div>
+        </div>
+
+        <div id="custom-error-msg" class="hidden text-xs text-rose-300 bg-rose-950/80 border border-rose-700 p-3 rounded-xl font-bold"></div>
+
+        <button onclick="app.applyCustomTarget()" class="min-h-[44px] w-full py-3 bg-ninja-donnie hover:bg-purple-600 text-white font-extrabold rounded-xl text-sm transition-all shadow-lg">
+          Generate Custom Puzzle
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: HINT & SOLUTION PLAYER -->
+  <div id="hint-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="hint-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-6 border-2 border-slate-700 animate-pop text-white">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h3 id="hint-modal-title" class="font-display font-bold text-lg text-white">
+          <i class="fa-solid fa-user-ninja text-ninja-slime mr-2" aria-hidden="true"></i> Sensei Breakdown
+        </h3>
+        <button onclick="app.closeModal('hint-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close modal"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div id="hint-modal-content" class="text-slate-200 text-sm space-y-3 font-medium">
+        <!-- Injected dynamically -->
+      </div>
+
+      <div class="mt-6 text-right">
+        <button onclick="app.closeModal('hint-modal')" class="min-h-[44px] px-5 py-2.5 bg-turtle-600 text-white font-extrabold rounded-xl text-sm hover:bg-turtle-500 transition-colors">
+          Got it, Sensei!
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: STATS & BELT PROGRESSION -->
+  <div id="stats-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="stats-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-6 border-2 border-slate-700 animate-pop text-white">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h3 id="stats-modal-title" class="font-display font-bold text-lg text-white"><i class="fa-solid fa-shield-halved text-ninja-leo mr-2" aria-hidden="true"></i> Ninja Rank & Stats</h3>
+        <button onclick="app.closeModal('stats-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close modal"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div id="belt-rank-display" class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center mb-4">
+        <!-- Injected dynamically -->
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+          <span class="text-xs text-slate-300 font-bold block">Puzzles Solved</span>
+          <span id="stat-solved" class="text-2xl font-display font-black text-turtle-400">0</span>
+        </div>
+        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+          <span class="text-xs text-slate-300 font-bold block">Best Streak</span>
+          <span id="stat-streak" class="text-2xl font-display font-black text-amber-400">0 🍕</span>
+        </div>
+        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+          <span class="text-xs text-slate-300 font-bold block">Blitz Record</span>
+          <span id="stat-blitz" class="text-2xl font-display font-black text-rose-400">0</span>
+        </div>
+        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+          <span class="text-xs text-slate-300 font-bold block">Hints Used</span>
+          <span id="stat-hints" class="text-2xl font-display font-black text-purple-300">0</span>
+        </div>
+      </div>
+
+      <div class="text-right">
+        <button onclick="app.resetStats()" class="min-h-[44px] px-3 py-1 text-xs text-rose-300 font-bold hover:underline">Reset Ninja Stats</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: HELP & INSTRUCTIONS -->
+  <div id="help-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-lg w-full p-6 border-2 border-slate-700 animate-pop max-h-[90vh] overflow-y-auto text-white">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+        <h3 id="help-modal-title" class="font-display font-bold text-lg text-white"><i class="fa-solid fa-graduation-cap text-ninja-mikey mr-2" aria-hidden="true"></i> How to Play Target Ninja</h3>
+        <button onclick="app.closeModal('help-modal')" class="p-2 min-w-[44px] min-h-[44px] text-slate-300 hover:text-white" aria-label="Close modal"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="space-y-4 text-sm text-slate-200 leading-relaxed">
+        <div class="bg-ninja-slime/10 p-3.5 rounded-2xl border border-ninja-slime/30">
+          <h4 class="font-bold text-ninja-slime mb-1 text-base">🥷 Objective</h4>
+          <p>Combine all given number cards using (+, −, ×, ÷) to match the target goal exactly!</p>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-bold text-white">🕹️ How to make moves:</h4>
+          <ol class="list-decimal list-inside space-y-1.5 pl-1 text-xs sm:text-sm">
+            <li>Select a <strong>Number Card</strong>.</li>
+            <li>Select an <strong>Operator (+, −, ×, ÷)</strong>.</li>
+            <li>Select a second <strong>Number Card</strong> to perform math!</li>
+            <li>The cards will combine into a single new card.</li>
+            <li>Continue combining until 1 card remains matching the goal!</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="mt-6 text-right">
+        <button onclick="app.closeModal('help-modal')" class="min-h-[44px] px-5 py-2.5 bg-turtle-600 text-white font-extrabold rounded-xl text-sm hover:bg-turtle-500 transition-colors">
+          Cowabunga! Let's Play!
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: VICTORY & DAILY SHARE -->
+  <div id="victory-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="victory-title">
+    <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-lg w-full p-6 text-center border-2 border-ninja-slime animate-pop max-h-[90vh] flex flex-col text-white">
+      <div class="w-16 h-16 bg-turtle-500/20 text-ninja-slime border-2 border-ninja-slime rounded-full flex items-center justify-center text-3xl mx-auto mb-3 shadow-lg flex-shrink-0">
+        🍕
+      </div>
+      <h3 id="victory-title" class="font-display font-black text-3xl text-white mb-1 uppercase tracking-wider italic">Cowabunga!</h3>
+      <p id="victory-subtext" class="text-ninja-slime text-sm font-extrabold mb-3">Target Mission Accomplished!</p>
+
+      <div id="victory-steps-container" class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs text-slate-200 mb-4 text-left overflow-y-auto max-h-72 flex-1 space-y-3">
+        <!-- Injected dynamically -->
+      </div>
+
+      <div class="flex gap-2">
+        <button id="daily-share-btn" onclick="app.copyDailySummary()" class="hidden min-h-[44px] flex-1 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-2xl text-sm transition-all">
+          <i class="fa-solid fa-share-nodes mr-1" aria-hidden="true"></i> Copy Daily Result
+        </button>
+        <button onclick="app.nextVictoryPuzzle()" class="min-h-[44px] flex-1 py-3 bg-turtle-600 hover:bg-turtle-500 text-white font-black font-display rounded-2xl text-base transition-all border-2 border-ninja-slime">
+          Next Mission <i class="fa-solid fa-arrow-right ml-1" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SCRIPT ENGINE -->
+  <script>
+
+    /**
+     * Exact Fraction class for precise arithmetic without float rounding errors
+     */
+    class Fraction {
+      constructor(n, d = 1) {
+        if (d === 0) throw new Error("Division by zero");
+        if (d < 0) { n = -n; d = -d; }
+        const g = Fraction.gcd(Math.abs(n), Math.abs(d));
+        this.n = n / g;
+        this.d = d / g;
+      }
+
+      static gcd(a, b) { return b === 0 ? a : Fraction.gcd(b, a % b); }
+      add(f) { return new Fraction(this.n * f.d + f.n * this.d, this.d * f.d); }
+      sub(f) { return new Fraction(this.n * f.d - f.n * this.d, this.d * f.d); }
+      mul(f) { return new Fraction(this.n * f.n, this.d * f.d); }
+      div(f) {
+        if (f.n === 0) return null;
+        return new Fraction(this.n * f.d, this.d * f.n);
+      }
+      equals(num) { return Math.abs((this.n / this.d) - num) < 1e-7; }
+      isInteger() { return this.d === 1; }
+      toNumber() { return this.n / this.d; }
+      toString() { return this.d === 1 ? `${this.n}` : `${this.n}/${this.d}`; }
+    }
+
+    /**
+     * TargetSolver evaluating binary expression trees
+     */
+    class TargetSolver {
+      static solve(numbers, target) {
+        const initialNodes = numbers.map(n => ({
+          val: new Fraction(n),
+          expr: `${n}`,
+          isIntegerPath: true
+        }));
+
+        const solutions = [];
+        const seenExprs = new Set();
+
+        function search(nodes) {
+          if (nodes.length === 1) {
+            if (nodes[0].val.equals(target)) {
+              const exprStr = nodes[0].expr;
+              if (!seenExprs.has(exprStr)) {
+                seenExprs.add(exprStr);
+                solutions.push(nodes[0]);
+              }
+            }
+            return;
+          }
+
+          for (let i = 0; i < nodes.length; i++) {
+            for (let j = 0; j < nodes.length; j++) {
+              if (i === j) continue;
+
+              const remaining = nodes.filter((_, idx) => idx !== i && idx !== j);
+              const a = nodes[i];
+              const b = nodes[j];
+
+              const ops = [
+                { symbol: '+', res: a.val.add(b.val) },
+                { symbol: '-', res: a.val.sub(b.val) },
+                { symbol: '*', res: a.val.mul(b.val) },
+                { symbol: '/', res: a.val.div(b.val) }
+              ];
+
+              for (const op of ops) {
+                if (!op.res) continue;
+                const isInt = a.isIntegerPath && b.isIntegerPath && op.res.isInteger();
+                const newExpr = `(${a.expr} ${op.symbol} ${b.expr})`;
+
+                search([...remaining, {
+                  val: op.res,
+                  expr: newExpr,
+                  isIntegerPath: isInt
+                }]);
+              }
+            }
+          }
+        }
+
+        search(initialNodes);
+        return solutions;
+      }
+    }
+
+    /**
+     * Web Audio Synth Sound FX Engine
+     */
+    class AudioEngine {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+      }
+
+      playTone(freq, type = 'sine', duration = 0.15, vol = 0.1) {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {}
+      }
+
+      playSelect() { this.playTone(440, 'sine', 0.08, 0.08); }
+      playOp() { this.playTone(587.33, 'triangle', 0.1, 0.1); }
+      playMerge() {
+        this.playTone(523.25, 'sine', 0.1, 0.12);
+        setTimeout(() => this.playTone(659.25, 'sine', 0.15, 0.12), 60);
+      }
+      playUndo() { this.playTone(300, 'sawtooth', 0.12, 0.05); }
+      playVictory() {
+        if (!this.enabled) return;
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          setTimeout(() => this.playTone(freq, 'triangle', 0.3, 0.15), idx * 100);
+        });
+      }
+      playError() { this.playTone(200, 'sawtooth', 0.2, 0.1); }
+    }
+
+    /**
+     * Main Target Ninja App Engine
+     */
+    class AppController {
+      constructor() {
+        this.audio = new AudioEngine();
+        this.difficulty = 'easy'; // easy, medium, hard, master
+        this.mode = 'practice'; // practice, blitz, daily, shredder
+        this.target = 10;
+        this.initialNumbers = [1, 2, 3, 4];
+        this.cards = [];
+        this.selectedCardId = null;
+        this.selectedOperator = null;
+        this.moveHistory = [];
+        this.solutionCache = [];
+        this.streak = 0;
+        this.pizzaSlices = 10;
+        this.activeHero = 'leo'; // leo, mikey, donnie, raph
+        this.heroAbilityUsed = false;
+
+        this.blitzTimer = null;
+        this.blitzTimeLeft = 60;
+
+        this.shredderTimer = null;
+        this.shredderProgress = 0;
+
+        this.stats = {
+          solved: 0,
+          bestStreak: 0,
+          blitzScore: 0,
+          hintsUsed: 0
+        };
+
+        this.loadStats();
+      }
+
+      init() {
+        this.updateStatsUI();
+        this.setDifficulty('easy', false);
+        this.generateNewPuzzle();
+      }
+
+      loadStats() {
+        try {
+          const saved = localStorage.getItem('target_ninja_stats');
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            this.stats = { ...this.stats, ...parsed };
+            this.pizzaSlices = parsed.pizzaSlices || 10;
+          }
+        } catch (e) {}
+      }
+
+      saveStats() {
+        try {
+          localStorage.setItem('target_ninja_stats', JSON.stringify({
+            ...this.stats,
+            pizzaSlices: this.pizzaSlices
+          }));
+        } catch (e) {}
+        this.updateStatsUI();
+      }
+
+      resetStats() {
+        this.stats = { solved: 0, bestStreak: 0, blitzScore: 0, hintsUsed: 0 };
+        this.pizzaSlices = 10;
+        this.saveStats();
+        this.closeModal('stats-modal');
+      }
+
+      getBeltRank() {
+        const s = this.stats.solved;
+        if (s >= 100 && this.stats.blitzScore >= 20) return { name: '🥋 Grand Sensei', color: 'text-amber-400', bg: 'bg-amber-950 border-amber-400' };
+        if (s >= 76) return { name: '⬛ Black Belt', color: 'text-slate-100', bg: 'bg-slate-900 border-slate-500' };
+        if (s >= 51) return { name: '🔴 Red Belt', color: 'text-rose-400', bg: 'bg-rose-950 border-rose-500' };
+        if (s >= 31) return { name: '🔵 Blue Belt', color: 'text-sky-400', bg: 'bg-sky-950 border-sky-500' };
+        if (s >= 16) return { name: '🟢 Green Belt', color: 'text-turtle-400', bg: 'bg-turtle-950 border-turtle-500' };
+        if (s >= 6)  return { name: '🟡 Yellow Belt', color: 'text-amber-300', bg: 'bg-amber-950 border-amber-500' };
+        return { name: '⚪ White Belt', color: 'text-slate-200', bg: 'bg-slate-800 border-slate-600' };
+      }
+
+      updateStatsUI() {
+        document.getElementById('stat-solved').textContent = this.stats.solved;
+        document.getElementById('stat-streak').textContent = `${this.stats.bestStreak} 🍕`;
+        document.getElementById('stat-blitz').textContent = this.stats.blitzScore;
+        document.getElementById('stat-hints').textContent = this.stats.hintsUsed;
+
+        document.getElementById('header-pizza-count').textContent = this.pizzaSlices;
+        document.getElementById('shop-pizza-balance').textContent = `${this.pizzaSlices} 🍕`;
+
+        const belt = this.getBeltRank();
+        const beltBadge = document.getElementById('header-belt-badge');
+        beltBadge.textContent = belt.name;
+
+        const rankDisplay = document.getElementById('belt-rank-display');
+        if (rankDisplay) {
+          rankDisplay.innerHTML = `
+            <span class="text-xs font-bold text-slate-300 uppercase block">Current Ninja Rank</span>
+            <span class="font-display font-black text-2xl ${belt.color}">${belt.name}</span>
+            <p class="text-xs text-slate-300 mt-1">Solve more puzzles to advance through the belts!</p>
+          `;
+        }
+      }
+
+      toggleSound() {
+        this.audio.enabled = !this.audio.enabled;
+        const icon = document.getElementById('sound-icon');
+        const btn = document.getElementById('sound-btn');
+        if (this.audio.enabled) {
+          icon.className = 'fa-solid fa-volume-high text-lg text-slate-200';
+          btn.classList.remove('bg-rose-900/50');
+        } else {
+          icon.className = 'fa-solid fa-volume-xmark text-lg text-rose-400';
+          btn.classList.add('bg-rose-900/50');
+        }
+      }
+
+      setTheme(themeName) {
+        document.body.setAttribute('data-theme', themeName);
+        this.closeModal('theme-modal');
+      }
+
+      selectHero(heroId) {
+        this.activeHero = heroId;
+        const heroNames = { leo: 'Leonardo', mikey: 'Michelangelo', donnie: 'Donatello', raph: 'Raphael' };
+        const heroIcons = { leo: '⚔️', mikey: '🍕', donnie: '🧪', raph: '🥊' };
+        const heroDescs = {
+          leo: 'Free strategic hint once per puzzle',
+          mikey: '+5s Blitz time on fast solves (<10s)',
+          donnie: 'Auto-highlight guaranteed move',
+          raph: 'Swap 1 card for new random digit'
+        };
+
+        document.getElementById('active-hero-name').textContent = heroNames[heroId];
+        document.getElementById('hero-avatar-icon').textContent = heroIcons[heroId];
+        document.getElementById('hero-ability-title').textContent = `${heroNames[heroId]}'s Skill`;
+        document.getElementById('hero-ability-desc').textContent = heroDescs[heroId];
+
+        this.closeModal('char-select-modal');
+      }
+
+      useHeroAbility() {
+        if (this.heroAbilityUsed) {
+          this.updateHistoryText("⚠️ Hero skill already used on this puzzle!");
+          this.audio.playError();
+          return;
+        }
+
+        if (this.activeHero === 'leo') {
+          this.getHint(true);
+        } else if (this.activeHero === 'donnie') {
+          if (this.solutionCache.length > 0) {
+            this.updateHistoryText(`🧪 Tech Analysis: Try combining numbers in the formula!`);
+            this.getHint(true);
+          }
+        } else if (this.activeHero === 'raph') {
+          if (this.selectedCardId && this.cards.length > 1) {
+            const card = this.cards.find(c => c.id === this.selectedCardId);
+            if (card) {
+              const newDigit = Math.floor(Math.random() * 9) + 1;
+              card.value = new Fraction(newDigit);
+              card.expr = `${newDigit}`;
+              this.solutionCache = TargetSolver.solve(this.cards.map(c => c.value.toNumber()), this.target);
+              this.renderCards();
+              this.updateHistoryText(`🥊 Raphael swapped card to [${newDigit}]!`);
+              this.heroAbilityUsed = true;
+            }
+          } else {
+            this.updateHistoryText("Select a card first to swap it with Raphael's skill!");
+          }
+        } else if (this.activeHero === 'mikey') {
+          this.updateHistoryText("🍕 Michelangelo's Pizza Party automatically adds +5s in Blitz mode when you solve fast!");
+        }
+      }
+
+      setDifficulty(diff, generate = true) {
+        this.difficulty = diff;
+        ['easy', 'medium', 'hard', 'master'].forEach(d => {
+          const btn = document.getElementById(`diff-${d}`);
+          if (btn) {
+            if (d === diff) {
+              btn.className = 'min-h-[44px] flex-1 sm:flex-initial px-4 py-2 rounded-lg text-sm font-black bg-ninja-slime text-slate-950 shadow-md transition-all';
+              btn.setAttribute('aria-selected', 'true');
+            } else {
+              btn.className = 'min-h-[44px] flex-1 sm:flex-initial px-4 py-2 rounded-lg text-sm font-extrabold text-slate-300 hover:text-white transition-all';
+              btn.setAttribute('aria-selected', 'false');
+            }
+          }
+        });
+
+        if (generate) this.generateNewPuzzle();
+      }
+
+      setGameMode(mode) {
+        this.mode = mode;
+        const timerContainer = document.getElementById('blitz-timer-container');
+        const shredderBar = document.getElementById('shredder-ai-bar');
+
+        this.stopBlitzTimer();
+        this.stopShredderAI();
+
+        if (mode === 'blitz') {
+          timerContainer.classList.remove('hidden');
+          this.startBlitzTimer();
+        } else if (mode === 'shredder') {
+          timerContainer.classList.add('hidden');
+          shredderBar.classList.remove('hidden');
+          this.startShredderAI();
+        } else {
+          timerContainer.classList.add('hidden');
+          shredderBar.classList.add('hidden');
+        }
+
+        this.generateNewPuzzle();
+      }
+
+      startBlitzTimer() {
+        this.stopBlitzTimer();
+        this.blitzTimeLeft = 60;
+        this.updateTimerDisplay();
+
+        this.blitzTimer = setInterval(() => {
+          this.blitzTimeLeft--;
+          this.updateTimerDisplay();
+
+          if (this.blitzTimeLeft <= 0) {
+            this.stopBlitzTimer();
+            this.audio.playError();
+            alert(`⏱️ Time's up! You solved ${this.streak} puzzles in Blitz Mode!`);
+            if (this.streak > this.stats.blitzScore) {
+              this.stats.blitzScore = this.streak;
+              this.saveStats();
+            }
+            this.streak = 0;
+            this.updateStatsUI();
+            this.generateNewPuzzle();
+          }
+        }, 1000);
+      }
+
+      stopBlitzTimer() {
+        if (this.blitzTimer) {
+          clearInterval(this.blitzTimer);
+          this.blitzTimer = null;
+        }
+      }
+
+      updateTimerDisplay() {
+        const el = document.getElementById('blitz-time');
+        if (el) el.textContent = `${this.blitzTimeLeft}s`;
+      }
+
+      startShredderAI() {
+        this.stopShredderAI();
+        this.shredderProgress = 0;
+        const fill = document.getElementById('shredder-progress-fill');
+        const status = document.getElementById('shredder-status-text');
+
+        this.shredderTimer = setInterval(() => {
+          this.shredderProgress += 5;
+          if (fill) fill.style.width = `${this.shredderProgress}%`;
+
+          if (this.shredderProgress >= 100) {
+            this.stopShredderAI();
+            this.audio.playError();
+            if (status) status.textContent = "🦹 Shredder Solved First!";
+            alert("🦹 Shredder AI beat you to the solution! Try again!");
+            this.generateNewPuzzle();
+          }
+        }, 1000);
+      }
+
+      stopShredderAI() {
+        if (this.shredderTimer) {
+          clearInterval(this.shredderTimer);
+          this.shredderTimer = null;
+        }
+      }
+
+      loadPresetTarget(targetNum) {
+        this.target = targetNum;
+        this.closeModal('custom-target-modal');
+        this.generateNewPuzzle(false);
+      }
+
+      generateNewPuzzle(randomizeTarget = true) {
+        let cardCount = this.difficulty === 'master' ? 5 : 4;
+        let numRange = [1, 9];
+
+        if (randomizeTarget) {
+          if (this.difficulty === 'easy') {
+            this.target = [10, 12, 15, 16, 20][Math.floor(Math.random() * 5)];
+            numRange = [1, 8];
+          } else if (this.difficulty === 'medium') {
+            this.target = [12, 18, 20, 24, 28, 30, 32, 36][Math.floor(Math.random() * 8)];
+            numRange = [1, 12];
+          } else if (this.difficulty === 'hard') {
+            this.target = Math.floor(Math.random() * 85) + 15;
+            numRange = [1, 15];
+          } else if (this.difficulty === 'master') {
+            this.target = Math.floor(Math.random() * 90) + 10;
+            numRange = [1, 12];
+          }
+        }
+
+        let foundSolvable = false;
+        let attempts = 0;
+        let selectedNums = [];
+        let solutions = [];
+
+        while (!foundSolvable && attempts < 500) {
+          attempts++;
+          selectedNums = Array.from({ length: cardCount }, () => Math.floor(Math.random() * (numRange[1] - numRange[0] + 1)) + numRange[0]);
+          solutions = TargetSolver.solve(selectedNums, this.target);
+          if (solutions.length > 0) foundSolvable = true;
+        }
+
+        if (!foundSolvable) {
+          this.target = 10;
+          selectedNums = [1, 2, 3, 4];
+          solutions = TargetSolver.solve(selectedNums, 10);
+        }
+
+        this.initialNumbers = selectedNums;
+        this.solutionCache = solutions;
+        this.heroAbilityUsed = false;
+
+        const targetBadge = document.getElementById('target-number-badge');
+        targetBadge.textContent = this.target;
+
+        if (this.mode === 'shredder') {
+          this.startShredderAI();
+        }
+
+        this.resetPuzzleState();
+      }
+
+      resetPuzzleState() {
+        this.cards = this.initialNumbers.map((num, idx) => ({
+          id: `card-${idx}-${Date.now()}`,
+          value: new Fraction(num),
+          expr: `${num}`
+        }));
+
+        this.selectedCardId = null;
+        this.selectedOperator = null;
+        this.moveHistory = [];
+
+        this.updateHistoryText("Select a card, then an operator (+, −, ×, ÷), then another card!");
+        this.renderCards();
+        this.renderOperators();
+        this.updateUndoButton();
+      }
+
+      resetPuzzle() {
+        this.audio.playUndo();
+        this.resetPuzzleState();
+      }
+
+      updateHistoryText(msg) {
+        const el = document.getElementById('history-text');
+        if (el) el.textContent = msg;
+      }
+
+      handleCardClick(cardId) {
+        const card = this.cards.find(c => c.id === cardId);
+        if (!card) return;
+
+        if (this.selectedCardId === null) {
+          this.selectedCardId = cardId;
+          this.audio.playSelect();
+          this.updateHistoryText(`Selected card [${card.value.toString()}]. Now choose an operator (+, −, ×, ÷).`);
+        } else if (this.selectedCardId === cardId) {
+          this.selectedCardId = null;
+          this.selectedOperator = null;
+          this.audio.playSelect();
+          this.updateHistoryText("Selection cleared.");
+        } else if (this.selectedOperator !== null) {
+          this.executeOperation(this.selectedCardId, cardId, this.selectedOperator);
+        } else {
+          this.selectedCardId = cardId;
+          this.audio.playSelect();
+          this.updateHistoryText(`Switched selection to [${card.value.toString()}]. Choose an operator.`);
+        }
+
+        this.renderCards();
+        this.renderOperators();
+      }
+
+      selectOperator(op) {
+        if (this.selectedCardId === null) {
+          this.audio.playError();
+          this.updateHistoryText("⚠️ Select a number card first before choosing an operator!");
+          return;
+        }
+
+        this.selectedOperator = op;
+        this.audio.playOp();
+
+        const card = this.cards.find(c => c.id === this.selectedCardId);
+        const cardVal = card ? card.value.toString() : '';
+        const opDisplay = op === '*' ? '×' : op === '/' ? '÷' : op === '-' ? '−' : op;
+        this.updateHistoryText(`Selected [${cardVal}] ${opDisplay} ... Now click the target card!`);
+
+        this.renderOperators();
+      }
+
+      renderOperators() {
+        const ops = [
+          { id: 'op-add', symbol: '+' },
+          { id: 'op-sub', symbol: '-' },
+          { id: 'op-mul', symbol: '*' },
+          { id: 'op-div', symbol: '/' }
+        ];
+
+        ops.forEach(item => {
+          const btn = document.getElementById(item.id);
+          if (!btn) return;
+
+          if (this.selectedOperator === item.symbol) {
+            btn.className = 'op-btn min-h-[48px] flex-1 py-3 bg-amber-400 text-slate-950 font-black rounded-xl text-2xl font-display shadow-lg ring-4 ring-amber-400/50 flex items-center justify-center';
+          } else {
+            btn.className = 'op-btn min-h-[48px] flex-1 py-3 bg-slate-800 text-white hover:bg-slate-700 rounded-xl text-2xl font-black font-display transition-all border border-slate-700 flex items-center justify-center';
+          }
+        });
+      }
+
+      executeOperation(c1Id, c2Id, op) {
+        const c1 = this.cards.find(c => c.id === c1Id);
+        const c2 = this.cards.find(c => c.id === c2Id);
+
+        if (!c1 || !c2) return;
+
+        this.triggerKatanaSlash();
+
+        this.moveHistory.push({
+          cards: this.cards.map(c => ({ id: c.id, value: new Fraction(c.value.n, c.value.d), expr: c.expr })),
+          selectedCardId: this.selectedCardId,
+          selectedOperator: this.selectedOperator
+        });
+
+        let resultVal = null;
+        try {
+          if (op === '+') resultVal = c1.value.add(c2.value);
+          else if (op === '-') resultVal = c1.value.sub(c2.value);
+          else if (op === '*') resultVal = c1.value.mul(c2.value);
+          else if (op === '/') {
+            if (c2.value.n === 0) {
+              this.moveHistory.pop();
+              this.audio.playError();
+              this.updateHistoryText("⚠️ Cannot divide by zero!");
+              return;
+            }
+            resultVal = c1.value.div(c2.value);
+          }
+        } catch (e) {
+          this.moveHistory.pop();
+          this.audio.playError();
+          this.updateHistoryText("⚠️ Invalid mathematical operation.");
+          return;
+        }
+
+        const opSymbol = op === '*' ? '×' : op === '/' ? '÷' : op === '-' ? '−' : op;
+        const newExpr = `(${c1.expr} ${opSymbol} ${c2.expr})`;
+
+        this.cards = this.cards.filter(c => c.id !== c1Id && c.id !== c2Id);
+        this.cards.push({
+          id: `card-${Date.now()}`,
+          value: resultVal,
+          expr: newExpr
+        });
+
+        this.selectedCardId = null;
+        this.selectedOperator = null;
+        this.audio.playMerge();
+
+        this.renderCards();
+        this.renderOperators();
+        this.updateUndoButton();
+
+        this.updateHistoryText(`Calculated: ${c1.value.toString()} ${opSymbol} ${c2.value.toString()} = ${resultVal.toString()}`);
+
+        if (this.cards.length === 1) {
+          const finalVal = this.cards[0].value;
+          if (finalVal.equals(this.target)) {
+            this.handleVictory();
+          } else {
+            this.updateHistoryText(`Result is ${finalVal.toString()}, but target is ${this.target}. Click Undo to try again!`);
+          }
+        }
+      }
+
+      triggerKatanaSlash() {
+        const line = document.getElementById('katana-slash-line');
+        if (!line) return;
+        line.setAttribute('x1', '10');
+        line.setAttribute('y1', '10');
+        line.setAttribute('x2', '300');
+        line.setAttribute('y2', '200');
+        line.setAttribute('opacity', '1');
+        setTimeout(() => line.setAttribute('opacity', '0'), 300);
+      }
+
+      updateUndoButton() {
+        const btn = document.getElementById('btn-undo');
+        if (btn) btn.disabled = this.moveHistory.length === 0;
+      }
+
+      undo() {
+        if (this.moveHistory.length === 0) return;
+        this.audio.playUndo();
+        const lastState = this.moveHistory.pop();
+        this.cards = lastState.cards.map(c => ({
+          id: c.id,
+          value: new Fraction(c.value.n, c.value.d),
+          expr: c.expr
+        }));
+        this.selectedCardId = null;
+        this.selectedOperator = null;
+
+        this.renderCards();
+        this.renderOperators();
+        this.updateUndoButton();
+        this.updateHistoryText("Undid last move.");
+      }
+
+      renderCards() {
+        const container = document.getElementById('cards-container');
+        container.innerHTML = '';
+
+        this.cards.forEach(card => {
+          const cardEl = document.createElement('button');
+          const isSelected = this.selectedCardId === card.id;
+
+          cardEl.className = `
+            relative rounded-2xl p-4 transition-all cursor-pointer flex flex-col items-center justify-center min-h-[110px] active:scale-95 border-2
+            ${isSelected
+              ? 'ninja-card-selected text-ninja-slime'
+              : 'ninja-card text-slate-950 hover:-translate-y-1'}
+          `;
+
+          cardEl.setAttribute('aria-label', `Card value ${card.value.toString()}`);
+          cardEl.onclick = () => this.handleCardClick(card.id);
+
+          const valText = document.createElement('span');
+          valText.className = `font-display font-black text-3xl sm:text-4xl ${isSelected ? 'text-ninja-slime' : 'text-slate-950'}`;
+          valText.textContent = card.value.toString();
+
+          const exprText = document.createElement('span');
+          exprText.className = `text-[11px] ${isSelected ? 'text-slate-300' : 'text-slate-600'} font-bold mt-1 truncate max-w-full`;
+          exprText.textContent = card.expr.includes('(') ? card.expr : '';
+
+          cardEl.appendChild(valText);
+          if (exprText.textContent) cardEl.appendChild(exprText);
+          container.appendChild(cardEl);
+        });
+      }
+
+      handleVictory() {
+        this.stopShredderAI();
+        this.audio.playVictory();
+        this.triggerConfetti();
+
+        this.streak++;
+        this.pizzaSlices += 1; // +1 Pizza Slice reward
+        this.stats.solved++;
+        if (this.streak > this.stats.bestStreak) this.stats.bestStreak = this.streak;
+        this.saveStats();
+
+        const stepsContainer = document.getElementById('victory-steps-container');
+        stepsContainer.innerHTML = '';
+
+        const winningExpr = this.cards[0].expr;
+
+        // 1. Highlight User's Solution
+        const userSolBox = document.createElement('div');
+        userSolBox.className = 'bg-turtle-950 border-2 border-turtle-500 p-3.5 rounded-2xl mb-3 shadow-md';
+        userSolBox.innerHTML = `
+          <div class="text-[11px] font-black text-turtle-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-check text-turtle-400"></i> Your Winning Solution
+          </div>
+          <div class="font-mono font-black text-white text-base sm:text-lg">${winningExpr} = ${this.target}</div>
+        `;
+        stepsContainer.appendChild(userSolBox);
+
+        // 2. Display All Possible Solutions
+        const allUniqueExprs = Array.from(new Set(this.solutionCache.map(s => s.expr)));
+
+        const allSolSection = document.createElement('div');
+        allSolSection.className = 'space-y-2';
+
+        const heading = document.createElement('div');
+        heading.className = 'text-xs font-extrabold text-amber-300 uppercase tracking-wider flex items-center justify-between pb-1 border-b border-slate-800';
+        heading.innerHTML = `
+          <span class="flex items-center gap-1.5">
+            <i class="fa-solid fa-scroll text-amber-400"></i> All Possible Solutions (${allUniqueExprs.length})
+          </span>
+          <span class="text-[10px] text-slate-400 font-normal">Sensei Archives</span>
+        `;
+        allSolSection.appendChild(heading);
+
+        const listContainer = document.createElement('div');
+        listContainer.className = 'space-y-2 max-h-52 overflow-y-auto pr-1';
+
+        allUniqueExprs.forEach((expr, idx) => {
+          const item = document.createElement('div');
+          const isUserMatch = expr === winningExpr;
+          item.className = `p-2.5 rounded-xl font-mono text-xs flex items-center justify-between border transition-all ${
+            isUserMatch
+              ? 'bg-turtle-900/40 border-turtle-500/60 text-turtle-200'
+              : 'bg-slate-900/90 border-slate-800 text-slate-200 hover:border-slate-700'
+          }`;
+
+          item.innerHTML = `
+            <div class="flex items-center gap-2 overflow-hidden">
+              <span class="text-[10px] font-sans font-bold bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded flex-shrink-0">#${idx + 1}</span>
+              <span class="truncate font-bold">${expr} = ${this.target}</span>
+            </div>
+            ${isUserMatch ? '<span class="text-[10px] bg-turtle-500/20 text-turtle-300 px-2 py-0.5 rounded-full font-sans font-extrabold flex-shrink-0 border border-turtle-500/40">You used this!</span>' : ''}
+          `;
+          listContainer.appendChild(item);
+        });
+
+        allSolSection.appendChild(listContainer);
+        stepsContainer.appendChild(allSolSection);
+
+        const shareBtn = document.getElementById('daily-share-btn');
+        if (this.mode === 'daily') {
+          shareBtn.classList.remove('hidden');
+        } else {
+          shareBtn.classList.add('hidden');
+        }
+
+        this.openModal('victory-modal');
+      }
+
+      copyDailySummary() {
+        const today = new Date().toISOString().slice(0, 10);
+        const text = `Target Ninja 🥷 Daily Challenge (${today})\n🎯 Target Hit: ${this.target}!\n🍕 Current Streak: ${this.streak}\n🥋 Rank: ${this.getBeltRank().name}`;
+        navigator.clipboard.writeText(text);
+        alert("📋 Daily Result copied to clipboard!");
+      }
+
+      nextVictoryPuzzle() {
+        this.closeModal('victory-modal');
+        if (this.mode === 'blitz') this.blitzTimeLeft += 5;
+        this.generateNewPuzzle();
+      }
+
+      triggerConfetti() {
+        const canvas = document.getElementById('confetti-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = Array.from({ length: 70 }, () => ({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 14,
+          vy: (Math.random() - 0.7) * 16,
+          color: ['#a3e635', '#38bdf8', '#fb923c', '#f43f5e', '#c084fc'][Math.floor(Math.random() * 5)],
+          size: Math.random() * 8 + 4,
+          life: 1
+        }));
+
+        let frame = 0;
+        function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.4;
+            p.life -= 0.015;
+
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, p.life);
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+          });
+
+          if (frame++ < 80) requestAnimationFrame(animate);
+          else ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        animate();
+      }
+
+      buyPowerUp(type) {
+        const prices = { smoke: 10, freeze: 12, slice: 15 };
+        const price = prices[type];
+
+        if (this.pizzaSlices < price) {
+          alert("🍕 Not enough Pizza Slices! Solve more puzzles to earn pizza!");
+          return;
+        }
+
+        this.pizzaSlices -= price;
+        this.saveStats();
+
+        if (type === 'smoke') {
+          this.generateNewPuzzle();
+          this.updateHistoryText("💨 Smoke Bomb used! Safely skipped puzzle!");
+        } else if (type === 'freeze') {
+          this.blitzTimeLeft += 15;
+          this.updateTimerDisplay();
+          this.updateHistoryText("❄️ Time Freeze activated! +15 seconds added!");
+        } else if (type === 'slice') {
+          if (this.selectedCardId) {
+            const card = this.cards.find(c => c.id === this.selectedCardId);
+            if (card && card.value.isInteger() && card.value.toNumber() > 3) {
+              const num = card.value.toNumber();
+              const f1 = Math.floor(Math.sqrt(num));
+              const f2 = Math.floor(num / f1);
+              this.cards = this.cards.filter(c => c.id !== this.selectedCardId);
+              this.cards.push({ id: `c-${Date.now()}-1`, value: new Fraction(f1), expr: `${f1}` });
+              this.cards.push({ id: `c-${Date.now()}-2`, value: new Fraction(f2), expr: `${f2}` });
+              this.renderCards();
+              this.updateHistoryText(`⚔️ Nunchaku Slice split [${num}] into [${f1}] and [${f2}]!`);
+            }
+          } else {
+            alert("Select a composite number card first to use Nunchaku Slice!");
+            this.pizzaSlices += price;
+            this.saveStats();
+            return;
+          }
+        }
+
+        this.closeModal('shop-modal');
+      }
+
+      getHint(free = false) {
+        if (!free) {
+          this.stats.hintsUsed++;
+          this.saveStats();
+        }
+
+        const titleEl = document.getElementById('hint-modal-title');
+        const contentEl = document.getElementById('hint-modal-content');
+
+        titleEl.innerHTML = `<i class="fa-solid fa-user-ninja text-ninja-slime mr-2"></i> Sensei Breakdown`;
+
+        if (this.solutionCache.length === 0) {
+          contentEl.innerHTML = `<p>No hints available for this configuration.</p>`;
+        } else {
+          const sampleSolution = this.solutionCache[0].expr;
+          contentEl.innerHTML = `
+            <div class="bg-amber-500/10 p-4 rounded-2xl border border-amber-500/40">
+              <p class="font-bold text-amber-300 mb-1">💡 Sensei Strategic Hint:</p>
+              <p class="text-slate-200 text-xs">One valid formula for target <strong>${this.target}</strong> is:</p>
+              <p class="font-mono text-base font-bold text-amber-300 my-2 bg-slate-950 p-2.5 rounded-xl border border-amber-500/30 text-center">${sampleSolution}</p>
+            </div>
+          `;
+        }
+
+        this.openModal('hint-modal');
+      }
+
+      showSolution() {
+        const titleEl = document.getElementById('hint-modal-title');
+        const contentEl = document.getElementById('hint-modal-content');
+
+        titleEl.innerHTML = `<i class="fa-solid fa-scroll text-purple-300 mr-2"></i> Ninja Scroll Solutions`;
+
+        if (this.solutionCache.length === 0) {
+          contentEl.innerHTML = `<p>No solution found.</p>`;
+        } else {
+          const uniqueExprs = Array.from(new Set(this.solutionCache.map(s => s.expr)));
+
+          contentEl.innerHTML = `
+            <div class="space-y-3">
+              <p class="text-slate-200 text-xs">All <strong>${uniqueExprs.length}</strong> valid ways to hit <strong>${this.target}</strong>:</p>
+              <div class="space-y-2 max-h-60 overflow-y-auto pr-1">
+                ${uniqueExprs.map((expr, idx) => `
+                  <div class="p-3 bg-slate-950 rounded-xl border border-slate-700 flex items-center justify-between font-mono font-bold text-slate-100">
+                    <span class="text-xs text-purple-300 font-sans">#${idx + 1}:</span>
+                    <span>${expr} = ${this.target}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        this.openModal('hint-modal');
+      }
+
+      applyCustomTarget() {
+        const targetInput = document.getElementById('custom-target-input');
+        const errBox = document.getElementById('custom-error-msg');
+
+        const customTarget = parseInt(targetInput.value);
+        if (isNaN(customTarget) || customTarget < 1) {
+          errBox.textContent = "Please enter a valid positive target number.";
+          errBox.classList.remove('hidden');
+          return;
+        }
+
+        this.target = customTarget;
+        this.generateNewPuzzle(false);
+        errBox.classList.add('hidden');
+        this.closeModal('custom-target-modal');
+      }
+
+      resetToHome() {
+        this.setDifficulty('easy');
+      }
+
+      openModal(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('hidden');
+      }
+
+      closeModal(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      }
+    }
+
+    let app;
+    window.onload = function() {
+      app = new AppController();
+      app.init();
+    };
+  </script>
+</body>
+</html>
